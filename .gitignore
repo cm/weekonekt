@@ -1,0 +1,7 @@
+.erlang.mk
+_rel
+ebin
+fullpass.d
+**/*.sw*
+deps
+*.d
