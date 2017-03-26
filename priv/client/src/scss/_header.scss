@@ -1,0 +1,515 @@
+/*=== 3. HEADER ===*/
+header{
+	position:relative;
+	z-index:999;
+}
+/*=== 3.1 HEADER TRANSPARENT ===*/
+.navbar-default{
+	background-color: transparent;
+	border: none;
+	border-radius: 0;
+	margin-bottom: 0;
+	position:relative;
+}
+.navbar-default.navbar-fixed-top{
+	position:fixed;
+}
+%focusMenu{
+	background-color: transparent !important;
+	color: $primary-color !important;
+	&:after{
+		width: 30%;
+	}
+}
+.navbar-nav{
+	@include mobile-all{
+		background-color: $white-color;
+		margin-top: 0;
+	}
+	@include tablet{
+		background-color: transparent !important;
+	}
+	>li{
+		>a{
+			text-transform: uppercase;
+			&:after{
+				content: "";
+				height: $base-xs+1px;
+				left: 0;
+				bottom: -3px;
+				width: 0px;
+				position: absolute;
+				@include transition(all 0.3s ease-in-out);
+				background-color: $primary-color;
+			}
+			&:hover{
+				color: $primary-color !important;
+				@include add-border(1px, rgba($white-color, .3), bottom);
+				@include opacity(1);
+				&:after{
+					@include mobile-all{
+						width: 0%;
+					}
+					@include tablet{
+						width: 100%;
+					}
+				}
+			}
+			&:focus{
+				@include add-border(1px, rgba($white-color, .3), bottom);
+			}
+			@include mobile-all{
+				color: $black-color !important;
+				padding: $base-xs*6;
+				@include add-border(1px, rgba($white-color, 1), bottom);
+			}
+			@include tablet{
+				margin: 0 $base $base-xs*14+1px $base;
+				font-size: $base*2;
+				color: $white-color !important;
+				padding: $base-xs*19 0 $base-xs*3+1px 0;
+				@include add-border(1px, rgba($white-color, .3), bottom);
+			}
+			@include desktops{
+				margin: 0 $base-xs*4 $base-xs*14+1px $base-xs*4;
+				font-size: $base-xs*7;
+			}
+			@include large-desktops{
+				margin: 0 $base*3 $base-xs*14+1px $base*3;
+			}
+		}
+		&.active{
+			a, a:hover{
+				color: $primary-color !important;
+				background-color: transparent !important;
+				@include opacity(1);
+				&:after{
+					@include mobile-all{
+						width: 0%;
+					}
+					@include tablet{
+						width: 100%;
+					}
+				}
+			}
+			a{
+				&:after{
+					@include mobile-all{
+						width: 0%;
+					}
+					@include tablet{
+						width: 30%;
+					}
+				}
+			}
+		}
+		&.open{
+			a{
+				@extend %focusMenu;
+				&:hover, &:focus{
+					@extend %focusMenu;
+				}
+				&:hover{
+					&:after{
+						@include mobile-all{
+							width: 0%;
+						}
+						@include tablet{
+							width: 100%;
+						}
+					}
+				}
+			}
+		}
+		&.dropdown{
+			.dropdown-menu{
+				box-shadow: none;
+				a{
+					padding: $base-xs+1px $base*4;
+					margin-bottom: 0;
+				}
+			}
+			&.searchBox{
+				a{
+					border: none;
+					@include mobile-all{
+						padding: $base-xs*6;
+						margin-bottom: $base-xs*5;
+						display: none;
+					}
+					@include tablet{
+						padding-top: $base-xs*21;
+						margin-bottom: $base-xs*12+1px;
+						display: block;
+					}
+					.searchIcon{
+						padding: $base*2 $base-xs*6;
+						background-color: $primary-color;
+						border-radius: 4px;
+						color: $white-color !important;
+					}
+					&:hover{
+						.searchIcon{
+							color: $white-color !important;
+						}
+						&:after{
+							display: none;
+						}
+					}
+					&:after{
+						display: none;
+					}
+				}
+				.dropdown-menu{
+					margin: 0 $base*2 0 0;
+					padding: $base*2 $base*3;
+					border-radius: 0;
+					@include mobile-all{
+						width: 100%;
+						position: relative;
+						display: block;
+					}
+					@include tablet{
+						width: $base*70;
+					}
+					li{
+						.form-control{
+							border-radius: 0;
+							box-shadow: none;
+							border-color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 33.9216);
+						}
+						.input-group-addon {
+							background-color: $primary-color;
+							border-color: $primary-color;
+							border-radius: 0;
+							color: $white-color;
+							font-size: 14px;
+							font-weight: 700;
+							text-transform: uppercase;
+						}
+					}
+				}
+			}
+			&.megaDropMenu{
+				position: static;
+				.dropdown-menu{
+					margin: -1px auto 0 auto;
+					right: 15px;
+					@include border-radius(5px);
+					@include mobile-all{
+						left: 0;
+						padding: 0;
+						width: 100%;
+					}
+					@include tablet{
+						left: 15px;
+						padding: $base*2 $base 0;
+						width: 720px;
+					}
+					@include desktops{
+						width: 940px;
+					}
+					@include large-desktops{
+						width: 1140px;
+					}
+					.list-unstyled{
+						width: 100%;
+						float: left;
+						@include mobile-all{
+							padding-bottom: $base;
+						}
+						@include tablet{
+							padding-bottom: $base*3;
+						}
+						li{
+							&.listHeading, &:first-child{
+								font-weight: 400;
+								text-transform: uppercase;
+								font-size: $base-xs*6+1px;
+								color: $text-title;
+								float: left;
+								@include mobile-all{
+									padding: $base*2 $base-xs*6 $base*2 0;
+								}
+								@include tablet{
+									padding: $base*2 $base-xs*6;
+								}
+							}
+							a{
+								color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 2.9412) !important;
+								font-size: $base-xs*6;
+								float: left;
+								width: 100%;
+								background-color: transparent !important;
+								@include mobile-all{
+									padding: $base-xs*3 $base-xs*6;
+								}
+								@include tablet{
+									padding: $base*2 $base-xs*6;
+								}
+								&:hover{
+									background-color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 40.1961) !important;
+									color: $primary-color !important;
+								}
+							}
+						}
+					}
+				}
+			}
+			&.singleDrop{
+				.dropdown-menu{
+					@include border-radius(5px);
+					min-width: 270px;
+					li{
+						a{
+							color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 2.9412) !important;
+							font-size: $base-xs*6;
+							float: none;
+							width: 100%;
+							background-color: transparent !important;
+							@include mobile-all{
+								padding: $base-xs*3 $base-xs*6 $base-xs*3 $base-xs*12;
+							}
+							@include tablet{
+								padding: $base*2 $base-xs*6;
+							}
+							&:hover{
+								background-color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 40.1961) !important;
+								color: $primary-color !important;
+							}
+						}
+						.dropdown-menu{
+							li{
+								a{
+									@include mobile-all{
+										padding: $base-xs*3 $base-xs*6 $base-xs*3 $base-xs*18;
+									}
+									@include tablet{
+										padding: $base*2 $base-xs*6;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+.dropdown-submenu{
+	position:relative;
+	a{
+		i{
+			float: right;
+			margin-top: $base-xs*2;
+		}
+	}
+	>.dropdown-menu{
+		top:0;
+		margin-top: 0 !important;
+		margin-left:-1px;
+		-webkit-border-radius:0 6px 6px 6px;
+		-moz-border-radius:0 6px 6px 6px;
+		border-radius:0 6px 6px 6px;
+		@include mobile{
+			left: 0;
+		}
+		@include tablet{
+			left: 100%;
+		}
+	}
+	&.pull-left{
+		float:none;
+		>.dropdown-menu{
+			left:-100%;
+			margin-left:10px;
+			-webkit-border-radius:6px 0 6px 6px;
+			-moz-border-radius:6px 0 6px 6px;
+			border-radius:6px 0 6px 6px;
+		}
+	}
+}
+.navbar-nav{
+	> li.open{
+		a{
+			&:after, &:hover:after, &:focus:after{
+				@include mobile-all{
+					width: 0%;
+				}
+				@include tablet{
+					width: 100%;
+				}
+			}
+		}
+	}
+	&.searchBox{
+		a{
+			&:after{
+				display: none;
+			}
+		}
+	}
+}
+.navbar-toggle{
+	margin-top: $base*4;
+}
+.navbar-toggle{
+	background-color: $white-color;
+}
+.navbar-collapse{
+	border-color: $white-color;
+	li{
+		&.dropdown{
+			.dropdown-menu{
+				box-shadow: none;
+				@include mobile-all{
+					position: relative;
+					width: 100%;
+					float: left;
+					border: 0;
+					display: block;
+				}
+				@include tablet{
+					position: absolute;
+					float: left;
+					// @include add-border(1px, $border-lighter, all);
+					display: none;
+				}
+			}
+			&.open{
+				.dropdown-menu{
+					display: block;
+				}
+			}
+			&.dropdown-submenu{
+				.dropdown-menu{
+					@include mobile-all{
+						position: relative;
+						width: 100%;
+						float: left;
+						border: 0;
+						display: block;
+					}
+					@include tablet{
+						position: absolute;
+						float: left;
+						// @include add-border(1px, $border-lighter, all);
+						display: none;
+					}
+				}
+				&.open{
+					.dropdown-menu{
+						display: block;
+					}
+				}
+			}
+		}
+	}
+}
+.navbar-brand {
+  float: left;
+  @include background('../img/logo.png', $base*3 $base-xs*9+1px);
+  @include background('../img/logo.png', $base*3 $base-xs*9+1px);
+  @include size($base*47, $base-xs*47+1px, transparent);
+  @include add-custom-padding($base-xs*12, $base*3, $base-xs*12, $base*3);
+  @include mobile-all{
+  	background-size: $base-xs*76 $base-xs*20 !important;
+  	margin-top: 0;
+  }
+  @include tablet{
+		background-size: $base-xs*101+1px $base-xs*27 !important;
+	}
+}
+.navbar-nav .singleDrop:hover > .dropdown-menu{
+	@include mobile-all{
+	}
+}
+.static .navbar-right{
+	margin-right:-30px !important;
+}
+
+/*=== 3.2 LIGHT HEADER ===*/
+.lightHeader{
+	@include transition(all 0.3s ease-in-out);
+	@include box-shadow(0, 3px, 10px, rgba($black-color, 0.10));
+	background-color: $white-color;
+	@include mobile-all{
+		height: $base-xs*41+1px;
+	}
+	@include tablet{
+		height: $base*19;
+	}
+	.navbar-brand {
+	  @include background('../img/logo-color-big.png', $base*3 $base-xs*9+1px);
+	  @include mobile-all{
+	  	background-size: $base-xs*76 $base-xs*20 !important;
+	  	margin-top: 0;
+	  	height: $base-xs*41+1px;
+	  }
+	  @include tablet{
+	  	background-size: $base-xs*101+1px $base-xs*27 !important;
+	  	height: $base*19;
+	  }
+	}
+	.navbar-nav{
+		> li{
+			> a{
+				color: $black-color !important;
+				
+				&:hover{
+					color: $primary-color !important;
+					border-color: $primary-color
+				}
+				@include mobile-all{
+					@include add-border(1px, $white-color, bottom);
+				}
+				@include tablet{
+					@include add-border(1px, rgba($black-color, .1), bottom);
+				}
+			}
+		}
+	} 
+}
+/*=== 3.3 DARK HEADER ===*/
+.darkHeader{
+	@include transition(all 0.3s ease-in-out);
+	@include box-shadow(0, 3px, 10px, rgba($black-color, 0.10));
+	background-color: $secondary-color;
+	@include mobile-all{
+		height: $base-xs*41+1px;
+	}
+	@include tablet{
+		height: $base*19;
+	}
+	.navbar-brand {
+	  @include background('../img/logo-dark.png', $base*3 $base-xs*9+1px);
+	  @include mobile-all{
+	  	background-size: $base-xs*76 $base-xs*20 !important;
+	  	margin-top: 0;
+	  	height: $base-xs*41+1px;
+	  }
+	  @include tablet{
+	  	background-size: $base-xs*101+1px $base-xs*27 !important;
+	  	height: $base*19;
+	  }
+	}
+	.navbar-nav{
+		> li{
+			> a{
+				&:hover{
+					color: $primary-color !important;
+					border-color: $primary-color
+				}
+				@include mobile-all{
+					@include add-border(1px, $white-color, bottom);
+					color: $black-color !important;
+				}
+				@include tablet{
+					@include add-border(1px, rgba($white-color, .1), bottom);
+					color: $white-color !important;
+				}
+			}
+		}
+	} 
+}
+

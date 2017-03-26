@@ -1,0 +1,72 @@
+/*================= 9. 404 NOT FOUND PAGE ==================*/
+/*=== 9.1 404 PAGE BACKGROUND ===*/
+.notFoundBg{
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: $base*168;
+	overflow: hidden;
+	background:url(../img/not-found/not-found-bg.jpg) no-repeat center top fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+.notFoundContent{
+	min-height: $base*78;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform:      translate(-50%, -50%);
+	text-align: center;
+	@include mobile-all{
+		min-width: 100%;
+	}
+	@include tablet{
+		min-width: $base*117;
+	}
+	img{
+		margin-bottom: $base*15;
+	}
+	h4{
+		font-size: $base*4;
+		line-height: $base-xs*13;
+		color: $white-color;
+		text-transform: capitalize;
+		margin-bottom: $base*15;
+		font-weight: 400;
+		@include mobile-all{
+			padding: 0 $base*4;
+		}
+		@include tablet{
+			padding: 0;
+		}
+	}
+	p{
+		color: $white-color;
+		margin-bottom: $base*4;
+	}
+	.input-group{
+		margin: 0 auto;
+		@include mobile-all{
+			width: 100%;
+		}
+		@include tablet{
+			width: $base*70;
+		}
+		.form-control{
+			height: $base*9;
+			box-shadow: none;
+			background-color: transparent;
+			border-color: rgba(lighten(desaturate(adjust-hue($primary-color, -8.5333), 98.5222), 4.3137), .25); 
+			color: $white-color;
+		}
+		.input-group-addon{
+			height: $base*9;
+			background-color: $primary-color;
+			color: $white-color;
+			border-color: $primary-color;
+			padding: $base-xs*3 $base*6; 
+		}
+	}
+}

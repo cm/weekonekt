@@ -6,3 +6,5 @@ fullpass.d
 deps
 *.d
 **/*.DS_Store
+**/*elm-stuff
+**/*node_modules

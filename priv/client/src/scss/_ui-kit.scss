@@ -1,0 +1,1121 @@
+/*=== 2. UI KIT ===*/
+/*=== 2.1 BUTTON ===*/
+.btn.active.focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn:active:focus, .btn:focus{
+	outline: 0;
+}
+.buttonCustomPrimary{
+	height: $base*9;
+	line-height: $base*9;
+	border-radius: $base-xs*2;
+	background-color: $primary-color;
+	text-transform: uppercase;
+	color: $white-color !important;
+	font-weight: 400;
+	font-size: $base*3;
+	padding: 0;
+}
+.buttonTransparent{
+	height: $base*7;
+	line-height: $base*7;
+	border-radius: $base-xs*2;
+	border-color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 31.1765);
+	padding: 0 $base*3;
+	color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 2.9412);
+	text-transform: uppercase;
+	outline:0;
+	&:hover{
+		background-color: $primary-color;
+		border-color: $primary-color;
+		color: $white-color;
+		@include opacity(1);
+		outline:0;
+	}
+	&focus{
+		outline:0;
+	}
+}
+/*=== 2.2 SECTION TITLE ===*/
+.sectionTitle{
+	text-align: center;
+	@include mobile-all{
+		margin-bottom: $base*6;
+	}
+	@include tablet{
+		margin-bottom: $base-xs*24;
+	}
+	h2{
+		position: relative;
+		margin-bottom: $base-xs*8;
+		@include mobile-all{
+			font-size: $base*4;
+		}
+		@include tablet{
+			font-size: $base-xs*13;
+		}
+		span{
+			@include add-padding($base-xs*19, left-right);
+			z-index: 5;
+			position: relative;
+			background-color: $white-color;
+			&.lightBg{
+				background-color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 40.1961);
+			}
+		}
+		&:before{
+			background-color: $title-border;
+			content: "";
+			display: block;
+			height: 1px;
+			position: absolute;
+			top: 50%;
+			width: 100%;
+			left: 0;
+			z-index: 1;
+		}
+	}
+	p{
+		color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 2.9412);
+		font-weight: 400;
+		text-transform: capitalize;
+		margin-bottom: 0;
+		@include mobile-all{
+			font-size: $base-xs*5+1px;
+		}
+		@include tablet{
+			font-size: $base-xs*9;
+		}
+	}
+}
+.sectionTitleDouble{
+	
+	@include mobile-all{
+		background-image: none;
+	}
+	@include tablet{
+		@include background('../img/home/devider.png', right center, 8px 45px);
+	}
+	p, h2{
+		color: $white-color;
+		text-transform: uppercase;
+		line-height: $base-xs*13;
+		margin-bottom: 0;
+		font-weight: 400;
+		@include desktops{
+			font-size: $base-xs*9;
+		}
+		@include large-desktops{
+			font-size: $base*4;
+		}
+	}
+	h2{
+		font-weight: 700;
+		@include desktops{
+			font-size: $base-xs*11;
+		}
+		@include large-desktops{
+			font-size: $base-xs*13;
+		}
+		span{
+			color: $primary-color;
+		}
+	}
+}
+/*=== 2.3 FORM ===*/
+.form{
+	.form-group{
+		.form-control{
+	    height: $base*9;
+	    background-color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 40.1961);
+	    box-shadow: none;
+	    border-color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 33.9216);
+	    color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 2.9412);
+	    font-family: "Montserrat",sans-serif;
+	    font-size: $base-xs*6;
+	    &:focus{
+	    	outline: 0;
+	    }
+		}
+		textarea{
+			&.form-control{
+				height: $base*30;
+			}
+		}
+	}
+	.buttonCustomPrimary{
+		padding: 0 $base*4;
+	}
+}
+.commentsForm{
+	@extend .form;
+	.form-control{
+		border: none;
+	}
+	.buttonCustomPrimary{
+		background-color: transparent;
+		color: darken(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 15.8824) !important;
+		border-color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 31.1765);
+		@include transition(all 0.3s ease-in-out);
+		&:hover{
+			background-color: $primary-color;
+			border-color: $primary-color;
+			color: $white-color !important; 
+		}
+	}
+	h3{
+		font-size: $base*4;
+		color: $text-title;
+		text-transform: capitalize;
+		font-weight: 400;
+		margin-bottom: $base*6;
+	}
+}
+.contactForm{
+	.form-control{
+		border: none;
+	}
+	.buttonCustomPrimary{
+		float: right;
+	}
+}
+/*=== 2.4 PASINATION ===*/
+.paginationCenter{
+	width: 100%;
+	text-align: center;
+	padding-top: $base-xs*39;
+	.pagination{
+		margin: 0;
+		li{
+			display: inline-block;
+			a{
+				color: darken(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 42.5490);
+				border: none;
+				height: $base*7;
+				line-height: $base*7;
+				padding: 0 $base-xs*6;
+				background-color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 40.1961);
+				&:hover{
+					color: $primary-color;
+					background-color: transparent;
+				}
+			}
+			&.active{
+				a{
+					color: $primary-color;
+					background-color: transparent;
+					&:hover, &:focus{
+						color: $primary-color;
+						background-color: transparent;
+					}
+				}
+			}
+		}
+		li:first-child, li:last-child{
+			a{
+				@extend .buttonTransparent;
+				color: darken(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 42.5490);
+				@include add-border(1px, lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 31.1765), all);
+			}
+		}
+		li:first-child{
+			a{
+				span{
+					i{
+						margin-right: $base;
+					}
+				}
+			}
+		}
+		li:last-child{
+			a{
+				span{
+					i{
+						margin-left: $base;
+					}
+				}
+			}
+		}
+	}
+	&.paginationTransparent{
+		padding-top: 0;
+		.pagination{
+			li{
+				a{
+					background-color: $white-color;
+				}
+			}
+		}
+	}
+}
+/*=== 2.5 ACCORDION ===*/
+.accordionWrappar{
+	padding: $base*3;
+	@include add-border(1px, lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 37.4510), all);
+	@include border-radius(4px);
+	@include mobile-all{
+		margin-bottom: $base*6;
+	}
+	@include tablet{
+		margin-bottom: 0;
+	}
+}
+.accordionsTransparent{
+	.panel-group{
+		margin-bottom: $base*3;
+		.panel{
+			border: none;
+			border-radius: 0;
+		}
+		.panel-heading{
+			padding: $base*3;
+			text-transform: uppercase;
+			font-size: $base*3;
+			color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 2.9412);
+			background-color: transparent; 
+			border: none;
+			@include add-border(1px, lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 37.4510), bottom);
+			border-radius: 0;
+			i{
+				line-height: $base-xs*11;
+			}
+			&.hideBorder{
+				border: none;
+			}
+			&:hover{
+				@include opacity(1);
+			}
+		}
+	}
+	.panel-default{
+		> a.panel-heading{
+			display: block;
+		}
+	} 
+	.panel-group .panel+.panel{
+		margin-top: 0;
+	}
+	.panel-default>.panel-heading+.panel-collapse>.panel-body{
+		border: none !important;
+	}
+	.panel{
+		box-shadow: none;
+	}
+	.panel-heading.active {
+	  color: $primary-color;
+	  border: none;
+	}
+	.panel-collapse.active{
+		@include add-border(1px, lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 37.4510), bottom);
+	}
+	.solidBgTitle{
+		.panel{
+			margin-bottom: $base*4;
+		}
+		.panel-heading{
+			background-color: $primary-color;
+			color: $white-color;
+			@include border-radius(4px);
+		}
+		.panel-body{
+			background-color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 40.1961);
+			border-radius: 0 0 4px 4px;
+		}
+		.panel-collapse{
+			border-radius: 0 0 4px 4px;
+		}
+	}
+	.accordionSolidTitle{
+		.panel{
+			margin-bottom: $base*3;
+			@include border-radius(4px);
+			background-color: transparent;
+		}
+		.panel-heading{
+			background-color: $white-color;
+			color: $text-title;
+			border: none;
+			@include border-radius(4px);
+		}
+		.panel-heading.active {
+		  color: $white-color;
+		  background-color: $primary-color;
+		}
+		.panel-collapse.active{
+			background-color: transparent;
+			border: none;
+		}
+	}
+	.accordionSolidBar{
+		@extend .accordionSolidTitle;
+	}
+}
+/*=== 2.6 TABS ===*/
+/*=== 2.7 DATEPICKER ===*/
+.ed-datepicker{
+	height: $base*9;
+	margin-top: $base-xs*2;
+	border: none;
+	@include add-border(1px, rgba(lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 31.1765), .3), bottom);
+	padding: 0;
+	border-radius: 0;
+	&.filterDate{
+		border-color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 31.1765);
+		margin-bottom: $base*4;
+	}
+}
+.ed-datepicker .form-control{
+	height: $base*9;
+	background: transparent;
+	border: none;
+	font-size: $base-xs*6;
+	font-weight: 400;
+	color: rgba($white-color, .3);
+	padding: $base-xs*2 $base-xs*6 $base-xs*2 0;
+	box-shadow: none !important;
+}
+.ed-datepicker.filterDate .form-control{
+	color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 2.9412);
+}
+.ed-datepicker .form-control::-webkit-input-placeholder{ 
+	font-size: $base-xs*6;
+	font-weight: 400;
+	color: rgba($white-color, .3);
+}
+.ed-datepicker .form-control::-moz-placeholder{ 
+	font-size: $base-xs*6;
+	font-weight: 400;
+	color: rgba($white-color, .3);
+}
+.ed-datepicker .form-control:-ms-input-placeholder{ 
+	font-size: $base-xs*6;
+	font-weight: 400;
+	color: rgba($white-color, .3);
+}
+.ed-datepicker .form-control:-moz-placeholder { 
+	font-size: $base-xs*6;
+	font-weight: 400;
+	color: rgba($white-color, .3);
+}
+.ed-datepicker.filterDate .form-control::-webkit-input-placeholder{ 
+	font-size: $base-xs*6;
+	font-weight: 400;
+	color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 2.9412);
+}
+.ed-datepicker.filterDate .form-control::-moz-placeholder{ 
+	font-size: $base-xs*6;
+	font-weight: 400;
+	color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 2.9412);
+}
+.ed-datepicker.filterDate .form-control:-ms-input-placeholder{ 
+	font-size: $base-xs*6;
+	font-weight: 400;
+	color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 2.9412);
+}
+.ed-datepicker.filterDate .form-control:-moz-placeholder { 
+	font-size: $base-xs*6;
+	font-weight: 400;
+	color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 2.9412);
+}
+.ed-datepicker .input-group-addon{
+	height: $base*9;
+	background: transparent;
+	border: none;
+	padding-right: 0;
+}
+.datepicker-dropdown{
+	width: auto;
+	padding: 0;
+}
+.filterDate .datepicker-dropdown{
+	top: 87% !important;
+}
+.datepicker-dropdown thead{
+	font-size: 15px;
+	font-weight: 400;
+	text-transform: uppercase;
+}
+.datepicker-dropdown thead tr:last-child th{
+	background-color: $primary-color;
+	border-radius: 0;
+	font-size: $base-xs*7;
+	color: $white-color;
+}
+.datepicker table tr td.day{
+	color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 2.9412);
+	font-weight: 400;
+	border-radius: 0 !important;
+	background: transparent;
+	margin: 0 3px 10px;
+	padding: $base;
+	width: $base-xs*21+1px;
+	height: $base-xs*21+1px;
+	text-align: center;
+	@include add-border(1px, lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 33.9216), all);
+}
+.datepicker table tr td.day.new, 
+.datepicker table tr td.day.old {
+	color: #cccfd3;
+	background: transparent;
+}
+.datepicker table tr td.day:hover, 
+.datepicker table tr td.focused {
+	background: $primary-color;
+	@include transition (background 0.3s);
+	cursor: pointer;
+	color: $white-color;
+}
+.datepicker table tr td.active.active, 
+.datepicker table tr td.active.highlighted.active, 
+.datepicker table tr td.active.highlighted:active, 
+.datepicker table tr td.active:active {
+	border-color: $secondary-color;
+	background: $secondary-color;
+	@include transition (background 0.3s, border-color 0.3s);
+}
+.datepicker table tr td.active.active.focus,
+.datepicker table tr td.active.active:focus, 
+.datepicker table tr td.active.active:hover, 
+.datepicker table tr td.active.highlighted.active.focus, 
+.datepicker table tr td.active.highlighted.active:focus, 
+.datepicker table tr td.active.highlighted.active:hover, 
+.datepicker table tr td.active.highlighted:active.focus, 
+.datepicker table tr td.active.highlighted:active:focus, 
+.datepicker table tr td.active.highlighted:active:hover, 
+.datepicker table tr td.active:active.focus, 
+.datepicker table tr td.active:active:focus, 
+.datepicker table tr td.active:active:hover {
+	border-color: $secondary-color;
+	background: $secondary-color;
+	@include transition (background 0.3s, border-color 0.3s);
+}
+.datepicker .datepicker-switch{
+	color: darken(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 42.5490)
+}
+.datepicker .datepicker-switch:hover, 
+.datepicker .next:hover, 
+.datepicker .prev:hover, 
+.datepicker tfoot tr th:hover {
+	background:transparent;
+	border: none;
+	@include transition (color 0.3s);
+	cursor: pointer;
+	color: $secondary-color;
+}
+.datepicker-dropdown::after, 
+.datepicker-dropdown::before{
+	display: none;
+}
+.datepicker table tr td, .datepicker table tr th{
+	height:$base*10;
+}
+/*=== 2.8 THUMBNAIL ===*/
+.thumbnail{
+	border: none;
+	padding: 0;
+	&.deals{
+		overflow: hidden;
+		position: relative;
+		float: left;
+		box-shadow: none;
+		@include transition(all 0.3s ease-in-out);
+		img{
+			width: 100%;
+			height: 263px;
+		}
+		.discountInfo{
+			position: absolute;
+			left: 0;
+			top: 0;
+			height: 263px;
+			width: 100%;
+			@include mobile-all{
+				padding: $base 0 0 $base;
+			}
+			@include tablet{
+				padding: $base 0 0 $base;
+			}
+			@include desktops{
+				padding: $base*4 0 0 $base*4;
+			}
+			.discountOffer{
+				border-radius: 100%;
+				background-color: $primary-color;
+				@include mobile-all{
+					margin-bottom: 40%;
+					width: $base*12;
+					padding: $base*3 0;
+				}
+				@include tablet{
+					margin-bottom: $base*6;
+					width: $base*12;
+					padding: $base*3 0;
+				}
+				@include desktops{
+					margin-bottom: $base*12;
+					width: $base*15+1px;
+					padding: $base-xs*9+1px 0;
+				}
+				@include large-desktops{
+					margin-bottom: $base-xs*52;
+					width: $base*15+1px;
+					padding: $base-xs*9+1px 0;
+				}
+				h4{
+					color: $white-color;
+					text-align: center;
+					margin: 0;
+					text-transform: uppercase;
+					@include mobile-all{
+						font-size: $base-xs*7;
+					}
+					@include tablet{
+						font-size: $base-xs*7;
+					}
+					@include desktops{
+						font-size: $base-xs*9;
+					}
+					span{
+						display: block;
+					}
+				}
+			}
+			.duration{
+				margin-left: 0;
+				position: absolute;
+				left: $base*4;
+				bottom: $base*4;
+				li{
+					color: $white-color;
+					font-weight: 700;
+					@include add-border(1px, $white-color, right);
+					line-height: $base*4+1px;
+					float: left;
+					@include tablet{
+						font-size: $base*2+1px;
+						padding: 0 $base*2;
+					}
+					@include desktops{
+						font-size: $base*3;
+						padding: 0 $base-xs*6;
+					}
+					&:first-child{
+						padding-left: 0;
+					}
+					&:last-child{
+						border-right: 0;
+					}
+				}
+			}
+		}
+		.caption{
+			padding: $base*6 $base*4;
+			.captionTitle{
+				font-size: $base*3;
+				color: $text-title;
+				text-transform: uppercase;
+				font-weight: 700;
+				margin: 0 0 $base*3 0;
+				display: block;
+				&:hover{
+					@include opacity(1);
+					color: $primary-color;
+				}
+			}
+			p{
+				margin-bottom: $base*8;
+			}
+			.detailsInfo{
+				display: inline-block;
+				width: 100%;
+				text-align: center;
+				h5{
+					float: left;
+					line-height: $base*4+1px;
+					margin: 0;
+					color: $primary-color;
+					font-weight: 400;
+					font-size: $base*4;
+					span{
+						font-size: $base-xs*7;
+						color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 2.9412);
+						text-transform: capitalize;
+						@include tablet{
+							display: inline-block;
+						}
+						@include desktops{
+							display: block;
+						}
+					}
+					@include mobile-all{
+						display: block;
+						width: 100%;
+						margin-bottom: $base*6;
+						text-align: center;
+					}
+					@include tablet{
+						display: inline-block;
+						width: auto;
+						margin-bottom: 0;
+						text-align: left;
+					}
+				}
+			}
+		}
+		&.packagesPage{
+			.discountOffer{
+				@include mobile-all{
+					margin-bottom: 40%;
+					width: $base*12;
+					padding: $base*3 0;
+				}
+				@include tablet{
+					margin-bottom: $base*6;
+					width: $base*12;
+					padding: $base*3 0;
+				}
+				@include desktops{
+					margin-bottom: $base*9;
+					width: $base*14;
+					padding: $base-xs*8 0;
+				}
+			}
+			.duration{
+				margin-left: 0;
+				li{
+					color: $white-color;
+					font-weight: 700;
+					@include add-border(1px, $white-color, right);
+					line-height: $base*4+1px;
+					float: left;
+					@include tablet{
+						font-size: $base*2+1px;
+						padding: 0 $base*2;
+					}
+					&:first-child{
+						padding-left: 0;
+					}
+					&:last-child{
+						border-right: 0;
+					}
+				}
+			}
+			.caption{
+				.detailsInfo{
+					.detailsBtn{
+						.buttonTransparent{
+							font-size: $base-xs*6+1px;
+						}
+					}
+				}
+			}
+		}
+		&:hover{
+			@include box-shadow(0, 3px, 10px, rgba($black-color, 0.10));
+		}
+	}
+	&.blogPostItem{
+		position: relative;
+		border: none;
+		padding: 0;
+		float: left;
+		box-shadow: none;
+		img{
+			width: 100%;
+		}
+		.caption{
+			padding: $base*6 $base*4;
+			p{
+				margin-bottom: $base*6;
+			}
+			.detailsInfo{
+				display: inline-block;
+				width: 100%;
+				h4{
+					display: inline-block;
+					float: left;
+				}
+				h4{
+					line-height: $base*4+1px;
+					margin-bottom: 0;
+					color: $primary-color;
+					font-weight: 400;
+					font-size: $base*4;
+					span{
+						font-size: $base-xs*7;
+						color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 2.9412);
+						text-transform: capitalize;
+						@include tablet{
+							display: inline-block;
+						}
+						@include desktops{
+							display: block;
+						}
+					}
+				}
+			}
+		}
+	}
+	&.citiesContent{
+		margin-bottom: $base*16;
+		.imageArea{
+			margin-bottom: $base-xs*9;
+			padding: 0 $base-xs*4+1px;
+			position: relative;
+			img{
+				width: 100%;
+			}
+			.sticker{
+				position: absolute;
+				left: $base-xs*9+1px;
+				top: $base*2;
+				background-color: rgba($black-color, .35);
+				@include border-radius(4px);
+				color: $white-color;
+				font-size: $base*3;
+				font-weight: 700;
+				padding: $base-xs*6 $base*4;
+				text-transform: uppercase;
+			}
+		}
+		.caption{
+			.media{
+				background-color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 40.1961);
+				@include border-radius(4px);
+				@include add-border(1px, lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 37.4510), all);
+				@include mobile-all{
+					margin-bottom: $base*6;
+				}
+				@include tablet{
+					margin-bottom: 0;
+				}
+				.media-body{
+					padding-left: $base*2;
+					a{
+						color: $text-title;
+						font-size: $base-xs*9;
+						line-height: $base-xs*12;
+						text-transform: uppercase;
+						margin: $base*3 0;
+						display: block;
+						font-weight: 400;
+						&:hover{
+							@include opacity(1);
+							color: $primary-color;
+						}
+					}
+					h4{
+						color: $primary-color;
+						font-size: $base-xs*9;
+						line-height: $base-xs*12;
+						text-transform: uppercase;
+						margin-bottom: 0;
+						font-weight: 400;
+					}
+				}
+			}
+		}
+		.media-left{
+			float: left;
+		}
+	}
+}
+.pageLink{
+	width: 100%;
+	height: 263px;
+	display: block;
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 1000;
+}
+.marginExten{
+	margin-left: -24px;
+	margin-right: -24px;
+}
+.buttonArea{
+	width: 100%;
+	display: block;
+	text-align: center;
+	.buttonTransparent{
+		height: $base*9;
+		line-height: $base*9; 
+		@include mobile-all{
+			margin-bottom: $base*6;
+		}
+		@include tablet{
+			margin-bottom: 0;
+		}
+	}
+	&.galleryBtnArea{
+		text-align: left;
+		padding: $base*12 0;
+		.buttonTransparent{
+			background-color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 40.1961);
+			border-color:  lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 40.1961);
+			color: $text-title;
+			padding: 0 $base*6;
+			&:hover{
+				color: $white-color;
+				background-color: $primary-color;
+				border-color: $primary-color; 
+			}
+		}
+	}
+}
+.blogTitle{
+	font-size: $base*4;
+	color: $text-title;
+	text-transform: capitalize;
+	font-weight: 400;
+	margin: 0 0 $base*4 0;
+	display: block;
+	&:hover{
+		color: $primary-color;
+	}
+}
+.blogInfo{
+	margin-bottom: $base*5;
+	li{
+		font-size: $base-xs*6;
+		line-height: $base-xs*9;
+		color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 2.9412);
+		i{
+			margin-right: $base-xs*3;
+		}
+		a{
+			color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 2.9412);
+			&:hover{
+				color: $primary-color;
+			}
+		}
+	}
+}
+.rating{
+	margin-left: 0;
+	display: block;
+	width: 100%;
+	margin-bottom: $base;
+	li{
+		padding: 0;
+		i{
+			color: darken(desaturate(adjust-hue($primary-color, 18.4232), 0.7843), 5.8824);
+		}
+	}
+}
+.rating{
+	&.homePage{
+		margin-left: 0;
+		display: block;
+		width: 100%;
+		position: absolute;
+		left: $base*4;
+		bottom: $base*9;
+		li{
+			padding: 0;
+			i{
+				color: darken(desaturate(adjust-hue($primary-color, 18.4232), 0.7843), 5.8824);
+			}
+		}
+	}
+}
+.detailsBtn{
+	float: right;
+	margin-top: $base;
+	@include mobile-all{
+		display: block;
+		width: 100%;
+	}
+	@include tablet{
+		display: inline-block;
+		width: auto;
+	}
+	li{
+		padding: 0;
+		.buttonTransparent{
+			color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 2.9412);
+			&:hover{
+				color: $white-color;
+			}
+		}
+	}
+}
+.btnArea{
+	padding-top: $base*6;
+	text-align: center;
+}
+/*=== 2.9 modal ===*/
+.modal{
+	&.bookingModal{
+		.modal-dialog{
+			@include mobile-all{
+				width: auto;
+			}
+			@include tablet{
+				width: $base-xs*201;
+			}
+			.modal-content{
+				border: none;
+				@include add-border(5px, $primary-color, top);
+				.modal-header{
+					border: none;
+					.modal-title{
+						@include border-radius($base-xs*3);
+					}
+				}
+				.modal-body{
+					@extend .form;
+				}
+			}
+		}
+	}
+}
+/*=== 2.10 PANEL ===*/
+.packagesFilter{
+	border: none;
+	margin-bottom: $base*6;
+	@include add-border($base, $primary-color, top);
+	.panel-heading{
+		background-color: $white-color;
+		border: none;
+		.panel-title{
+			text-transform: uppercase;
+			color: darken(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 42.5490);
+			font-size: $base-xs*9;
+			line-height: $base*5;
+			border: none;
+		}
+	}
+	.panel-body{
+		padding-top: 0px;
+		.buttonTransparent{
+			color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 2.9412);
+			&:hover{
+				color: $white-color;
+			}
+		}
+	}
+}
+/*=== 2.11 PRICE RANGE SLIDER ===*/
+.priceRange{
+	.progress{
+		margin: $base*4 0 $base*4+5px 0; 
+		height: $base;
+		background-color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 31.1765);
+		position: relative;
+		overflow: visible;
+		.progress-bar{
+			background-color: $secondary-color;
+		}
+		.bulet{
+			width: 16px;
+			height: 16px;
+			background-color: $white-color;
+			@include add-border(2px, $secondary-color, all);
+			@include border-radius(100%);
+			left: 0px;
+			top: -5px;
+			position: absolute;
+			&.next{
+				left: 60px;
+			}
+		}
+	}
+	.btn-default{
+		display: none;
+		height: 30px;
+		line-height: 30px;
+		padding: 0;
+		text-transform: uppercase;
+		background-color: $secondary-color;
+		border-radius: 0;
+		border: none;
+		color: $white-color;
+		font-weight: 700;
+		@include mobile-xs{
+			width: 82px;
+			font-size: $base*2+4px;
+		}
+		@include mobile{
+			width: 82px;
+			font-size: $base*2+4px;
+		}
+		@include tablet{
+			width: 50px;
+			font-size: $base*2;
+		}
+		@include desktops{
+			width: 45px;
+			font-size: $base*2;
+		}
+		@include large-desktops{
+			width: 82px;
+			font-size: $base*2+4px;
+		}
+	}
+	.priceLabel{
+		float: right;
+		line-height: 30px;
+		color: $secondary-color;
+		@include mobile{
+			font-size: $base*2+4px;
+		}
+		@include tablet{
+			font-size: $base*2+1px;
+		}
+		@include desktops{
+			font-size: $base*2+4px;
+		}
+	}
+}
+
+.priceRange{
+	position: relative;
+	.price-slider-inner{
+		display: block;
+		margin: $base*2+5px 0 $base*4+5px 0;
+		.amount-wrapper{
+			display: none;
+			position: absolute;
+			bottom: 25px;
+			right:20px;
+			font-size: $base*2+4px;
+			width: 120px;
+			input{
+				background-color: transparent;
+				border: 0;
+				width: 28%;
+				font-size: $base*2+4px;
+				color: $secondary-color;
+				font-weight: 700;
+				text-align: right;
+			}
+		}
+		.ui-widget-content{
+			background: none;
+			border: 0;
+			background-color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 31.1765);
+			height: 4px;
+			clear: both;
+			border-radius: $base-xs*2;
+			margin: 0 $base*2 - 5px 0 $base-xs*4+1px;
+			.ui-slider-range{
+				background-color: $primary-color;
+				border: none;
+				border-radius: 0;
+			}
+			.ui-slider-handle{
+				border-radius: 50%;
+				background: none;
+				@include add-border(3px, $primary-color, all);
+				background-color: $primary-color;
+				top: -6px;
+				width: 16px;
+				height: 16px;
+				outline: none;
+			}
+		}
+	}
+}
+.media-left{
+	display: inline-block;
+	float: left;
+}

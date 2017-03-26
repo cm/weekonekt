@@ -1,0 +1,325 @@
+/*================= 12 BOOKING ==================*/
+/*=== 12.1 BOOKING PROGRESS BAR ===*/
+.progress-wizard {
+	margin-top: 40px;
+	@include add-border(1px, lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 31.9608), bottom);
+	padding: 0 0 $base*6 0;
+	> .progress-wizard-step{
+		padding: 0; 
+		position: relative; 
+		height: $base*20;
+		@include mobile-all{
+			margin-bottom: $base*6;			
+		}
+		@include tablet{
+			margin-bottom: 0;			
+		}
+		> .progress {
+			position: relative; 
+			border-radius: 0px; 
+			height: 2px; 
+			box-shadow: none; 
+			margin: 20px 0;
+			> .progress-bar {
+				width:0px; 
+				box-shadow: none; 
+				@include mobile-all{
+					background-color: transparent;
+				}
+				@include tablet{
+					background: $primary-color;
+				}
+			}
+		}
+		&.complete{
+			> .progress{
+				> .progress-bar {
+					width:100%;
+				}
+			}
+		}
+		&.active {
+			> .progress {
+				> .progress-bar {
+					width:50%;
+				}
+			}
+		}
+	}
+}
+.progress-wizard {
+	> .progress-wizard-step {
+		> .progress {
+			> .progress-bar {
+				width:0%;
+			}
+		}
+	}
+}
+.progress-wizard {
+	> .progress-wizard-step:first-child.active {
+		> .progress {
+			> .progress-bar {width:0%;}
+		}
+	}
+}
+.progress-wizard {
+	> .progress-wizard-step:last-child.active {
+		> .progress {
+			> .progress-bar {width: 100%;}
+		}
+	}
+}
+
+.progress-wizard {
+	> .progress-wizard-step:first-child  {
+		> .progress {left: 50%; width: 50%;}
+	}
+}
+.progress-wizard {
+	> .progress-wizard-step:last-child  {
+		> .progress {width: 50%;}
+	}
+}
+.progress{
+	@include mobile-all{
+		background-color: transparent;
+	}
+	@include tablet{
+    background-color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 31.1765);
+	}
+}
+.progress-wizard {
+	> .progress-wizard-step {
+		> .progress-wizard-dot {
+			width: $base-xs*101+1px; 
+			display: block; 
+			background-color: $white-color; 
+			@include border-radius(10px);
+			@include add-border(2px, $primary-color, all);
+			padding: $base*4+1px 0;
+			text-align: center;
+			color: $text-title;
+			@include mobile-all{
+				position: relative;
+				top: 0;
+				left: 0;
+				margin: -20px auto 0 auto;
+			}
+			@include tablet{
+				position: absolute; 
+				top: -15px;
+				left: 28%; 
+				margin-top: -15px; 
+				margin-left: -15px; 
+			}
+			i{
+				display: block;
+				color: $text-title;
+				font-size: $base*4;
+				margin-bottom: $base*3;
+			}
+			&:hover{
+				@include opacity(1);
+			}
+		} 
+	}
+}
+
+.progress-wizard {
+	> .progress-wizard-step.disabled {
+		> .progress-wizard-dot {
+			border-color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 31.1765);
+			color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 2.9412);
+		}
+	}
+}
+.progress-wizard {
+	> .progress-wizard-step.complete {
+		> .progress-wizard-dot{
+			background-color: $primary-color;
+			color: $white-color;
+			i{
+				color: $white-color;
+			}
+		}
+	}
+}
+/*=== 12.1 BOOKING INFO ===*/
+.infoTitle{
+	h2{
+		font-weight: 400;
+		color: $text-title;
+		font-size: $base*4;
+		text-transform: capitalize;
+		margin-bottom: $base*5;
+	}
+}
+/*=== 12.2 BOOKING FORM ===*/
+.bookingForm{
+	.form{
+		.form-control{
+			border: none;
+		}
+		.form-group{
+			label{
+				color: $text-title;
+				font-weight: 400;
+				&.blankLabel{
+					height: $base-xs*8;
+				}
+			}
+			
+		}
+		.checkbox{
+			label{
+				color: $text-title;
+				font-weight: 400;
+				a{
+					color: $primary-color;
+
+				}
+			}
+			input[type=checkbox]{
+				border-color: $primary-color;
+			}
+		}
+	}
+}
+/*=== 12.3 BOOKING DETAILS ===*/
+.bookDetailsInfo{
+	@include mobile-all{
+		margin-bottom: $base*6;
+	}
+	@include tablet{
+		margin-bottom: 0;
+	}
+	img{
+		width: 100%;
+	}
+}
+.infoArea{
+	padding: $base*4;
+	background-color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 40.1961);
+	border-radius: 0 0 4px 4px;
+	h3{
+		font-size: $base-xs*8;
+		color: $text-title;
+		margin-bottom: $base*5;
+		text-transform: capitalize;
+		font-weight: 400;
+	}
+	.list-unstyled{
+		margin-bottom: $base*10;
+		li{
+			font-size: $base-xs*7;
+			color: $text-title;
+			padding: $base*3 0;
+			@include add-border(1px, lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 31.1765), bottom);
+			i{
+				margin-right: $base;
+			}
+			span{
+				color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 2.9412);
+			}
+		}
+	}
+	h2{
+		font-size: $base*4;
+		color: $text-title;
+		font-weight: 400;
+		span{
+			color: $primary-color;
+			font-weight: 700;
+		}
+	}
+}
+/*=== 12.4 BOOKING CONFIRMED ===*/
+.bookingConfirmed{
+	.alert{
+		position: relative;
+		min-height: $base*18;
+		
+		margin-bottom: $base*10; 
+		background-image: url("../img/booking/alert-check.png");
+		background-position: 0 0;
+		background-size: 50px 90px;
+		background-repeat: no-repeat;
+		@include mobile-all{
+			line-height: $base*4;
+			padding: $base*3 $base*13 0 $base*12;
+			font-size: $base*2+1px;
+		}
+		@include tablet{
+			line-height: $base*18;
+			padding: 0 0 0 $base*14;
+			font-size: $base*4;
+		}
+	}
+	.alert-dismissable .close, .alert-dismissible .close {
+		position: absolute;
+		top: 0;
+		right: $base*4;
+		color: darken(desaturate(adjust-hue($primary-color, 93.1810), 71.7742), 4.5098);
+		height: $base*18;
+		@include opacity(1);
+		@include mobile-all{
+			font-size: 10px;
+		}
+		@include tablet{
+			font-size: $base-xs*7;
+		}
+	}
+	.infoTitle{
+		h2{
+			font-size: $base-xs*13;
+		}
+	}
+}
+.confirmDetilas{
+	img{
+		width: 100%;
+	}
+}
+.confirmInfo{
+	padding: $base*8 $base*6;
+	.infoTitle{
+		h2{
+			font-size: $base*4;
+		}
+		h3{
+			font-size: $base*4;
+		}
+	}
+	p{
+		margin-bottom: $base*8;
+	}
+	.dl-horizontal{
+		dt{
+			width: $base*20;
+			text-align: left;
+			color: $text-title;
+			font-weight: 400;
+			margin-bottom: $base;
+			float: left;
+			i{
+				margin-right: $base;
+			}
+		}
+		dd{
+			margin: 0 0 $base $base*20;
+		}
+	}
+}
+.priceTotal{
+		h2{
+			text-transform: capitalize;
+			color: $text-title;
+			font-size: $base-xs*13;
+			font-weight: 400;
+			span{
+				color: $primary-color;
+				font-size: $base*5;
+			}
+		}
+	}

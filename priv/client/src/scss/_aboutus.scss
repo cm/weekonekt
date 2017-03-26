@@ -1,0 +1,196 @@
+/*================= 11 ABOUT US ==================*/
+/*=== 11.1 ABOUT US TITLE ===*/
+.aboutTitle{
+	padding-bottom: $base*6;
+	margin-bottom: $base*10;
+	@include add-border(1px, lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 33.9216), bottom);
+	h4{
+		text-transform: capitalize;
+		color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 2.9412);
+		font-weight: 400;
+		text-align: center;
+		line-height: $base-xs*12;
+	}
+	p{
+		text-align: center;
+	}
+}
+.aboutItem{
+	.media{
+		margin-bottom: $base*10;
+		.media-left{
+			width: $base*12;
+			height: $base*12;
+			@include border-radius(4px);
+			background-color: $secondary-color;
+			padding-right: 0;
+			margin-right: $base*4;
+			text-align: center;
+			i{
+				font-size: $base*7;
+				line-height: $base*12;
+				color: $white-color;
+			}
+		}
+		.media-body{
+			h4{
+				text-align: left;
+				color: $text-title;
+				margin-bottom: $base-xs*6+1px;
+				text-transform: capitalize;
+			}
+			p{
+				text-align: left;
+			}
+		}
+	}
+}
+
+/*=== 11.2 ABOUT COMMENTS ===*/
+.aboutComments{
+	background-image: url("../img/home/promotion/promotion-1.jpg");
+	background-attachment: fixed;
+	width: 100%;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	background-position: center;
+	color: #ffffff;
+	height: $base*81+2px;
+	padding: 0;
+	.commentsTable{
+		display: table;
+		height: $base*81+2px;
+		width: 100%;
+		.commentsTableInner{
+			display: table-cell;
+			vertical-align: middle;
+			text-align: center;
+			.commentsInfo{
+				i{
+					padding: $base-xs*8 $base-xs*6+1px;
+					background-color: darken(desaturate(adjust-hue($primary-color, 181.4667), 97.9167), 37.0588);
+					font-size: $base*7;
+					color: $white-color;
+					line-height: $base*6;
+					@include border-radius(4px);
+					margin-bottom: $base*9;
+				}
+				p{
+					color: $white-color;
+					margin-bottom: $base*9;
+				}
+				h5{
+					font-size: $base-xs*7;
+					line-height: $base*4;
+					color: $primary-color;
+					margin: 0;
+				}
+			}
+		}
+	}
+}
+/*=== 11.2 ABOUT TEAM MEMBERS ===*/
+.teamMember{
+	position: relative;
+	@include mobile-all{
+		margin-bottom: $base*6;
+	}
+	@include tablet{
+		margin-bottom: 0;
+	}
+	img{
+		width: 100%;
+	}
+	.memberName{
+		position: absolute;
+		left: $base*6;
+		bottom: $base*6;
+		z-index: 100;
+		@include transition(all 0.3s ease-in-out);
+		h4{
+			line-height: $base-xs*9;
+			color: $white-color;
+			margin-bottom: 0;
+		}
+		p{
+			margin-bottom: 0;
+			color: $white-color;
+		}
+	}
+	.maskingArea{
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		left: 0;
+		top: 0;
+		z-index: 50;
+		@include opacity(0);
+		background-color: rgba($black-color, .7);
+		@include border-radius(4px);
+		@include transition(all 0.3s ease-in-out);
+		p{
+			position: absolute;
+			left: $base*6;
+			bottom: $base*24;
+			margin-bottom: 0;
+			color: $white-color;
+			padding-right: $base*9+3px;
+		}
+		.list-inline{
+			position: absolute;
+			left: $base*6;
+			bottom: $base-xs*27;
+			li{
+				@include tablet{
+					padding: $base-xs;
+				}
+				@include desktops{
+					padding: 0 $base-xs;
+				}
+				@include large-desktops{
+					padding: 0 $base;
+				}
+				a{
+					display: block;
+					text-align: center;
+					@include add-border(1px, darken(desaturate(adjust-hue($primary-color, 181.4667), 94.8718), 25.2941), all);
+					border-radius: 100%;
+					color: $white-color;
+					&:hover{
+						background-color: $primary-color;
+						border-color: $primary-color;
+						@include opacity(1);
+					}
+					@include mobile-all{
+						width: $base*7;
+						height: $base*7;
+						line-height: $base*7;
+						font-size: $base-xs*7;
+					}
+					@include tablet{
+						width: $base*5;
+						height: $base*5;
+						line-height: $base*5; 
+						font-size: $base*2;
+					}
+					@include desktops{
+						width: $base*7;
+						height: $base*7;
+						line-height: $base*7;
+						font-size: $base-xs*7; 
+					}
+				}
+			}
+		}
+	}
+	&:hover{
+		.memberName{
+			bottom: $base*36;
+		}
+		.maskingArea{
+			@include opacity(1);
+		}
+	}
+}
