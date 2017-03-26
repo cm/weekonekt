@@ -6,14 +6,14 @@
 routes(App, Handler) -> 
   [
     {"/api/[...]", http_server, [Handler]},
-    {"/", cowboy_static, {priv_file, App, "index.html"}},
-    {"/[...]", cowboy_static, {priv_dir, App, "."}}
+    {"/", cowboy_static, {priv_file, App, "static/index.html"}},
+    {"/[...]", cowboy_static, {priv_dir, App, "static"}}
   ].
 
 start(App, Handler) -> 
   Dispatch = cowboy_router:compile([{'_', routes(App, Handler)}]),
   {ok, _} = cowboy:start_clear(my_http_listener, 100,
-                               [{port, 8081}],
+                               [{port, 8082}],
                                #{env => #{dispatch => Dispatch}}
                               ).
 
