@@ -1,0 +1,101 @@
+/*=== 1.COMMON ===*/
+.container{
+	width: 100%;
+	@include mobile-xs {
+		width: 320px;
+	}
+	@include mobile {
+		width: 450px;
+	}
+	@include tablet {
+		width: 750px;
+	}
+	@include desktops {
+		width: 970px;
+	}
+	@include large-desktops {
+		width: 1170px;
+	}
+}
+body.bodyColor.wrapper {
+    margin:0 auto;
+    @include mobile-xs {
+		max-width: 320px;
+	}
+	@include mobile {
+		max-width: 450px;
+	}
+	@include tablet {
+		max-width: 750px;
+	}
+	@include desktops {
+		max-width: 970px;
+	}
+	@include large-desktops {
+		max-width: 1170px;
+	}
+}
+body.bodyColor .header {
+    @include mobile-xs {
+		max-width: 320px;
+	}
+	@include mobile {
+		max-width: 450px;
+	}
+	@include tablet {
+		max-width: 750px;
+	}
+	@include desktops {
+		max-width: 970px;
+	}
+	@include large-desktops {
+		max-width: 1170px;
+	}
+}
+body.bodyColor .navbar-fixed-top {
+    right: auto;
+    left: auto;
+}
+
+.btn{
+	display: inline-block;
+	@include border-radius(4px);
+	text-transform: uppercase;
+    text-align: center;
+    font-size: 14px;
+    padding: 9px 0;
+    @include mobile {
+    	font-size: 15px;
+    	padding: 13px 0;
+    }
+    @include tablet {
+    	font-size: 12px;
+    	padding: 8px 0;
+    }
+    @include desktops {
+    	font-size: 14px;
+    	padding: 12px 0;
+    }
+    @include large-desktops {
+    	font-size: 15px;
+    	padding: 13px 0;
+    }
+}
+a{
+	color: $primary-color;
+	text-decoration: none !important;
+	@include transition(all 0.3s ease-in-out);
+	&:hover{
+	@include opacity(.8);
+	outline: 0;
+	}
+	&:focus{
+    outline: 0;
+	}
+}
+.main-wrapper{
+	position: relative;
+}
+.form-control:focus{
+	box-shadow: none;
+}

@@ -1,0 +1,200 @@
+/*=== 4. FOOTER ===*/
+.footer{
+	width: 100%;
+	display: block;
+	background-color: $secondary-color;
+	padding: $base*16 0;
+}
+.footer-logo{
+	display: block;
+	margin-bottom: $base*5;
+}
+.footerContent{
+	h5{
+		font-size: $base*3;
+		color: $white-color;
+		line-height: $base*4+1px;
+		margin: $base*5 0;
+		text-transform: uppercase; 
+		font-family: "Montserrat",sans-serif;
+	}
+	p{
+		color: lighten(desaturate(adjust-hue($primary-color, 187.4667), 97.6526), 2.3529);
+		@include tablet{
+			font-size: $base*2+1px;
+		}
+		@include desktops{
+			font-size: $base-xs*7;
+		}	
+	}
+	.list-unstyled{
+		li{
+			color: lighten(desaturate(adjust-hue($primary-color, 187.4667), 97.6526), 2.3529);
+			margin-bottom: $base*3;
+			@include tablet{
+				font-size: $base*2+1px;
+			}
+			@include desktops{
+				font-size: $base-xs*7;
+			}
+			i{
+				@include mobile-all{
+					margin-right: $base*2;
+				}
+				@include tablet{
+					margin-right: $base*2;
+				}
+				@include desktops{
+					margin-right: $base-xs*7;
+				}
+			}
+			a{
+				color: lighten(desaturate(adjust-hue($primary-color, 187.4667), 97.6526), 2.3529);
+				&:hover{
+					color:$primary-color;
+				}
+			}
+		}
+	}
+	&.imgGallery{
+		.row{
+			@include mobile{
+				width: auto;
+			}
+			@include mobile{
+				width:100%;
+			}
+			.col-xs-4{
+				margin-bottom: $base*3;
+				@include tablet{
+					padding: 0 $base*3 0 $base*3;
+				}
+				@include tablet{
+					padding: 0 0 0 $base*3;
+				} 
+				a{
+					display: block;
+					border-radius: $base-xs*2;
+					img{
+						width: 100%;
+					}
+				}
+			}
+		}
+	}
+	.input-group{
+		@include add-border(1px, darken(desaturate(adjust-hue($primary-color, 181.4667), 94.8718), 25.2941), all);
+		border-radius: $base-xs*2+1px;
+		margin-bottom: $base*6;
+		.form-control{
+			background-color: transparent;
+			border: 0;
+			color: lighten(desaturate(adjust-hue($primary-color, 187.4667), 97.6526), 2.3529);
+		}
+		.input-group-addon{
+			border-radius: $base-xs*2;
+			background-color: darken(desaturate(adjust-hue($primary-color, 184.1939), 93.9891), 20.0000);
+			border: 0;
+			@include transition(all 0.3s ease-in-out);
+			i{
+				color: $white-color;
+			}
+			&:hover{
+				background-color: $primary-color;
+				border-color: $primary-color;
+				@include opacity(1);
+			}
+		}
+	}
+	.list-inline{
+		li{
+			@include tablet{
+				padding: $base-xs;
+			}
+			@include desktops{
+				padding: 0 $base-xs;
+			}
+			@include large-desktops{
+				padding: 0 $base;
+			}
+			a{
+				display: block;
+				text-align: center;
+				@include add-border(1px, darken(desaturate(adjust-hue($primary-color, 181.4667), 94.8718), 25.2941), all);
+				border-radius: 100%;
+				color: $white-color;
+				&:hover{
+					background-color: $primary-color;
+					border-color: $primary-color;
+					@include opacity(1);
+				}
+				@include mobile-all{
+					width: $base*7;
+					height: $base*7;
+					line-height: $base*7;
+					font-size: $base-xs*7;
+				}
+				@include tablet{
+					width: $base*5;
+					height: $base*5;
+					line-height: $base*5; 
+					font-size: $base*2;
+				}
+				@include desktops{
+					width: $base*7;
+					height: $base*7;
+					line-height: $base*7;
+					font-size: $base-xs*7; 
+				}
+			}
+		}
+	}
+}
+.copyRight{
+	display: block;
+	background-color: darken(desaturate(adjust-hue($primary-color, 181.4667), 92.1053), 40.9804);
+	padding: $base*6 0;
+	.list-inline{
+		@include mobile-all{
+			float: left;
+			width: 100%;
+			text-align: center;
+			margin: 0 0 $base*6 0;
+		}
+		@include tablet{
+			float: right;
+			width: auto;
+			text-align: left;
+			margin-bottom: 0;
+		}
+		li{
+			a{
+				font-size: $base-xs*6+1px;
+				color: lighten(desaturate(adjust-hue($primary-color, 187.4667), 97.6526), 2.3529);
+				&:hover{
+					color:$primary-color;
+				}
+			}
+		}
+	}
+}
+.copyRightText{
+	p{
+		margin-bottom: 0;
+		color: lighten(desaturate(adjust-hue($primary-color, 187.4667), 97.6526), 2.3529);
+		a{
+			color: lighten(desaturate(adjust-hue($primary-color, 187.4667), 97.6526), 2.3529);
+			&:hover{
+				color: $primary-color;
+			}
+		}
+		@include mobile-all{
+			font-size: $base-xs*5+1px;
+			text-align: center;
+		}
+		@include tablet{
+			font-size: $base-xs*6+1px;
+			text-align: left;
+		}
+	}
+}

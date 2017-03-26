@@ -1,0 +1,696 @@
+/*================= 7. PACKAGES ==================*/
+/*================= 7.1 PACKAGES LIST ==================*/
+.packagesList{
+	background-color: $white-color;
+	min-height: $base*54;
+	margin-bottom: $base*6;
+	.media-left{
+		@include mobile-all{
+			float: left;
+			width: 100%;
+			padding-right: 0;
+		}
+		@include tablet{
+			float: left;
+			width: 100%;
+			padding-right: 0;
+		}
+		@include desktops{
+			float: left;
+			width: auto;
+			padding-right: $base*2;
+		}
+		img{
+			width: 100%;
+		}
+	}
+	.media-body{
+		position: relative;
+		
+		height: 100%;
+		overflow: visible;
+		@include mobile-all{
+			padding: $base*6;
+		}
+		@include tablet{
+			padding: $base*6 $base*6 0 $base*4;
+		}
+		.detailsBtn{
+			float: left;
+			margin-left: 0;
+			position: absolute;
+			left: $base*4;
+			top: $base*40;
+			margin-bottom: 0;
+			@include mobile-all{
+				position: relative;
+				left: auto;
+				top: auto;
+				margin-bottom: $base*4;
+			}
+			@include tablet{
+				top: $base*36;
+			}
+			@include desktops{
+				top: $base*42;
+			}
+			@include large-desktops{
+				top: $base*40;
+			}
+			.buttonTransparent{
+				margin-bottom: $base-xs*5;
+				i{
+					margin-right: $base-xs*5;
+				}
+			}
+		}
+		.countryRating{
+			span{
+				display: inline-block;
+				float: left;
+				padding-right: $base;
+				margin-right: $base;
+				@include add-border(1px, lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 31.1765), right); 
+				text-transform: uppercase;
+				font-size: $base-xs*6+1px;
+				line-height:  $base-xs*7+1px;
+				margin-top: $base-xs*2+1px;
+				color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 2.9412)
+			}
+		}
+	}
+}
+.textInfo{
+	height: $base*7;
+	line-height: $base*7;
+	@include border-radius(4px);
+	@include add-border(1px, lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 31.1765), all);
+	padding: 0 $base*3;
+	color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 2.9412);
+	text-transform: uppercase;
+	margin-bottom: $base*2;
+	font-size: $base-xs*7;
+	display: block;
+}
+.media-heading{
+	a{
+		color: darken(desaturate(adjust-hue($primary-color, 181.4667), 90.4762), 39.4118);
+		&:hover{
+			@include opacity(1);
+			color: $primary-color;
+		}
+	}
+}
+
+.bodyLeft, .bodyRight{
+	display: inline-block;
+	float: left;
+	width: 70%;
+	@include mobile-all{
+		width: 100%;
+	}
+	@include tablet{
+		width: 70%;
+	}
+	@include desktops{
+		width: 60%;
+	}
+	@include large-desktops{
+		width: 70%;
+	}
+}
+.bodyLeft{
+	p{
+		@include mobile-all{
+			font-size: $base-xs*6;
+		}
+		@include tablet{
+			font-size: $base-xs*6;
+		}
+		@include desktops{
+			font-size: $base-xs*6;
+		}
+		@include large-desktops{
+			font-size: $base-xs*7;
+		}
+	}
+}
+.bodyRight{
+	float: right;
+	@include mobile-all{
+		width: 100%;
+	}
+	@include tablet{
+		width: 28%;
+	}
+	@include desktops{
+		width: 38%;
+	}
+	@include large-desktops{
+		width: 28%;
+	}
+}
+.bookingDetails{
+	width: 100%;
+	display: block;
+	text-align: center;
+	background-color: $primary-color;
+	@include border-radius(6px);
+	padding: $base*5 $base*11 $base*3 $base*11;
+	min-height: $base*42;
+	h2{
+		color: $white-color;
+		margin-bottom: $base;
+	}
+	p{
+		color: $white-color;
+	}
+	.buttonTransparent{
+		margin-bottom: $base*2;
+		width: 100%;
+		display: block;
+		color: $white-color;
+		border-color: $white-color; 
+		&:hover{
+			background-color: $white-color;
+			border-color: $white-color;
+			color: $primary-color;
+		}
+	}
+}
+.sidebarPage{
+	.packagesList{
+		min-height: $base-xs*117;
+		.media-left{
+			@include mobile-all{
+				float: left;
+				width: 100%;
+				padding-right: 0;
+				height: auto;
+			}
+			@include tablet{
+				float: left;
+				width: 100%;
+				padding-right: 0;
+				height: auto;
+			}
+			@include desktops{
+				float: left;
+				width: 39%;
+				padding-right: $base*2;
+				height: $base-xs*117;
+			}
+			@include large-desktops{
+				height: auto;
+			}
+			img{
+				width: 100%;
+				height: 100%;
+			}
+		}
+		.media-body{
+			padding: $base*4;
+			.detailsBtn{
+				@include mobile-all{
+					position: relative;
+					left: auto;
+					top: auto;
+					margin-bottom: $base*4;
+				}
+				@include tablet{
+					top: $base*36;
+				}
+				@include desktops{
+					top: $base*35;
+				}
+				@include large-desktops{
+					top: $base*35;
+				}
+				.btn{
+					@include mobile-all{
+						font-size: $base-xs*7;
+					}
+					@include tablet{
+						font-size: $base-xs*7;
+					}
+					@include desktops{
+						font-size: $base-xs*5;
+					}
+					@include large-desktops{
+						font-size: $base-xs*7;
+					}
+				}
+				
+			}
+			.bookingDetails{
+				min-height: $base*36;
+				padding: $base*3;
+			}
+		}
+	}
+}
+/*================= 7.2 SINGLE PACKAGE FULL WIDTH ==================*/
+%titlePart{
+	font-size: $base*4;
+	color: $text-title;
+	line-height: $base-xs*13;
+	margin: 0 0 $base*5 0;
+	font-weight: 400;
+}
+.singlePackage{
+	.carousel{
+		margin-bottom: $base*6;
+	}
+	.carousel-indicators{
+		display: none;
+	}
+	.carousel-control{
+		background-image: none;
+		@include opacity(1);
+	}
+	.carousel-control .glyphicon-menu-left, 
+	.carousel-control .glyphicon-menu-right, 
+	.carousel-control .icon-next, 
+	.carousel-control .icon-prev{
+		position: absolute;
+		top: 50%;
+    margin-top: -40px;
+		z-index: 5;
+		width: $base*15;
+		height: $base*15;
+		line-height: $base*15;
+		@include border-radius(4px);
+		background-color: rgba($black-color, .35);
+		@include mobile-all{
+			display: none;
+		}
+		@include tablet{
+			display: inline-block;
+		}
+	}
+	.carousel-control .icon-prev, 
+	.carousel-control .glyphicon-menu-left {
+	    margin-left: 0;
+	    left: $base*4;
+	}
+	.carousel-control .icon-next, 
+	.carousel-control .glyphicon-menu-right {
+	    right: $base*4;
+	    margin-right: 0;
+	}
+	.well{
+		background-color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 40.1961);
+		border-color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 37.4510);
+		box-shadow: none;
+		padding: $base*6;
+		margin-bottom: $base*14;
+		.infoImage{
+			width: 100%;
+			img{
+				width: 100%;
+				min-height: 220px;
+			}
+		}
+	}
+	.packageInfo{
+		h4{
+			text-transform: uppercase;
+			font-weight: 400;
+			color: $text-title;
+			margin: $base*4 0 $base*6 0;
+		}
+		.dl-horizontal{
+			margin-bottom: 0;
+			dt{
+				text-align: left;
+				color: $primary-color;
+				float: left;
+				text-transform: uppercase;
+				margin-bottom: $base*3;
+				@include mobile-all{
+					font-size: $base-xs*6;
+					line-height: $base-xs*9+1px;
+					width: $base*22;
+				}
+				@include tablet{
+					font-size: $base-xs*7;
+					line-height: $base*4+1px;
+					width: $base*28;
+				}
+			}
+			dd{
+				line-height: $base*4+1px;
+				span{
+					color: $primary-color;
+				}
+				@include mobile-all{
+					font-size: $base-xs*6;
+					margin-left: $base*22;
+				}
+				@include tablet{
+					font-size: $base-xs*7;
+					margin-left: $base*28;
+				}
+			}
+		}
+		p{
+			margin-bottom: $base*5;
+			span{
+				color: $primary-color;
+				font-size: $base-xs*9;
+				margin-left: $base*2;
+			}
+		}
+		.buttonCustomPrimary{
+			padding: 0 $base*4;
+		}
+	}
+	.generalInfo{
+		margin-bottom: $base*2;
+		float: left;
+		h2{
+			@extend %titlePart;
+		}
+	}
+}
+.singlePackage{
+	.panel-group{
+		margin-bottom: $base*14;
+		.panel-heading{
+			padding: $base*3;
+			text-transform: uppercase;
+			font-size: $base-xs*9;
+			color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 2.9412);
+			background-color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 40.1961);
+			border-color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 37.4510);
+			i{
+				line-height: $base-xs*11;
+			}
+		}
+	}
+	.panel-default{
+		> a.panel-heading{
+			display: block;
+		}
+	} 
+	.panel-group .panel+.panel{
+		margin-top: $base*3;
+	}
+}
+.relatedProduct{
+	h2{
+		@extend %titlePart;
+	}
+}
+.relatedItem{
+	position: relative;
+	display: block;
+	overflow: hidden;
+	width: 100%;
+	height: auto;
+	@include mobile-all{
+		margin-bottom: $base*6;
+	}
+	@include tablet{
+		margin-bottom: 0;
+	}
+	img{
+		width: 100%;
+		@include transition(all 0.5s ease-in-out);
+	}
+	.maskingInfo{
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		display: block;
+		background-color: rgba($black-color, .35);
+		text-align: center;
+		@include transition(all 0.3s ease-in-out);
+		@include opacity(0);
+		h4{
+			margin: $base*16 0 $base*3 0;
+			font-size: $base*4;
+			color: $white-color;
+			font-weight: 700;
+			@include transition(all 0.3s ease-in-out);
+		}
+		p{
+			color: $white-color;
+			margin-bottom: $base*5;
+		}
+		.buttonTransparent{
+			color: $white-color;
+		}
+	}
+	&:hover{
+		img{
+			@include transform(scale(1.2));
+		}
+		.maskingInfo{
+			@include opacity(1);
+			h4{
+				margin: $base*14 0 $base*3 0;
+			}
+		}
+	}
+}
+.galleryCarousel{
+	.carousel-indicators{
+		@include mobile-all{
+			display: none;
+		}
+		@include tablet{
+			display: block;
+		}
+	}
+	.carousel-control .glyphicon-menu-left, 
+	.carousel-control .glyphicon-menu-right, 
+	.carousel-control .icon-next, 
+	.carousel-control .icon-prev{
+		background-color: rgba($white-color, .35);
+	}
+	.carousel-indicators{
+		li {
+			display: inline-block;
+			width: auto;
+			height: auto;
+			text-indent: 0;
+			border-radius: 0px;
+			@include border-radius(4px);
+			border-width: $base-xs;
+			background-color: $white-color;
+			img{
+				@include opacity(.5);
+			}
+			&.active{
+				width: auto;
+				height: auto;
+				img{
+					@include opacity(1);
+				}
+			}
+		}
+	} 
+}
+.countryTitle{
+	.carousel-inner{
+		>.item{
+			height: $base*90;
+			img{
+				height: 100%;
+			}
+		}
+	}
+}
+.weatherInfo{
+	width: 100%;
+	height: $base*90;
+	position: relative;
+	img{
+		width: 100%;
+		height: 100%; 
+	}
+	.cityWeather{
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		top: 0;
+		left: 0;
+		.cityTable{
+			display: table;
+			height: $base*90;
+			width: 100%;
+			.cityTableInner{
+				display: table-cell;
+				vertical-align: middle;
+				text-align: center;
+				.cityWeatherInfo{
+					img{
+						width: auto;
+						height: auto;
+						margin-bottom: $base*3;
+					}
+					h2{
+						font-size: $base*9;
+						color: $white-color;
+						line-height: $base*9;
+						margin: 0 0 $base*5 0; 
+					}
+					p{
+						font-size: $base*4;
+						color: $white-color;
+						text-transform: capitalize;
+						margin: 0;
+						font-weight: 700;
+					}
+				}
+			}
+		}
+	}
+	.dayTime{
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: auto;
+		display: block;
+		padding: $base*4;
+		span{
+			color: $white-color;
+		}
+	}
+	.daysWeather{
+		position: absolute;
+		left: 0;
+		bottom: $base*3;
+		width: 100%;
+		height: auto;
+		display: block;
+		.list-inline{
+			margin-left: 0;
+			text-align: center;
+			li{
+				color: $white-color;
+				text-align: center;
+				margin: 0 $base*6;
+				span{
+					img{
+						width: auto;
+						height: auto;
+						display: block;
+						margin: $base 0;
+					}
+				}
+			}
+		}
+	}
+}
+.countryTabs{
+	margin-bottom: $base*12;
+	.nav-tabs{
+		border-color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 31.1765);
+		>li{
+			margin: 0;
+			>a{
+				color: $text-title;
+				border: none;
+				text-transform: uppercase;
+				@include add-border($base-xs+1px, transparent, bottom);
+				position: relative;
+				margin: 0;
+				&:hover{
+					background-color: transparent;
+					@include opacity(1);
+					&:after{
+						width: 100%;
+					}
+				}
+				&:after{
+					content: "";
+					height: $base-xs+1px;
+					left: 0;
+					bottom: -3px;
+					width: 0px;
+					position: absolute;
+					@include transition(all 0.3s ease-in-out);
+					background-color: $primary-color;
+				}
+			}
+			&.pull-right{
+				.list-inline{
+					li{
+						a{
+							line-height: $base-xs*21+1px;
+							color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 2.9412);
+							&:hover{
+								color: $primary-color;
+								@include opacity(1);
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	.nav-tabs>li.active>a, 
+	.nav-tabs>li.active>a:focus, 
+	.nav-tabs>li.active>a:hover{
+		border: none;
+		@include add-border($base-xs+1px, $primary-color, bottom);
+		color: $text-title;
+	}
+	.tab-content{
+		padding-top: $base*6;
+		.well{
+			h3{
+				color: $text-title;
+				font-weight: 400;
+				font-size: $base-xs*9;
+				margin-bottom: $base*5;
+			}
+			.list-unstyled{
+				margin-bottom: $base*3;
+				float: left;
+				li{
+					color: $text-title;
+					margin-bottom: $base*3;
+					i{
+						margin-right: $base*2;
+					}
+				}
+			}
+			.buttonCustomPrimary{
+				padding: 0 $base*4;
+				&:hover{
+					@include opacity(1);
+				}
+			}
+		}
+	}
+}
+.commonInfo{
+	h2{
+		color: $text-title;
+		font-size: $base*4;
+		font-weight: 400;
+		margin-bottom: $base*5;
+	}
+	p{
+		margin-bottom: $base*5;
+	}
+	.list-inline{
+		li{
+			margin-bottom: $base*2;
+			width: 40%;
+			i{
+				@include transform(rotate(45deg));
+				font-size: $base*2;
+				color: darken(desaturate(adjust-hue($primary-color, 191.4667), 98.5646), 14.9020);
+				margin-right: $base*2;
+			}
+		}
+	}
+}
+

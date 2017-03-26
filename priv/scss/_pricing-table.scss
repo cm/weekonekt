@@ -1,0 +1,116 @@
+/*================= 14 PRICING TABLE ==================*/
+/*=== 14.1 PRICING TABLE 1 ===*/
+.priceTable{
+	.panel{
+		text-align: center;
+		border-color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 31.1765);
+		background-color: transparent;
+		.panel-heading{
+			font-size: $base-xs*12;
+			color: $text-title;
+			text-transform: uppercase;
+			padding: $base*5 $base*3;
+			background-color: transparent;
+			border-color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 31.1765);
+		}
+		.panel-body{
+			background-color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 40.1961);
+			@include add-border(1px, lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 31.1765), bottom);
+			&.changeColor{
+				background-color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 37.0588);
+			}
+		}
+		.priceCircle{
+			width: $base*26+1px;
+			padding: $base*7 0;
+			background-color: $white-color;
+			@include add-border(1px, lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 31.1765), all);
+			@include border-radius(100%);
+			display: inline-block;
+			@include transition(all 0.3s ease-in-out);
+			h3{
+				font-size: $base-xs*16;
+				color: $primary-color;
+				margin: 0;
+				line-height: $base*9;
+				@include transition(all 0.3s ease-in-out);
+				small{
+					display: block;
+					color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 2.9412);
+					font-size: $base-xs*7;
+					text-transform: lowercase;
+				}
+			}
+		}
+		.list-unstyled{
+			padding: $base*8 0 $base*2 $base*4;
+			li{
+				text-align: left;
+				margin-bottom: $base*5;
+				color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 2.9412);
+				font-size: $base-xs*8;
+				i{
+					margin-right: $base*2;
+				}
+			}
+		}
+		.panel-footer{
+			padding: $base*5 $base*3;
+			background-color: transparent;
+			border-color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 31.1765);
+		}
+		.bodyImageBg{
+			padding: 0;
+			position: relative;
+			img{
+				width: 100%;
+			}
+			.priceCircle{
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform:      translate(-50%, -50%);
+				width: auto;
+				height: auto;
+				padding: 0 0;
+				border-radius: 0;
+				background-color: transparent;
+				border: none;
+				@include transition(all 0.3s ease-in-out);
+				h3{
+					font-size: $base-xs*16;
+					color: $white-color;
+					margin: 0;
+					line-height: $base*9;
+					small{
+						display: block;
+						color: $white-color;
+						font-size: $base-xs*7;
+						text-transform: lowercase;
+					}
+				}
+			}
+		}
+		&:hover{
+			.priceCircle{
+				background-color: $primary-color;
+				h3{
+					color: $white-color;
+					small{
+						color: $white-color;
+					}
+				}
+			}
+		}
+		&:hover{
+			.bodyImageBg{
+				.priceCircle{
+					background-color: transparent;
+					h3{
+						color: $primary-color;
+					}
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,60 @@
+/*================= 15 TABS ==================*/
+/*=== 15.1 TABS PART ===*/
+.tabsPart{
+	.nav-tabs{
+		text-align: center;
+		border: none;
+		margin-bottom: $base*14;
+		li{
+			float: none;
+			display: inline-block;
+			a{
+				height: 35px;
+				line-height: 35px;
+				border-radius: 4px;
+				padding: 0 15px;
+				color: #969696;
+				text-transform: uppercase;
+				outline: 0;
+				@include add-border(1px, lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 31.1765), all);
+				&:hover{
+					background-color: $primary-color;
+					color: $white-color;
+					@include opacity(1);
+				}
+			}
+			&.active{
+				a{
+					background-color: $primary-color;
+					color: $white-color;
+					@include add-border(1px, $primary-color, all);
+				}
+			}
+		}
+	}
+	.media-body{
+		padding-left: $base*4;
+	}
+	.commonInfo{
+		h2{
+			margin: $base*3 0;
+			text-transform: capitalize;
+		}
+	}
+	.tab-pane{
+		.well{
+			margin-bottom: $base*12;
+		}
+	}
+}
+.tabSection{
+	.tabArea{
+		.media:last-child{
+			border: none;
+			margin-bottom: 0;
+		}
+		.media-body{
+			padding-left: $base*4;
+		}
+	}
+}

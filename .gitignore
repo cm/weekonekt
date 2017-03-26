@@ -5,3 +5,4 @@ fullpass.d
 **/*.sw*
 deps
 *.d
+**/*.DS_Store

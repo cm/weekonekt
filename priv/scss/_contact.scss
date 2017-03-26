@@ -1,0 +1,54 @@
+/*================= 10 CONTACT US ==================*/
+/*=== 10.1 CONTACT INFO ===*/
+.contactInfo{
+	h2{
+		font-size: $base-xs*13;
+		color: $text-title;
+		margin-bottom: $base-xs*6+1px;
+	}
+	p{
+		margin-bottom: $base*5;
+		@include mobile-all{
+			font-size: $base*2;
+			line-height: $base*3+1px;
+		}
+		@include tablet{
+			font-size: $base-xs*7;
+			line-height: $base*4+1px;
+		}
+	}
+	.media{
+		margin-bottom: $base*4;
+		.media-left{
+			width: $base*15;
+			height: $base*15;
+			line-height: $base*15;
+			text-align: center;
+			background-color: $primary-color;
+			color: $white-color;
+			padding-right: 0;
+			margin-right: $base*5;
+			font-size: $base*7;
+			float: left;
+		}
+		p{
+			margin-bottom: 0;
+			a{
+				color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 2.9412);
+			}
+		}
+		.media-body{
+			h4{
+				font-weight: 400;
+			}
+		}
+	}
+}
+/*=== 10.2 MAP AREA SECTION ===*/
+.mapArea{
+	width: 100%;
+	display: block;
+	iframe{
+		width: 100%;
+	}
+}

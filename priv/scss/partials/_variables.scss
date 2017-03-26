@@ -1,0 +1,15 @@
+/*=== VARIABLES ===*/
+$primary-color:#ff891e;
+$secondary-color:#262a2e;
+$white-color: #ffffff;
+$black-color: #000000;
+$text-title: #222222;
+
+$title-border: #e5e5e5;
+
+@function tint($primary-color, $percentage) {
+  @return mix(white, $primary-color, $percentage);
+}
+
+$base: 5px;
+$base-xs: 2px;
