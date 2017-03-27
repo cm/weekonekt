@@ -8,3 +8,9 @@ dep_ebus = git https://github.com/cabol/erlbus master
 dep_jwt = git https://github.com/artemeff/jwt master
 DEP_PLUGINS = cowboy
 include erlang.mk
+
+REL_NAME = weekonekt 
+REL_DIR = _rel/$REL_NAME_release/releases/0.0.1
+
+quick:
+	  @erl +pc unicode -smp enable -sname weekonekt -boot _rel/weekonekt_release/releases/0.0.1/weekonekt_release -config rel/sys.config -env ERL_LIBS _rel/weekonekt_release/lib

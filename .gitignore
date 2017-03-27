@@ -1,10 +1,12 @@
 .erlang.mk
 _rel
 ebin
-fullpass.d
+*.d
 **/*.sw*
 deps
 *.d
 **/*.DS_Store
 **/*elm-stuff
 **/*node_modules
+**/*.lock
+**/*.dump
