@@ -1,4 +1,4 @@
-$(document).ready(function(){
+jQuery(document).ready(function(){
 //============================== CLOSE DROPDOWN SELECT =========================
   $(".ed-datepicker input.form-control").focus(function() {
     $(".sbOptions").css("display", "none");
@@ -21,7 +21,7 @@ $(document).ready(function(){
   });
 
 //============================== Rs-Slider =========================
-  $('.fullscreenbanner').revolution({
+  jQuery('.fullscreenbanner').revolution({
    delay: 5000,
    startwidth: 1170,
    startheight: 745,
@@ -71,7 +71,7 @@ $(document).ready(function(){
   });
 
 //============================== PRICE SLIDER RANGER =========================
-  $(document).ready(function() {
+  jQuery(document).ready(function() {
     var minimum = 20;
     var maximum = 300;
 

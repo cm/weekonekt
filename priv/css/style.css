@@ -12,7 +12,7 @@
 	2.9 MODAL
 	2.10 PANEL
 	2.11 PRICE RANGE SLIDER
-3. HEADER 
+3. HEADER
 	3.1 HEADER TRANSPARENT
 	3.2 LIGHT HEADER
 	3.3 DARK HEADER
@@ -635,7 +635,7 @@ a:focus {
   margin-bottom: 20px;
 }
 
-.ed-datepicker .form-control {
+.ed-datepicker .form-control, .dark-form-control {
   height: 45px;
   background: transparent;
   border: none;
@@ -645,6 +645,12 @@ a:focus {
   padding: 4px 12px 4px 0;
   box-shadow: none !important;
 }
+
+.search-form-control{
+    font-size: 23px;
+}
+
+
 
 .ed-datepicker.filterDate .form-control {
   color: #969696;
@@ -698,7 +704,7 @@ a:focus {
   color: #969696;
 }
 
-.ed-datepicker .input-group-addon {
+.ed-datepicker .input-group-addon, .dark-input-group-addon  {
   height: 45px;
   background: transparent;
   border: none;

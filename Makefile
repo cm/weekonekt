@@ -12,5 +12,13 @@ include erlang.mk
 REL_NAME = weekonekt 
 REL_DIR = _rel/$REL_NAME_release/releases/0.0.1
 
-quick:
-	  @erl +pc unicode -smp enable -sname weekonekt -boot _rel/weekonekt_release/releases/0.0.1/weekonekt_release -config rel/sys.config -env ERL_LIBS _rel/weekonekt_release/lib
+dev_rel:
+	@rm -rf run/*.boot
+	@rm -rf run/*.script
+	@rm -rf run/*.rel
+	@cp _rel/weekonekt_release/releases/0.0.1/weekonekt_release.rel run/weekonekt.rel
+	@cd run; erl -noshell -pa ~/Projects/weekonekt/ebin -pa ~/Projects/weekonekt/deps/*/ebin -eval 'systools:make_script("weekonekt", [local]),init:stop().'; cd ..
+
+dev:
+	@erl +pc unicode -smp enable -sname weekonekt -boot run/weekonekt -config rel/sys
+
