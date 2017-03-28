@@ -1,7 +1,14 @@
-import './scss/style.scss'
 
 require('bootstrap')
-require('fontawesome')
+require('font-awesome/css/font-awesome.css');
+import './plugins/jquery-ui/jquery-ui.css'
+import './plugins/rs-plugin/css/settings.css'
+import './plugins/selectbox/select_option1.css'
+import './plugins/datepicker/datepicker.css'
+import './plugins/isotope/jquery.fancybox.css'
+import './plugins/isotope/isotope.css'
+import './css/colors/default.css'
+import './scss/style.scss'
 
 import './plugins/jquery-ui/jquery-ui.js'
 import './plugins/tweenlite/tweenlite.min.js'
