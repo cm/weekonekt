@@ -13,6 +13,7 @@ REL_NAME = weekonekt
 REL_DIR = _rel/$REL_NAME_release/releases/0.0.1
 
 dev_rel:
+	@rm *.dump
 	@rm -rf run/*.boot
 	@rm -rf run/*.script
 	@rm -rf run/*.rel

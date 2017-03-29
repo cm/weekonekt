@@ -2126,6 +2126,10 @@ header {
   margin-bottom: 25px;
 }
 
+.footer-logo h1 {
+  color: white;
+}
+
 .footerContent h5 {
   font-size: 15px;
   color: #ffffff;
@@ -2134,7 +2138,7 @@ header {
   text-transform: uppercase;
   font-family: "Montserrat",sans-serif;
 }
-.footerContent p {
+.footerContent p, .footerContent h1 {
   color: #929497;
 }
 @media (min-width: 768px) {
@@ -2372,6 +2376,18 @@ header {
   background-color: #262a2e;
   display: block;
 }
+.darkSection input {
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+.darkSection .input-group-addon {
+  background: transparent;
+  border: 0;
+  font-size: 22px;
+}
+
 .darkSection.citiesPage {
   padding: 36px 30px;
   -webkit-border-radius: 4px;
@@ -6212,6 +6228,11 @@ header {
 }
 .tabSection .tabArea .media-body {
   padding-left: 20px;
+}
+
+.inline-form .input-group {
+  margin-top: 12px;
+  margin-bottom: 12px;
 }
 
 /*# sourceMappingURL=style.css.map */
