@@ -13,7 +13,7 @@ routes(App, Handler) ->
 start(App, Handler) -> 
   Dispatch = cowboy_router:compile([{'_', routes(App, Handler)}]),
   {ok, _} = cowboy:start_clear(my_http_listener, 100,
-                               [{port, 8080}],
+                               [{port, 8081}],
                                #{env => #{dispatch => Dispatch}}
                               ).
 
