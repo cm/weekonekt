@@ -1,0 +1,395 @@
+/*================= 5. SECTION ==================*/
+/*=== 5.1 MAIN CONTENT SECTION ===*/
+.static .pageTitle{
+	margin-top:0;
+}
+.mainContentSection, .whiteSection, .lightSection{
+	width: 100%;
+	padding: $base*20 0 $base*14 0;
+	background-color: $white-color;
+	display: block;
+}
+/*=== 5.2 DARK SECTION ===*/
+.darkSection{
+	width: 100%;
+	padding: $base*8+2px 0;
+	background-color: $secondary-color;
+	display: block;
+	&.citiesPage{
+		padding: $base*7+1px $base*6;
+		@include border-radius(4px);
+		margin-bottom: $base*16;
+	}
+}
+.gridResize{
+	> .col-sm-3{
+		@include tablet{
+			width: 100%;
+		}
+		@include desktops{
+			width: 21%;
+		}
+	}
+	> .col-sm-7{
+		@include mobile-all{
+			width: 100%;
+			margin-bottom: $base*3;
+		}
+		@include tablet{
+			width: 100%;
+			margin-bottom: $base*3;
+		}
+		@include desktops{
+			width: 68%;
+			margin-bottom: 0;
+		}
+	}
+	> .col-sm-2{
+		@include tablet{
+			width: 100%;
+		}
+		@include desktops{
+			width: 11%;
+		}
+	}
+	.buttonCustomPrimary{
+		margin-top: 4px;
+	}
+}
+/*=== 5.3 WHITE SECTION ===*/
+.destinations{
+	background-color: $secondary-color;
+	@include border-radius($base);
+	a img{
+		border-top-left-radius:5px;
+		border-bottom-left-radius:5px;
+	}
+	.media-left{
+		display: inline-block;
+		float: left;
+		@include mobile-all{
+			width: 100%;
+			padding-right: 0;
+		}
+		@include tablet{
+			width: 50%;
+			padding-right: $base*2;
+		}
+		@include desktops{
+			width: auto;
+
+		}
+		img{
+			width: 100%;
+		}
+	}
+	.media-body{
+		@include mobile-all{
+			padding: $base*3;
+		}
+		@include tablet{
+			padding: $base*3 $base-xs*11+1px 0 $base-xs*11+1px;
+		}
+		@include desktops{
+			padding: $base*16 $base-xs*11+1px 0 $base-xs*11+1px;
+		}
+		@include large-desktops{
+			padding: $base*16 $base*9 0 $base*9;
+		}
+		.media-heading{
+			color: $white-color;
+			text-transform: uppercase;
+			@include tablet{
+				font-size: $base-xs*8;
+				margin-bottom: $base*2;
+			}
+			@include desktops{
+				font-size: $base*4;
+				margin-bottom: $base*5;
+			}
+		}
+		p{
+			@include tablet{
+				font-size: $base*2+1px;
+				margin-bottom: $base*2;
+				line-height: $base-xs*8+1px;
+			}
+			@include desktops{
+				font-size: $base*4;
+				margin-bottom: $base*5;
+				line-height: $base*4+1px;
+			}
+			@include large-desktops{
+				font-size: $base-xs*7;
+				line-height: $base*4+1px;
+			}
+		}
+		.list-unstyled{
+			@include mobile-all{
+				margin-bottom: $base*3;
+				width: 100%;
+				display: block;
+				float: none;
+			}
+			@include tablet{
+				margin-bottom: $base;
+				width: 33%;
+				display: inline-block;
+				float: left;
+			}
+			@include desktops{
+				margin-bottom: $base-xs*12;
+			}
+			li{
+				text-transform: uppercase;
+				font-size: $base-xs*7;
+				color: $white-color;
+				i{
+					color: $primary-color;
+					margin-right: $base*2;
+				}
+				a{
+					text-transform: capitalize;
+					color: lighten(desaturate(adjust-hue($primary-color, 187.4667), 97.6526), 2.3529);
+					margin-bottom: $base-xs*4;
+					@include tablet{
+						font-size: $base*2+1px;
+						line-height: $base-xs*8+1px;
+					}
+					@include desktops{
+						font-size: $base-xs*7;
+						line-height: $base*4+1px;
+					}
+					i{
+						@include transform(rotate(45deg));
+						font-size: $base-xs*4;
+						color: lighten(desaturate(adjust-hue($primary-color, 187.4667), 97.6526), 2.3529);
+					}
+					&:hover{
+						color: $primary-color;
+						i{
+							color: $primary-color;
+						}
+					}
+				}
+				&:first-child{
+					@include tablet{
+						margin-bottom: 0;
+					}
+					@include desktops{
+						margin-bottom: $base-xs*8;
+					}
+				}
+			}
+		}
+		.media-btn{
+			display: block;
+			width: 100%;
+			
+		}
+	}
+}
+.filter-container{
+	padding: 0 $base*4 $base*6 $base*4;
+}
+.isotopeFilters{
+	ul.filter{
+		> li {
+			@include mobile-all{
+				padding: $base-xs;
+			}
+			@include tablet{
+				padding: 0;
+			}
+			a{
+				font-size: $base-xs*7;
+				line-height: $base*7;
+				color: lighten(desaturate(adjust-hue($primary-color, 187.4667), 97.6526), 2.3529);
+				text-transform: uppercase;
+				@extend .buttonTransparent;
+				border-width: 1px;
+				border-style: solid;
+				display: inline-block;
+			}
+			&.active{
+				a{
+					background-color: $primary-color;
+					color: $white-color;
+					border-color: $primary-color;
+				}
+			}
+		}
+	}
+}
+.fancybox-lock{
+	.fancybox-overlay{
+		background-color: rgba($black-color, .75);
+	}
+}
+.isotopeSelector{
+	img{
+		width: 100%;
+		@include border-radius(4px);
+	}
+	&:hover{
+		img{
+			@include transform(scale(1.2) rotate(0));
+		}
+	}
+}
+.overlay-background{
+	@include border-radius(4px);
+}
+.isotopeSelector{
+	figure{
+		position: relative;
+		margin-bottom: $base*6;
+	}
+	h4{
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		font-size: $base*4;
+		color: $white-color;
+		text-transform: uppercase;
+		z-index: 100;
+		@include transform (translate(-50%, -50%));
+		@include transition(all 0.3s ease-in-out);
+		width: 100%;
+		text-align: center;
+	}
+	.overlay{
+		width: 100%;
+		height: 100%;
+		background-color: rgba($black-color, .5);
+		position: absolute;
+		left: 0;
+		top: 0;
+		@include opacity(0);
+		@include transition(all 0.3s ease-in-out);
+		@include border-radius(4px);
+		.fancybox-pop{
+			width: 100%;
+			height: 100%;
+			display: block;
+			text-align: center;
+			position: absolute;
+			z-index: 1000;
+			@include border-radius(4px);
+			.overlayInfo{
+				position: absolute;
+				left: 50%;
+				top: 50%;
+				width: 100%;
+				@include transition(all 0.3s ease-in-out);
+				@include transform (translate(-50%, -30%));
+				h5{
+					position: relative;
+					font-size: $base*4;
+					color: $white-color;
+					text-transform: uppercase;
+					margin-bottom: $base*11;
+					margin-top: 0;
+					span{
+						color: $primary-color;
+					}
+				}
+				p{
+					color: $white-color;
+					margin-bottom: 0;
+					i{
+						margin-right: $base;
+					}
+				}
+			}
+		}
+	}
+	&:hover{
+		.overlay{
+			@include opacity(1);
+			@include border-radius(4px);
+			.overlayInfo{
+				@include transform (translate(-50%, -50%));
+			}
+		}
+		h4{
+			color: $primary-color;
+		}
+	}
+}
+.isotopeSelector{
+	.overlay{
+		&.galleryMasonry{
+			.fancybox-pop{
+				.overlayInfo{
+					h2{
+						margin: 0 0 $base*3 0;
+						font-size: $base*4;
+						color: $white-color;
+						font-weight: 700;
+						position: relative;
+						@include transition(all 0.3s ease-in-out);
+					}
+					p{
+						color: $white-color;
+						margin-bottom: $base*5;
+					}
+					.buttonTransparent{
+						color: $white-color;
+						background-color: transparent;
+						&:hover{
+							background-color: $primary-color;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+/*=== 5.4 PAGE TITLE SECTION ===*/
+.pageTitle{
+	background-image: url("../img/pages/page-title-bg.jpg");
+	width: 100%;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	background-position: center top;
+	color: #ffffff;
+	height: $base*40;
+	
+	@include mobile-all{
+		margin-top: $base*16+3px;
+	}
+	@include tablet{
+		margin-top: $base*19;
+	}
+	.titleTable{
+		display: table;
+    height: $base*40;
+    width: 100%;
+    .titleTableInner{
+    	display: table-cell;
+    	text-align: center;
+    	vertical-align: middle;
+    	.pageTitleInfo{
+    		text-align: center;
+    		h1{
+    			color: $white-color;
+    			font-size: $base*6;
+    		}
+    	}
+    }
+	}
+}
+.under-border{
+		width: 60px;
+		height: 3px;
+		background-color:#ffffff;
+		margin: 16px auto 0;
+	}
+/*=== 5.5 PACKAGES SECTION ===*/
+.packagesSection, .lightSection{
+	background-color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 40.1961);
+}

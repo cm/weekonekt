@@ -1,0 +1,210 @@
+/*================= 13 COMING SOON ==================*/
+/*=== 13.1 COMING SOON BG ===*/
+.comingSoonBg{
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: $base*168;
+	overflow: hidden;
+	background:url(../img/coming-soon/coming-bg.jpg) no-repeat center top fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+.comingTitle{
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	padding: $base*7 0;
+	text-align: center;
+	background-color: rgba($black-color, .3);
+	@include mobile-all{
+		padding: $base*3 0;
+	}
+	@include tablet{
+		padding: $base*7 0;
+	}
+}
+.comingContent{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform:      translate(-50%, -50%);
+	text-align: center;
+	@include mobile-all{
+		width: 100%;
+		min-width: 100%;
+		padding: 0 $base*2;
+	}
+	@include tablet{
+		width: auto; 
+		min-width: $base*117;
+		padding: 0
+	}
+	h1{
+		font-weight: 400;
+		color: $white-color;
+		font-size: $base*8;
+		
+		@include mobile-all{
+			font-size: $base*6;
+			margin: $base*4 0 $base*3 0;
+		}
+		@include tablet{
+			font-size: $base*8;
+			margin: $base*4 0 $base*8 0;
+		}
+	}
+	p{
+		color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 9.6078);
+		margin-bottom: $base*4;
+		@include mobile-all{
+			font-size: $base*2;
+			line-height: $base*3;
+		}
+		@include tablet{
+			font-size: $base-xs*7;
+			line-height: $base*4+1px;
+		}
+	}
+	.input-group{
+		margin: 0 auto;
+		margin-bottom: $base*4;
+		@include mobile-all{
+			width: 100%;
+		}
+		@include tablet{
+			width: $base*110;
+		}
+		.form-control{
+			height: $base*9;
+			box-shadow: none;
+			background-color: transparent;
+			border-color: rgba(lighten(desaturate(adjust-hue($primary-color, -8.5333), 98.5222), 4.3137), .25); 
+			color: $white-color;
+		}
+		.input-group-addon{
+			height: $base*9;
+			background-color: $primary-color;
+			color: $white-color;
+			border-color: $primary-color;
+			@include border-radius(4px); 
+			@include mobile-all{
+				padding: $base-xs*3 $base*3;
+			}
+			@include tablet{
+				padding: $base-xs*3 $base*6;
+			}
+		}
+	}
+	.list-inline{
+		li{
+			@include tablet{
+				padding: $base-xs;
+			}
+			@include desktops{
+				padding: 0 $base-xs;
+			}
+			@include large-desktops{
+				padding: 0 $base;
+			}
+			a{
+				display: block;
+				text-align: center;
+				border-radius: 100%;
+				color: rgba($black-color, .4);
+				background-color: rgba($white-color, .4);
+				&:hover{
+					background-color: $primary-color;
+					@include opacity(1);
+					color: $white-color;
+				}
+				@include mobile-all{
+					width: $base*7;
+					height: $base*7;
+					line-height: $base*7;
+					font-size: $base-xs*7;
+				}
+				@include tablet{
+					width: $base*5;
+					height: $base*5;
+					line-height: $base*5; 
+					font-size: $base*2;
+				}
+				@include desktops{
+					width: $base*7;
+					height: $base*7;
+					line-height: $base*7;
+					font-size: $base-xs*7; 
+				}
+			}
+		}
+	}
+}
+.count-down{
+	padding: 0 0 $base*7 0;
+	#simple_timer{
+		width: 100%;
+		margin: 0 auto;
+		color: $white-color;
+		text-align: center;
+		.table-cell{
+			display: inline-block;
+			@include mobile {
+				margin: 0 $base*2;
+			}
+			@include tablet {
+				margin: 0 $base*2;
+			}
+			@include desktops {
+				margin: 0 $base*2;
+			}
+			@include large-desktops {
+				margin: 0 $base*2+2px;
+			}
+			.tab-val{
+				font-weight: 700;
+				display: block;
+				margin-bottom: $base*4;
+				@include border-radius(100%);
+				background-color: rgba($white-color, .1);
+				@include add-border(1px, $white-color, all);
+				@include mobile-all {
+					width: 65px;
+					height: 65px;
+					line-height: 65px;
+					font-size: $base*5;
+				}
+				@include tablet {
+					width: 85px;
+					height: 85px;
+					line-height: 85px;
+					font-size: $base*7;
+				}
+				@include desktops {
+					width: 85px;
+					height: 85px;
+					line-height: 85px;
+					font-size: $base*7;
+				}
+				@include large-desktops {
+					width: 109px;
+					height: 109px;
+					line-height: 109px;
+					font-size: $base*9;
+				}
+			}
+			.tab-metr{
+				color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 9.6078);
+				font-size: $base-xs*7;
+				font-weight: 400;
+				text-transform: uppercase;
+				@include tablet {
+					font-size: $base*3;
+				}
+			}
+		}
+	}
+}

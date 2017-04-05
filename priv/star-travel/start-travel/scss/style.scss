@@ -1,0 +1,80 @@
+// scss file
+
+/* ====== index =====
+1. COMMON
+2. UI KIT
+	2.1 BUTTON
+	2.2 SECTION TITLE
+	2.3 FORM
+	2.4 PASINATION
+	2.5 ACCORDION
+	2.6 TABS
+	2.7 DATEPICKER
+	2.8 THUMBNAIL
+	2.9 MODAL
+	2.10 PANEL
+	2.11 PRICE RANGE SLIDER
+3. HEADER 
+	3.1 HEADER TRANSPARENT
+	3.2 LIGHT HEADER
+	3.3 DARK HEADER
+4. FOOTER
+5. SECTION
+	5.1 MAIN CONTENT SECTION
+	5.2 DARK SECTION
+	5.3 WHITE SECTION
+	5.4 SECTION TITLE DARK
+	5.4 PAGE TITLE SECTION
+	5.5 PACKAGES SECTION
+6. HOME
+	6.1 BANNER
+	6.2 PROMOTION
+	6.3 COUNT UP
+7. PACKAGES
+	7.1 PACKAGES LIST
+	7.2 SINGLE PACKAGE FULL WIDTH
+8. BLOG
+	8.1 BLOG POST LIST ITEM
+	8.2 BLOG POST SIDEBAR
+	8.3 BLOG SINGLE POST
+9. 404 NOT FOUND PAGE
+	9.1 404 PAGE BACKGROUND
+10 CONTACT US
+	10.1 CONTACT INFO
+	10.2 MAP AREA SECTION
+11 ABOUT US
+	11.1 ABOUT US TITLE
+	11.2 ABOUT COMMENTS
+12 BOOKING
+	12.1 BOOKING PROGRESS BAR
+	12.2 BOOKING FORM
+	12.3 BOOKING DETAILS
+	12.4 BOOKING CONFIRMED
+13 COMING SOON
+14 PRICING TABLE
+15 TABS
+	15.1 TABS PART
+
+===================== */
+@import 'partials/mixins';
+@import 'partials/variables';
+@import 'partials/media-query';
+@import 'reset';
+@import 'common';
+@import 'ui-kit';
+@import 'header';
+@import 'footer';
+@import 'section';
+@import 'home';
+@import 'packages';
+@import 'blog';
+@import '404';
+@import 'contact';
+@import 'aboutus';
+@import "booking";
+@import "comingsoon"; 
+@import "pricing-table";
+@import "tabs";
+
+
+

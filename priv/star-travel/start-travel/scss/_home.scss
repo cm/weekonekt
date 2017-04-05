@@ -1,0 +1,251 @@
+/*================= 6. HOME ==================*/
+@import 'header';
+@import 'footer';
+/*=== 6.1 BANNER ===*/
+.static .bannercontainer{
+	margin-top:-95px;
+}
+.fullscreenbanner-container {
+	width:100%;
+	position:relative;
+	padding:0;
+	.tp-bullets.preview4{
+		opacity: 1 !important;
+		height: auto !important;
+		@include desktops {
+			bottom: $base*6 !important;
+		}
+	}
+	.tp-bullets.preview4 .bullet {
+	    background: rgba(255, 255, 255, 0.5) !important;
+	    @include border-radius (50%);
+	    box-shadow: none!important;
+	    width: 6px !important;
+	    height: 6px !important;
+	    border: 2px solid rgba(255, 255, 255, 0.0) !important;
+	    display: inline-block;
+	    margin-right: 14px !important;
+	    margin-left: 0 !important;
+	    margin-bottom: 0px !important;
+	    @include transition (background-color 0.2s, border-color 0.2s);
+	    float: none !important;
+	}
+	.tp-bullets.preview4 .bullet:hover, .tp-bullets.preview4 .bullet.selected {
+	    box-shadow: none!important;
+	    background: rgba(255, 255, 255, 0.0) !important;
+	    width: 14px !important;
+	    height: 14px !important;
+	    border: 2px solid rgba(255, 255, 255, 1) !important;
+	    margin-right: 10px !important;
+	    margin-left: -4px!important;
+	    margin-bottom: -3px!important;
+	}
+	.tparrows.preview4 .tp-arr-iwrapper {
+		display: none !important;
+	}
+}
+.tp-bullets{
+	z-index: 99;
+}
+@include tablet {
+	.tparrows.preview4:hover:after{	
+		-webkit-transform: rotateY(0);
+	 	transform:rotateY(0);
+	 }
+	.tp-leftarrow.preview4:hover:after{	
+		-webkit-transform: rotateY(0); 
+		transform:rotateY(0)
+	}
+}
+.fullscreenbanner{
+	color: $white-color;
+	width:100%;
+	position:relative;
+}
+.tp-caption{
+	white-space: normal!important;
+	width: inherit;
+	@include mobile-all {
+		width: 100%;
+	}
+	@include tablet {
+		width: 85%;
+	}
+	@include desktops {
+		width: 70%;
+	}
+	@include large-desktops {
+		width: 65%;
+	}
+}
+.tp-caption.rs-caption-1{
+	text-transform: uppercase;
+	font-weight: 700;
+	@include mobile-all {
+		font-size: $base*2+1px !important;
+		line-height: $base*3+2px !important;
+	}
+	@include tablet {
+		font-size: $base*4 !important;
+		line-height: $base*6 !important;
+	}
+	@include desktops {
+		font-size: $base*6 !important;
+		line-height: $base*10 !important;
+	}
+	@include large-desktops {
+		font-size: $base*6 !important;
+		line-height: $base*10 !important;
+	}
+	span{
+		display: block;
+		@include mobile-all {
+			font-size: $base-xs*10 !important;
+			line-height: $base-xs*15 !important;
+		}
+		@include tablet {
+			font-size: $base-xs*25 !important;
+			line-height: $base-xs*20 !important;
+		}
+		@include desktops {
+			font-size: $base-xs*32 !important;
+			line-height: $base-xs*27 !important;
+		}
+		@include large-desktops {
+			font-size: $base-xs*32 !important;
+			line-height: $base-xs*27 !important;
+		}
+	}
+}
+.tp-caption.rs-caption-2{
+	font-weight: 400;
+	display: none;
+	@include tablet {
+		display: block;
+		font-size: $base*2+1px !important;
+		line-height: $base*3+2px !important;
+	}
+	@include large-desktops {
+		font-size: $base-xs*7 !important;
+		line-height: $base*4+1px !important;
+	}
+}
+.rs-caption-3{
+	.btn{
+		width: 131px;
+	}
+}
+.fullscreenbanner .tp-dottedoverlay.twoxtwo {
+  background: rgba(0, 0, 0, 0.15);
+  background-image: none!important;
+  z-index: 1;
+}
+
+.tparrows.preview4 {	
+	width:85px; 
+	height:85px;  
+}
+.tparrows.preview4:after{	
+	line-height: 85px;
+	width:85px;
+	height:85px;
+	background-color: rgba($white-color, .1); 
+}
+/*=== 6.2 PROMOTION ===*/
+.promotionWrapper{
+	background-image: url("../img/home/promotion/promotion-1.jpg");
+	background-attachment: fixed;
+	width: 100%;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	background-position: center;
+	color: #ffffff;
+	height: $base*80+3px;
+	.promotionTable{
+		display: table;
+		height: $base*80+3px;
+		width: 100%;
+		.promotionTableInner{
+			display: table-cell;
+			vertical-align: middle;
+			text-align: center;
+			.promotionInfo{
+				text-align: center;
+				span{
+					line-height: $base*4+1px;
+					color: $white-color;
+					text-transform: uppercase;
+					font-size: $base-xs*9;
+				}
+				h2{
+					font-size: $base-xs*13;
+					line-height: $base-xs*16+1px;
+					color: $white-color;
+					margin-bottom: $base*8;
+					margin: $base*2 0 $base*8 0;
+				}
+				.rating{
+					li{
+						color: darken(desaturate(adjust-hue($primary-color, 18.4232), 0.7843), 5.8824);
+						padding: 0;
+					}
+				}
+				p{
+					font-size: $base-xs*9;
+					line-height: $base*4+1px;
+					margin: 0 0 $base*4 0;
+					color: $white-color;
+				}
+				.buttonCustomPrimary{
+					padding: 0 $base-xs*8;
+				}
+			}
+		}
+	}
+}
+/*=== 6.3 COUNT UP ===*/
+.countUpSection{
+	background-image: url("../img/home/promotion/promotion-2.jpg");
+	background-attachment: fixed;
+	width: 100%;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	background-position: center center !important;
+	color: #ffffff;
+	padding: $base*26 0;
+	.icon{
+		width: $base-xs*48;
+		height: $base-xs*48;
+		background-color: rgba($primary-color, .9);
+		@include border-radius(100%);
+		display: inline-block;
+		margin-bottom: $base*3;
+		i{
+			font-size: $base*8+2px;
+			line-height: $base-xs*48;
+		}
+	}
+	.counter{
+		line-height: $base*8;
+		@include mobile-all{
+			font-size: $base*6+2px;
+		}
+		@include tablet{
+			font-size: $base*10+2px;
+		}
+	}
+	h5{
+		line-height: $base*4+1px;
+		text-transform: uppercase;
+		@include mobile-all{
+			font-size: $base-xs*6+1px;
+		}
+		@include tablet{
+			font-size: $base*3;
+		}
+	}
+}

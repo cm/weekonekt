@@ -1,0 +1,307 @@
+/*================= 8. BLOG ==================*/
+/*================= 8.1 BLOG POST LIST ITEM ==================*/
+.blogPostListItem{
+	padding-bottom: $base*10;
+	margin-bottom: $base*10;
+	@include add-border(1px, lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 33.9216), bottom); 
+	.media-body{
+		padding: $base*4;
+	}
+	.media-left{
+		img{
+			width: 100%;
+		}
+	}
+}
+/*================= 8.2 BLOG POST SIDEBAR ==================*/
+.blogSidebar{
+	.media-left{
+		@include mobile-all{
+			width: auto;
+		}
+		@include tablet{
+			width: 50%;
+		}
+		img{
+			width: 100%;
+		}
+	}
+	.panel{
+		border-color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 37.4510);
+		box-shadow: none;
+		background-color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 40.1961);
+		padding-bottom: $base*3;
+		.panel-heading{
+			border: none;
+			font-size: $base*4;
+			color: $text-title;
+			line-height: $base-xs*13;
+		}
+		.panel-body{
+			.input-group{
+				.form-control{
+					box-shadow: none;
+					border: none;
+				}
+				.input-group-addon{
+					background-color:$primary-color;
+					box-shadow: none;
+					border: none;
+					@include border-radius(4px);
+					i{
+						color: $white-color;
+					}
+				}
+			}
+			.list-group{
+				margin-bottom: 0;
+				.list-group-item{
+					background-color: transparent;
+					border: none;
+					@include add-border(1px, lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 33.9216), bottom);
+					border-radius: 0;
+					padding-left: 0;
+					padding-right: 0;
+					color: $text-title;
+					.badge{
+						background-color: transparent;
+						color: $text-title;
+						@include transition(all 0.3s ease-in-out);
+					}
+					&:hover{
+						@include opacity(1);
+						color: $primary-color;
+						.badge{
+							color: $primary-color;
+						}
+					}
+					&:last-child{
+						border: none;
+					}
+				}
+			}
+			.list-inline{
+				li{
+					width: 33.33333333%;
+					float: left;
+					padding: $base;
+					a{
+						width: 100%;
+						display: block;
+						img{
+							width: 100%;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+.tabArea{
+	margin-bottom: $base*4;
+	.nav-tabs{
+		border-color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 37.4510);
+		>li{
+			padding: 0 $base-xs*2;
+			>a{
+				@include add-border(1px, lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 37.4510), all);
+				color: $text-title;
+			}
+			&.active{
+				a{
+					border-color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 37.4510);
+					background-color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 40.1961);
+					color: $text-title;
+					border-bottom-color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 40.1961);
+				}
+			}
+			&:first-child{
+				padding-left: 0;
+			}
+			&:last-child{
+				padding-right: 0;
+			}
+		}
+	}
+	.tab-content{
+		background-color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 40.1961);
+		@include add-border(1px, lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 37.4510), all);
+		border-top: none;
+		@include border-radius(4px);
+		border-top-left-radius: 0;
+		border-top-right-radius: 0;
+		padding: $base*4 $base-xs*8;
+		.media{
+			padding-bottom: $base*3;
+			margin-bottom: $base*3;
+			@include add-border(1px, lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 33.9216), bottom);
+			&.removeMargin{
+				margin: 0;
+				border: none;
+			}
+			.media-left{
+				width: 35%;
+				padding-right: $base-xs*4;
+				img{
+					width: 100%;
+				}
+			}
+			.media-body{
+				.media-heading{
+					color: $text-title;
+					font-size: $base-xs*7;
+					line-height: $base*4+1px;
+					margin-bottom: $base;
+					float: left;
+					text-transform: capitalize;
+					font-weight: 400;
+					&:hover{
+						color: $primary-color;
+					}
+				}
+				p{
+					font-size: $base-xs*6;
+					line-height: $base-xs*9;
+					margin-bottom: 0;
+					i{
+						margin-right: $base-xs*2;
+					}
+				}
+			}
+		}
+	}
+}
+/*================= 8.3 BLOG SINGLE POST ==================*/
+.blogSinglePost{
+	border: none;
+	padding: 0;
+	img{
+		margin-bottom: $base*5;
+	}
+	.caption{
+		h2{
+			font-size: $base*4;
+			margin-bottom: $base*4;
+			text-transform: capitalize;
+			font-weight: 400;
+		}
+		p{
+			margin-bottom: $base*4;
+		}
+	}
+	.well{
+		background-color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 40.1961);
+		border: none;
+		box-shadow: none;
+		float: left;
+		display: block;
+		width: 100%;
+		margin-bottom: $base*12;
+		span{
+			color: $text-title;
+			font-weight: 700;
+			font-size: $base*3;
+			float: left;
+		}
+		.list-inline{
+			float: right;
+			li{
+				a{
+					font-size: $base-xs*7;
+					color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 2.9412);
+					&:hover{
+						color: $primary-color;
+					}
+				}
+			}
+		}
+	}
+}
+.imageBg{
+	background-image: url("../img/blog/blog-single-02.png");
+	width: 100%;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	background-position: center top;
+	color: #ffffff;
+	height: $base-xs*104;
+	@include border-radius($base);
+	margin-bottom: $base*4;
+	.imageBgTable{
+		display: table;
+    height: $base-xs*104;
+    width: 100%;
+    .imageBgTableInner{
+    	display: table-cell;
+    	text-align: left;
+    	vertical-align: middle;
+			blockquote{
+				padding: 0 $base*10;
+				border: none;
+				margin-bottom: 0;
+				p{
+					color: $white-color;
+					font-size: $base-xs*9;
+					line-height: $base-xs*13;
+				}
+				footer{
+					color: $white-color;
+					font-size: $base-xs*7;
+					line-height: $base-xs*13;
+				}
+			}
+    }
+	}
+}
+.commentsArea{
+	h3{
+		font-weight: 400;
+		text-transform: capitalize;
+		margin-bottom: $base*6;
+		font-size: $base*4;
+	}
+	.media{
+		margin: 0 0 $base*10 0;
+		.media-left{
+			padding-right: $base*4;
+			width: auto;
+			display: inline-block;
+			float: left;
+		}
+		.media-body{
+			.media{
+				margin: $base*10 0 0 0;
+			}
+			h4, p{
+				text-transform: capitalize;
+				font-size: $base-xs*7;
+				margin: 0 0 $base-xs*7 0;
+				display: block;
+				span{
+					color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 2.9412);
+					font-weight: 400;
+					i{
+						margin-right: $base-xs*7;
+					}
+				}
+			}
+			p{
+				color: lighten(desaturate(adjust-hue($primary-color, -28.5333), 100.0000), 2.9412);
+				line-height: $base-xs*11; 
+			}
+			.btn-link{
+				padding: 0;
+				color: $primary-color;
+				@include transition(all 0.3s ease-in-out);
+				text-transform: capitalize;
+				font-size: $base-xs*7;
+				&:hover{
+					color: $primary-color;
+					text-decoration: none;
+				}
+			}
+		}
+	}
+}
