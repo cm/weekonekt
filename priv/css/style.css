@@ -1166,12 +1166,20 @@ a:focus {
 .thumbnail.citiesContent .caption .media .media-body a {
   color: #222222;
   font-size: 18px;
-  line-height: 24px;
+  //line-height: 24px;
   text-transform: uppercase;
-  margin: 15px 0;
+  //margin: 15px 0;
+  margin-top: 15px;
   display: block;
   font-weight: 400;
 }
+
+.thumbnail.citiesContent .caption .media .media-body p {
+  line-height: normal;
+  text-transform: uppercase;
+  margin: 0 0 6px;
+}
+
 .thumbnail.citiesContent .caption .media .media-body a:hover {
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=$value)";
   filter: alpha(opacity=1);

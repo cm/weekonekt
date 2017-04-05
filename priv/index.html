@@ -110,144 +110,44 @@
     </section>
     </script>
 
+    <script type="text/x-template" id="locationresult">
+      <div class="media" style="margin-bottom: 20px;" v-on:click="$r('select')">
+        <a class="media-left" href="#">
+          <img class="media-object" src="img/cities/{{location.picture}}.png" alt="Image">
+        </a>
+        <div class="media-body ">
+          <a href="#" class="media-heading">{{location.name}}</a>
+          <p class="muted">
+            {{location.country}}
+          </p>
+          <h3>
+            <i class="fa fa-comment-o"></i>
+            {{location.count}}
+          </h3>
+        </div>
+      </div>
+    </script>
 
-    <script type="text/template" id="locationresults">
+    <script type="text/x-template" id="continentresult">
+      <div class="thumbnail citiesContent">
+        <div class="imageArea">
+          <img src="img/cities/{{continent.picture}}.png" alt="cities image">
+          <div class="sticker">{{continent.name}}</div>
+        </div>
+        <div class="caption">
+          <div class="row">
+            <div class="col-sm-6 col-xs-12" v-for="l in continent.locations">
+              <locationresult :location="l"></locationresult>
+            </div>
+          </div>
+        </div>
+      </div>
+    </script>
+
+    <script type="text/template" id="destinationresults">
       <div class="row marginExten">
-        <div class="col-sm-6 col-xs-12">
-          <div class="thumbnail citiesContent">
-            <div class="imageArea">
-              <img src="img/cities/cities-big-01.png" alt="cities image">
-              <div class="sticker">Eourope</div>
-            </div>
-            <div class="caption">
-              <div class="row">
-                <div class="col-sm-6 col-xs-12">
-                  <div class="media">
-                    <a class="media-left" href="#">
-                      <img class="media-object" src="img/cities/cities-sm-01.png" alt="Image">
-                    </a>
-                    <div class="media-body">
-                      <a href="#" class="media-heading">Rome</a>
-                      <h4>$6,500</h4>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-sm-6 col-xs-12">
-                  <div class="media">
-                    <a class="media-left" href="#">
-                      <img class="media-object" src="img/cities/cities-sm-02.png" alt="Image">
-                    </a>
-                    <div class="media-body">
-                      <a href="#" class="media-heading">spain</a>
-                      <h4>$6,500</h4>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-6 col-xs-12">
-          <div class="thumbnail citiesContent">
-            <div class="imageArea">
-              <img src="img/cities/cities-big-02.png" alt="cities image">
-              <div class="sticker">Asia</div>
-            </div>
-            <div class="caption">
-              <div class="row">
-                <div class="col-sm-6 col-xs-12">
-                  <div class="media">
-                    <a class="media-left" href="#">
-                      <img class="media-object" src="img/cities/cities-sm-03.png" alt="Image">
-                    </a>
-                    <div class="media-body">
-                      <a href="#" class="media-heading">Maldives</a>
-                      <h4>$6,500</h4>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-sm-6 col-xs-12">
-                  <div class="media">
-                    <a class="media-left" href="#">
-                      <img class="media-object" src="img/cities/cities-sm-04.png" alt="Image">
-                    </a>
-                    <div class="media-body">
-                      <a href="#" class="media-heading">nepal</a>
-                      <h4>$6,500</h4>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-6 col-xs-12">
-          <div class="thumbnail citiesContent">
-            <div class="imageArea">
-              <img src="img/cities/cities-big-03.png" alt="cities image">
-              <div class="sticker">america</div>
-            </div>
-            <div class="caption">
-              <div class="row">
-                <div class="col-sm-6 col-xs-12">
-                  <div class="media">
-                    <a class="media-left" href="#">
-                      <img class="media-object" src="img/cities/cities-sm-05.png" alt="Image">
-                    </a>
-                    <div class="media-body">
-                      <a href="#" class="media-heading">brazil</a>
-                      <h4>$6,500</h4>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-sm-6 col-xs-12">
-                  <div class="media">
-                    <a class="media-left" href="#">
-                      <img class="media-object" src="img/cities/cities-sm-06.png" alt="Image">
-                    </a>
-                    <div class="media-body">
-                      <a href="#" class="media-heading">Canada</a>
-                      <h4>$6,500</h4>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-6 col-xs-12">
-          <div class="thumbnail citiesContent">
-            <div class="imageArea">
-              <img src="img/cities/cities-big-04.png" alt="cities image">
-              <div class="sticker">africa</div>
-            </div>
-            <div class="caption">
-              <div class="row">
-                <div class="col-sm-6 col-xs-12">
-                  <div class="media">
-                    <a class="media-left" href="#">
-                      <img class="media-object" src="img/cities/cities-sm-07.png" alt="Image">
-                    </a>
-                    <div class="media-body">
-                      <a href="#" class="media-heading">South africa</a>
-                      <h4>$6,500</h4>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-sm-6 col-xs-12">
-                  <div class="media">
-                    <a class="media-left" href="#">
-                      <img class="media-object" src="img/cities/cities-sm-08.png" alt="Image">
-                    </a>
-                    <div class="media-body">
-                      <a href="#" class="media-heading">nigeria</a>
-                      <h4>$6,500</h4>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+        <div class="col-sm-6 col-xs-12" v-for="c in continents">
+            <continentresult :continent="c"></continentresult>
         </div>
       </div>
     </script>
@@ -298,26 +198,116 @@
 
       <section class="mainContentSection">
         <div class="container">
-
           <section class="darkSection citiesPage">
             <locationsearch></locationsearch>
           </section>
+          <destinationresults></destinationresults>
+        </div>
+      </section>
+    </script>
 
-          <section class="whiteSection">
-            <locationresults></locationresults>
-          </section>
-
+    <script type="text/template" id="categories">
+      <section class="pageTitle" style="background-image:url(img/pages/page-title-bg9.jpg);">
+        <div class="container">
           <div class="row">
             <div class="col-xs-12">
-              <div class="buttonArea">
-                <ul class="list-inline">
-                  <li><a href="" class="btn buttonTransparent">All Destinations</a></li>
-                </ul>
+              <div class="titleTable">
+                <div class="titleTableInner">
+                  <div class="pageTitleInfo">
+                    <h1>Categories</h1>
+                    <div class="under-border"></div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
+
+      <section class="mainContentSection singlePackage">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-4 col-xs-12">
+              <div class="thumbnail blogPostItem">
+                <img src="img/blog/blog-01.png" alt="blog-image">
+                <div class="caption">
+                  <h3><a href="#" class="blogTitle">Bali, Indonesia</a></h3>
+                </div>
+              </div>
+
+              <div class="accordionsTransparent">
+                <div class="panel-group" id="accordionIcons">
+                  <categoryresult v-for="c in categories" :category="c"></categoryresult>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-8 col-xs-12">
+              <recommendations></recommendations>
+            </div>
+          </div>
+        </div>
+      </section>
+    </script>
+
+    <script type="text/template" id="recommendations">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12">
+          <div role="tabpanel" class="countryTabs">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#over-view" aria-controls="over-view" role="tab" data-toggle="tab">Highlights</a>
+              </li>
+              <li class="pull-right">
+
+              </li>
+            </ul>
+            <div class="tab-content">
+              <div role="tabpanel" class="tab-pane active" id="over-view">
+                <div class="row">
+                  <div class="col-sm-12 col-xs-12">
+                    <div class="commonInfo">
+                      <h2>some title should be here</h2>
+                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </script>
+
+
+
+    <script type="text/template" id="categoryresult">
+      <div class="panel panel-default">
+        <a class="panel-heading accordion-toggle collapsed" data-toggle="collapse"
+          data-parent="#accordionIcons" href="#collapseTwo" aria-expanded="false">
+          <span>{{category.name}}</span>
+          <i class="indicator fa fa-plus  pull-right"></i>
+        </a>
+        <div id="collapseTwo" class="panel-collapse collapse" aria-expanded="false">
+          <div class="panel-body">
+            <div class="media">
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </script>
+
+    <script type="text/template" id="categoryoption">
+      <div class="bookingDetails col-xs-3 col-sm-12">
+        <h2>{{option.name}}</h2>
+        <optionchoice v-for="c in option.choices" :choice="c"></optionchoce>
+      </div>
+    </script>
+
+    <script type="text/template" id="optionchoice">
+      <a href="#" class="btn buttonTransparent clearfix">{{choice.name}}</a>
     </script>
 
     <script type="text/template" id="top-locations">
@@ -637,7 +627,7 @@
 
     <script type="text/template" id="page-header">
     <header>
-      <nav class="navbar navbar-default navbar-main navbar-fixed-top" role="navigation">
+      <nav class="navbar navbar-default navbar-main navbar-fixed-top {{navBarStyle}}" role="navigation">
         <div class="container">
           <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">

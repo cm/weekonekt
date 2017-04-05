@@ -7,7 +7,7 @@
     data: {
       counters: [
         { label: "Locations", value: 241, icon: "map-marker" },
-        { label: "Recommendations", value: 422, icon: "thumbs-up  " },
+        { label: "Recommendations", value: 422, icon: "comment-o" },
         { label: "Travellers", value: 131, icon: "smile-o" },
         { label: "Advertisers", value: 44, icon: "briefcase" }
       ]
@@ -33,13 +33,137 @@
     }
   });
 
-  Vue.$comp("locationresults");
+  Vue.$comp("destinationresults", {
+    data: {
+      continents: [
+        { name: "Asia",
+          picture: "cities-big-01",
+          locations: [
+            { name: "Bali",
+              country: "Indonesia",
+              picture: "cities-sm-01",
+              count: 17
+            },
+            { name: "Bangkok",
+              country: "Thailand",
+              picture: "cities-sm-01",
+              count: 215
+            },
+            { name: "Phu Ket",
+              country: "Thailand",
+              picture: "cities-sm-01",
+              count: 2
+            }
+          ]
+        },
+
+      ]
+    }
+  });
+
+  Vue.$comp("continentresult", {
+    props: [ "continent" ]
+  });
+
+  Vue.$comp("locationresult", {
+    many: true,
+    props: [ "location" ],
+    states: {
+      DEFAULT: {
+        select: {
+          then: "DEFAULT",
+          and: {
+            send: "location",
+            to: "main",
+            data: "location.id"
+          }
+        }
+      }
+    }
+  });
+
 
   Vue.$comp("destinations");
+  Vue.$comp("categories", {
+    data: {
+      categories: [
+        { name: "Accomodation",
+          description: "Hotels, appartments, B&Bs...",
+          options: [
+            { name: "Type",
+              choices: [
+                { name: "Cottage" },
+              ]
+            },
+            { name: "Rating",
+              choices: [
+                { name: "Mid-range" },
+              ]
+            }
+          ]
+        },
+        { name: "Activities",
+          description: "Sightseeing, sports, guided tours..."
+        },
+        { name: "Health",
+          description: "Spas, well-being, relaxation..."
+        },
+        { name: "Food & Beverage",
+          description: "Restaurants, Bars, pubs, lounges..."
+        }
+
+      ]
+    }
+  });
+
+  Vue.$comp("recommendations" );
+  
+  Vue.$comp("categoryresult", {
+    many: true,
+    props: [ "category" ]
+  });
+
+  Vue.$comp("categoryoption", {
+    many: true,
+    props: [ "option" ]
+  });
+
+  Vue.$comp("optionchoice", {
+    many: true,
+    props: [ "choice" ]
+  });
 
   Vue.$comp("page-banner");
-  Vue.$comp("page-header", {
 
+  Vue.$comp("page-header", {
+    ui: {
+      navBarStyle: {
+        $DEFAULT: "",
+        LIGHT: "static-light"
+      }
+    },
+    states: {
+      DEFAULT: {
+        light: {
+          then: "LIGHT"
+        }
+      },
+
+      LIGHT: {
+        default: {
+          then: "DEFAULT"
+        }
+      }
+    },
+
+    listen: {
+      states: {
+        main: {
+          DESTINATIONS: "light",
+          WELCOME: "default"
+        }
+      }
+    }
   });
 
   Vue.$comp("page-footer", {
@@ -55,31 +179,40 @@
     ui: {
       content: {
         $DEFAULT: "welcome-view",
-        SEARCHING_LOCATION: "destinations"
+        DESTINATIONS: "destinations",
+        CATEGORIES: "categories"
+
+
       }
     },
 
     states: {
       WELCOME: {
-        searchingLocation: {
-          then: "SEARCHING_LOCATION"
+        destinations: {
+          then: "DESTINATIONS"
         }
       },
-      SEARCHING_LOCATION: {
+      DESTINATIONS: {
+        location: {
+          then: "CATEGORIES"
+        }
+      },
+      CATEGORIES: {
+
 
       }
+
     },
     listen: {
       states: {
         locationsearch: {
-          BUSY: "searchingLocation"
+          BUSY: "destinations"
         }
       }
     }
   });
 
   Vue.$app("app", {
-
   });
 
   Vue.$configure({
