@@ -2,7 +2,9 @@ const webpack = require('webpack')
 const path = require('path')
 const copy = require('copy-webpack-plugin')
 
-const aliases = { 
+const entry = process.env.npm_lifecycle_event === 'build' ? 'prod' : 'dev';
+
+const aliases = {
   'jQuery': 'jquery',
   '$': 'jquery',
   'window.$': 'jquery'
@@ -10,22 +12,23 @@ const aliases = {
 
 
 const config = {
-  externals: {
-     'TweenLite': 'TweenLite'
-  },
+  resolve: { alias: aliases },
   context: path.resolve(__dirname, 'src'),
-  entry: './app.js',
+  entry: "./" + entry + ".js",
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'app.js',
-    publicPath: '/dist/',
+  //  publicPath: '/dist/',
+  },
+  devServer:{
+    contentBase: 'dist'
   },
   plugins: [
     new webpack.NamedModulesPlugin(),
     new webpack.ProvidePlugin(aliases),
-    new copy([
-      { from: "img/home/slider", to: "img/slider"}
-    ])
+    //new copy([
+    //  { from: "img/home/slider", to: "img/slider"}
+    //])
   ],
   module: {
     rules: [
@@ -63,7 +66,7 @@ const config = {
         ]
       },
       {
-        test   : /\.(jpg|png|gif)?$/,
+        test   : /\.(jpg|png|gif|ico)?$/,
         use: [
           'url-loader'
         ]
@@ -72,7 +75,8 @@ const config = {
       {
         test:    /\.elm$/,
         exclude: [/elm-stuff/, /node_modules/],
-        loader:  'elm-webpack-loader?verbose=true&warn=true',
+        loader: 'elm-hot-loader!elm-webpack-loader'
+        //loader:  'elm-webpack-loader?verbose=true&warn=true',
       }
     ],
 
