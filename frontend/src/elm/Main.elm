@@ -1,7 +1,10 @@
 module Main exposing (..)
 
 import Html exposing (..)
-import Html.Events exposing (..)
+
+
+--import Html.Events exposing (..)
+
 import Html.Attributes exposing (..)
 import Html.Attributes.Aria exposing (..)
 import WebSocket exposing (..)
@@ -48,24 +51,188 @@ view : Model -> Html Msg
 view model =
     div []
         [ headerSection model
-        , contactSection model
+        , startSection model
+        , featuresSection model
         , footerSection model
         ]
 
 
 headerSection : Model -> Html Msg
 headerSection model =
-    div [] [ text "Hello Pedro 2" ]
+    div [ id "sticky-nav-sticky-wrapper", class "sticky-wrapper", style [ ( "height", "92px" ) ] ]
+        [ div [ class "navbar navbar-custom sticky", role "navigation", id "sticky-nav" ]
+            [ div [ class "container" ]
+                [ div [ class "navbar-header" ]
+                    [ button
+                        [ type_ "button"
+                        , class "navbar-toggle"
+                        , attribute "data-toggle" "collapse"
+                        , attribute "data-target" ".navbar-collapse"
+                        ]
+                        [ span [ class "sr-only" ] [ text "Toggle navigation" ]
+                        , span [ class "icon-bar" ] []
+                        , span [ class "icon-bar" ] []
+                        , span [ class "icon-bar" ] []
+                        ]
+                    , a [ class "navbar-brand logo" ]
+                        [ text "wee"
+                        , span [] [ text "Konekt" ]
+                        ]
+                    ]
+                , div [ class "navbar-collapse collapse", id "navbar-menu" ]
+                    [ ul [ class "nav navbar-nav nav-custom-left" ] []
+                    , ul [ class "nav navbar-nav navbar-right" ]
+                        [ li [] [ a [] [ text "Login" ] ]
+                        , li [] [ a [ class "btn btn-white-fill navbar-btn" ] [ text "Join now" ] ]
+                        ]
+                    ]
+                ]
+            ]
+        ]
 
 
-contactSection : Model -> Html Msg
-contactSection model =
-    div [] []
+startSection : Model -> Html Msg
+startSection model =
+    section [ class "bg-custom home", id "home" ]
+        [ div [ class "home-sm" ]
+            [ div [ class "container" ]
+                [ div [ class "row" ]
+                    [ div [ class "col-md-6 col-sm-7" ]
+                        [ div [ class "home-wrapper home-wrapper-alt p-0" ]
+                            [ h1 [ class "h1 font-light text-white w-full" ]
+                                [ text "Choose your destination"
+                                ]
+                            , h4 [ class "text-light w-full" ]
+                                [ text "Where are you going? "
+                                , span [] [ text "Find" ]
+                                , text " what fellow travellers have recommended"
+                                , br [] []
+                                , text "Where have you been? Tell us what you would "
+                                , span [] [ text "recommend" ]
+                                , text "!"
+                                ]
+                            , Html.form []
+                                [ div [ class "form-group m-b-0" ]
+                                    [ input [ type_ "text", class "form-control input-subscribe", placeholder "Enter a location" ] []
+                                    ]
+                                ]
+                            , a [ class "btn btn-white-bordered" ] [ text "Find" ]
+                            , span [] [ text " " ]
+                            , a [ class "btn btn-white-bordered" ] [ text "Recommend" ]
+                            ]
+                        ]
+                    , div [ class "col-md-4 col-md-offset-2 col-sm-5" ]
+                        [ Html.form [ role "form", class "intro-form" ]
+                            [ h3 [ class "text-center" ] [ text "Register for free" ]
+                            , div [ class "form-group" ]
+                                [ input [ type_ "text", class "form-control", placeholder "Full Name", required True ] []
+                                ]
+                            , div [ class "form-group" ]
+                                [ input [ type_ "text", class "form-control", placeholder "Email Address", required True ] []
+                                ]
+                            , div [ class "form-group" ]
+                                [ input [ type_ "text", class "form-control", placeholder "User name", required True ] []
+                                ]
+                            , div [ class "form-group" ]
+                                [ input [ type_ "text", class "form-control", placeholder "Password", required True ] []
+                                ]
+                            , div [ class "form-group" ]
+                                [ button [ type_ "submit", class "btn btn-custom btn-sm btn-block" ] [ text "Join Now" ]
+                                ]
+                            , span [ class "help-block m-b-0 m-t-20 text-muted" ]
+                                [ small []
+                                    [ text "By registering you agree the weeKonekt "
+                                    , a [] [ text "Terms of Use" ]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ]
+
+
+featuresSection : Model -> Html Msg
+featuresSection model =
+    div [ class "section bg-light", id "features" ]
+        [ div [ class "container" ]
+            [ div [ class "row" ]
+                [ div [ class "col-sm-12 text-center" ]
+                    [ h3 [ class "title" ] [ text "We connect you to the world" ]
+                    , p [ class "text-muted sub-title" ]
+                        [ span []
+                            [ text "weeKonekt" ]
+                        , text
+                            " enables travellers and local citizens to share their recommendations about their past travel experiences or local favourite spots"
+                        ]
+                    ]
+                ]
+            , div [ class "row" ]
+                [ div [ class "col-sm-4" ]
+                    [ div [ class "features-box" ]
+                        [ i [ class "pe-7s-search" ] []
+                        , h4 [] [ text "Plan your next trip" ]
+                        , p [ class "text-muted" ] [ text "Where are you going? Find recommendations from other travellers" ]
+                        ]
+                    ]
+                , div [ class "col-sm-4" ]
+                    [ div [ class "features-box" ]
+                        [ i [ class "pe-7s-smile" ] []
+                        , h4 [] [ text "Positive karma only" ]
+                        , p [ class "text-muted" ] [ text "No negative stuff. Only positive reviews are allowed" ]
+                        ]
+                    ]
+                , div [ class "col-sm-4" ]
+                    [ div [ class "features-box" ]
+                        [ i [ class "pe-7s-pen" ] []
+                        , h4 [] [ text "Share your experience" ]
+                        , p [ class "text-muted" ] [ text "Where have you been? Share your recommendations with the rest of the world" ]
+                        ]
+                    ]
+                ]
+            , div [ class "row" ]
+                [ div [ class "col-sm-4" ]
+                    [ div [ class "features-box" ]
+                        [ i [ class "pe-7s-like2" ] []
+                        , h4 [] [ text "Rate recommendations" ]
+                        , p [ class "text-muted" ] [ text "Help us finding the best places to see, the best things to do" ]
+                        ]
+                    ]
+                , div [ class "col-sm-4" ]
+                    [ div [ class "features-box" ]
+                        [ i [ class "pe-7s-users" ] []
+                        , h4 [] [ text "Connect with others" ]
+                        , p [ class "text-muted" ] [ text "Get in touch and seek personalised advice from fellow travellers" ]
+                        ]
+                    ]
+                , div [ class "col-sm-4" ]
+                    [ div [ class "features-box" ]
+                        [ i [ class "pe-7s-cash" ] []
+                        , h4 [] [ text "Monetarize your experience" ]
+                        , p [ class "text-muted" ] [ text "Are you liking recommendations? Are your recommendations being liked? Are you giving advice to future travellers? Get paid for it!" ]
+                        ]
+                    ]
+                ]
+            ]
+        ]
 
 
 footerSection : Model -> Html Msg
 footerSection model =
-    div [] []
+    footer [ class "bg-gray footer" ]
+        [ div [ class "container" ]
+            [ div [ class "row" ]
+                [ div [ class "col-sm-12" ]
+                    [ div [ class "footer-alt text-center" ]
+                        [ p [ class "text-muted m-b-0" ]
+                            [ text "2017 ® weeKonekt. All rights reserved."
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ]
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )

@@ -407,8 +407,12 @@ a:hover,a:focus,.a:active {
   font-size: 16px;
   font-weight: 400;
   width: 80%;
-  margin: 30px auto 50px auto;
+  /*margin: 30px auto 50px auto;*/
 }
+
+.home-wrapper h4 span {
+  text-decoration: underline;
+} 
 
 .full-screen {
   display: table;
@@ -611,7 +615,7 @@ iframe {
   margin-bottom: 10px;
 }
 
-.input-subscribe:focus {
+.input-subscribe, .input-subscribe:focus {
   border: 2px solid rgba(255, 255, 255, 0.6);
 }
 
@@ -641,8 +645,8 @@ label.valid {
 /*======= 11.Footer =======*/
 
 .footer {
-  padding-top: 60px;
-  padding-bottom: 60px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   background-color: #2f3e47;
 }
 
@@ -667,8 +671,8 @@ label.valid {
 }
 
 .footer-alt {
-  margin-top: 30px;
-  padding-top: 20px;
+  /* margin-top: 30px;
+  padding-top: 20px;*/
 }
 
 .footer address {

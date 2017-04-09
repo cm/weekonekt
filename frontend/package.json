@@ -25,6 +25,6 @@
   "scripts": {
     "start": "webpack-dev-server --content-base ./dist --inline --hot",
     "build": "webpack -p",
-    "deploy": "cp dist/* ../priv && cp dist/* ../_rel/fullpass_release/lib/fullpass-0.1.0/priv"
+    "deploy": "cp dist/* ../priv"
   }
 }
