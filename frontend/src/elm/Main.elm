@@ -1,10 +1,7 @@
 module Main exposing (..)
 
 import Html exposing (..)
-
-
---import Html.Events exposing (..)
-
+import Html.Events exposing (..)
 import Html.Attributes exposing (..)
 import Html.Attributes.Aria exposing (..)
 import WebSocket exposing (..)
@@ -16,15 +13,48 @@ type alias Flags =
     }
 
 
+type alias Place =
+    { country : String
+    , area : String
+    , location : String
+    }
+
+
+type alias Places =
+    List Place
+
+
 type alias Model =
     { flags : Flags
-    , message : String
+    , keywords : String
+    , places : Places
+    , place : Maybe Place
     }
 
 
 init : Flags -> ( Model, Cmd Msg )
 init flags =
-    ( { flags = flags, message = "" }, WebSocket.send (wsUrl flags) (encodeText "Hello") )
+    ( initModel flags, WebSocket.send (wsUrl flags) (encodeText "Hello") )
+
+
+initModel : Flags -> Model
+initModel flags =
+    { flags = flags
+    , keywords = ""
+    , places = allPlaces
+    , place = Nothing
+    }
+
+
+allPlaces : Places
+allPlaces =
+    [ { country = "Indonesia", area = "Bali", location = "Denpasar" }
+    , { country = "Indonesia", area = "Bali", location = "Jimbaran" }
+    , { country = "Indonesia", area = "Bali", location = "Kuta" }
+    , { country = "Indonesia", area = "Bali", location = "Negara" }
+    , { country = "Indonesia", area = "Bali", location = "Singaraja" }
+    , { country = "Indonesia", area = "Bali", location = "Ubud" }
+    ]
 
 
 encodeText : String -> String
@@ -43,6 +73,8 @@ wsUrl flags =
 
 type Msg
     = NoOp
+    | Keywords String
+    | SelectPlace Place
     | WsMsg String
     | WsPing
 
@@ -113,12 +145,13 @@ startSection model =
                                 ]
                             , Html.form []
                                 [ div [ class "form-group m-b-0" ]
-                                    [ input [ type_ "text", class "form-control input-subscribe", placeholder "Enter a location" ] []
-                                    ]
+                                    [ placeSelectionInput model ]
                                 ]
-                            , a [ class "btn btn-white-bordered" ] [ text "Find" ]
-                            , span [] [ text " " ]
-                            , a [ class "btn btn-white-bordered" ] [ text "Recommend" ]
+                            , div [ style [ ( "position", "relative" ), ( "z-index", "0" ) ] ]
+                                (placeActionButtons
+                                    model
+                                )
+                            , placesLiveText model.places model.keywords
                             ]
                         ]
                     , div [ class "col-md-4 col-md-offset-2 col-sm-5" ]
@@ -151,6 +184,94 @@ startSection model =
                 ]
             ]
         ]
+
+
+placeActionButtons : Model -> List (Html Msg)
+placeActionButtons model =
+    case model.place of
+        Nothing ->
+            [ a [ class "btn btn-white-bordered disabled" ] [ text "Find" ]
+            , span [] [ text " " ]
+            , a [ class "btn btn-white-bordered disabled" ] [ text "Recommend" ]
+            ]
+
+        Just p ->
+            [ a [ class "btn btn-white-bordered" ] [ text "Find" ]
+            , span [] [ text " " ]
+            , a [ class "btn btn-white-bordered" ] [ text "Recommend" ]
+            ]
+
+
+placeSelectionInput : Model -> Html Msg
+placeSelectionInput model =
+    input [ type_ "text", class "form-control input-subscribe", placeholder "Enter a location", onInput Keywords, value (placeSelectionText model) ] []
+
+
+placeSelectionText : Model -> String
+placeSelectionText m =
+    case m.place of
+        Nothing ->
+            m.keywords
+
+        Just p ->
+            placeDescription p
+
+
+placesLiveText : Places -> String -> Html Msg
+placesLiveText places k =
+    case String.isEmpty k of
+        True ->
+            div [] []
+
+        False ->
+            case (filterPlaces k places) of
+                [] ->
+                    [ li [] [ text "No match" ] ] |> autocomplete
+
+                filteredPlaces ->
+                    (List.map
+                        placeLiveTextListItem
+                        filteredPlaces
+                    )
+                        |> autocomplete
+
+
+autocomplete : List (Html Msg) -> Html Msg
+autocomplete contents =
+    div [ class "autocomplete" ]
+        [ ul []
+            contents
+        ]
+
+
+filterPlaces : String -> Places -> Places
+filterPlaces k places =
+    List.filter (matchPlace k) places
+
+
+matchPlace : String -> Place -> Bool
+matchPlace k p =
+    String.contains
+        (String.toLower k)
+        (String.toLower
+            (String.join " " [ p.country, p.area, p.location ])
+        )
+
+
+placeLiveTextListItem : Place -> Html Msg
+placeLiveTextListItem p =
+    li []
+        [ a [ onClick (SelectPlace p) ]
+            [ i [ class "pe-7s-map-marker" ] []
+            , text " "
+            , text (placeDescription p)
+            ]
+        ]
+
+
+placeDescription : Place -> String
+placeDescription p =
+    p.location ++ ", " ++ p.area ++ " " ++ p.country
 
 
 featuresSection : Model -> Html Msg
@@ -241,8 +362,14 @@ update msg model =
         NoOp ->
             ( model, Cmd.none )
 
+        Keywords k ->
+            ( { model | keywords = k, place = Nothing }, Cmd.none )
+
+        SelectPlace p ->
+            ( { model | place = Just p, keywords = "" }, Cmd.none )
+
         WsMsg str ->
-            ( { model | message = str }, Cmd.none )
+            ( model, Cmd.none )
 
         WsPing ->
             ( model, WebSocket.send (wsUrl model.flags) (encodeText "Hello there") )

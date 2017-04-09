@@ -22,5 +22,8 @@
 
 #features .sub-title span {
   color: #bc7ca7;
+}
 
+.autocomplete {
+  background: #52587f; 
 }
