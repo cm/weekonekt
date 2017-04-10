@@ -24,11 +24,35 @@ type alias Places =
     List Place
 
 
+type alias Category =
+    { name : String
+    , icon : String
+    }
+
+
+type alias Categories =
+    List Category
+
+
+type Step
+    = Home
+    | Categories
+
+
+type Mode
+    = FindMode
+    | RecommendMode
+
+
 type alias Model =
     { flags : Flags
+    , step : Step
+    , mode : Maybe Mode
     , keywords : String
     , places : Places
     , place : Maybe Place
+    , categories : Categories
+    , category : Maybe Category
     }
 
 
@@ -40,9 +64,13 @@ init flags =
 initModel : Flags -> Model
 initModel flags =
     { flags = flags
+    , step = Home
+    , mode = Nothing
     , keywords = ""
     , places = allPlaces
     , place = Nothing
+    , categories = allCategories
+    , category = Nothing
     }
 
 
@@ -54,6 +82,17 @@ allPlaces =
     , { country = "Indonesia", area = "Bali", location = "Negara" }
     , { country = "Indonesia", area = "Bali", location = "Singaraja" }
     , { country = "Indonesia", area = "Bali", location = "Ubud" }
+    ]
+
+
+allCategories : Categories
+allCategories =
+    [ { name = "Accomodation", icon = "pe-7s-home" }
+    , { name = "Transportation", icon = "pe-7s-car" }
+    , { name = "Food & Beverage", icon = "pe-7s-wine" }
+    , { name = "Activities", icon = "pe-7s-photo" }
+    , { name = "Shopping", icon = "pe-7s-cart" }
+    , { name = "Health", icon = "pe-7s-like" }
     ]
 
 
@@ -75,17 +114,50 @@ type Msg
     = NoOp
     | Keywords String
     | SelectPlace Place
+    | Find
+    | Recommend
     | WsMsg String
     | WsPing
 
 
 view : Model -> Html Msg
 view model =
+    case model.step of
+        Home ->
+            homeView model
+
+        Categories ->
+            case ( model.mode, model.place ) of
+                ( Just m, Just p ) ->
+                    categoriesView m p model
+
+                _ ->
+                    errorView "Missing mode or place"
+
+
+homeView : Model -> Html Msg
+homeView model =
     div []
         [ headerSection model
         , startSection model
         , featuresSection model
         , footerSection model
+        ]
+
+
+categoriesView : Mode -> Place -> Model -> Html Msg
+categoriesView m p model =
+    div []
+        [ headerSection model
+        , categoriesSection m p model.categories
+        , footerSection model
+        ]
+
+
+errorView : String -> Html Msg
+errorView msg =
+    div []
+        [ text ("Error: " ++ msg)
         ]
 
 
@@ -186,6 +258,80 @@ startSection model =
         ]
 
 
+categoriesSection : Mode -> Place -> Categories -> Html Msg
+categoriesSection mode place categories =
+    section [ class "section bg-light", id "categories" ]
+        [ div [ class "container" ]
+            [ div [ class "row" ]
+                [ div [ class "col-sm-12 text-center" ]
+                    [ categorySelectionTitle mode
+                    ]
+                ]
+            , div [ class "row" ]
+                [ div [ class "col-sm-12 text-center" ]
+                    [ h1 [ class "h1 w-full" ]
+                        [ text (placeDescription place)
+                        ]
+                    ]
+                ]
+            , div [ class "row", style [ ( "margin-top", "50px" ) ] ]
+                [ div [ class "col-sm-6" ]
+                    [ div [ class "country-preview indonesia" ] []
+                    ]
+                , div [ class "col-sm-6" ]
+                    [ ul [ class "categories" ]
+                        (List.map categoryListItemView categories)
+                    ]
+                ]
+            ]
+        ]
+
+
+categorySelectionTitle : Mode -> Html Msg
+categorySelectionTitle mode =
+    case mode of
+        FindMode ->
+            div []
+                [ h1 [ class "w-full" ]
+                    [ i [ class "pe-7s-search" ] [] ]
+                , h1 [ class "h1 w-full" ]
+                    [ text "Find" ]
+                , h4 [ class "w-full" ]
+                    [ text "What are you looking for?" ]
+                ]
+
+        RecommendMode ->
+            div []
+                [ h1 [ class "w-full" ]
+                    [ i [ class "pe-7s-pen" ] [] ]
+                , h1 [ class "h1 w-full" ]
+                    [ text "Recommend" ]
+                , h4 [ class "w-full" ]
+                    [ text "What would you like to recommend?" ]
+                ]
+
+
+categorySelectionPlace : Place -> Html Msg
+categorySelectionPlace place =
+    div []
+        [ h1 [ class "h1 w-full" ]
+            [ i [ class "pe-7s-map-marker" ] []
+            , text (placeDescription place)
+            ]
+        , div [ class "country-preview indonesia" ] []
+        ]
+
+
+categoryListItemView : Category -> Html Msg
+categoryListItemView cat =
+    li []
+        [ a []
+            [ i [ class cat.icon ] []
+            , text cat.name
+            ]
+        ]
+
+
 placeActionButtons : Model -> List (Html Msg)
 placeActionButtons model =
     case model.place of
@@ -196,9 +342,9 @@ placeActionButtons model =
             ]
 
         Just p ->
-            [ a [ class "btn btn-white-bordered" ] [ text "Find" ]
+            [ a [ class "btn btn-white-bordered", onClick Find ] [ text "Find" ]
             , span [] [ text " " ]
-            , a [ class "btn btn-white-bordered" ] [ text "Recommend" ]
+            , a [ class "btn btn-white-bordered", onClick Recommend ] [ text "Recommend" ]
             ]
 
 
@@ -367,6 +513,12 @@ update msg model =
 
         SelectPlace p ->
             ( { model | place = Just p, keywords = "" }, Cmd.none )
+
+        Find ->
+            ( { model | step = Categories, mode = Just FindMode }, Cmd.none )
+
+        Recommend ->
+            ( { model | step = Categories, mode = Just RecommendMode }, Cmd.none )
 
         WsMsg str ->
             ( model, Cmd.none )

@@ -1,3 +1,4 @@
+require('./images/indonesia.jpg')
 require('./images/bg1.jpg')
 require('./images/bg3.jpg')
 require('./images/favicon.ico')
