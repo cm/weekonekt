@@ -27,6 +27,7 @@ type alias Places =
 type alias Category =
     { name : String
     , icon : String
+    , description : String
     }
 
 
@@ -87,12 +88,12 @@ allPlaces =
 
 allCategories : Categories
 allCategories =
-    [ { name = "Accomodation", icon = "pe-7s-home" }
-    , { name = "Transportation", icon = "pe-7s-car" }
-    , { name = "Food & Beverage", icon = "pe-7s-wine" }
-    , { name = "Activities", icon = "pe-7s-photo" }
-    , { name = "Shopping", icon = "pe-7s-cart" }
-    , { name = "Health", icon = "pe-7s-like" }
+    [ { name = "Accomodation", icon = "pe-7s-home", description = "Hotels, appartments, B&Bs..." }
+    , { name = "Transportation", icon = "pe-7s-car", description = "Local drivers, Buses, trains..." }
+    , { name = "Food & Beverage", icon = "pe-7s-wine", description = "Restaurants, Bars, pubs, lounges..." }
+    , { name = "Activities", icon = "pe-7s-photo", description = "Sightseeing, sports, guided tours..." }
+    , { name = "Shopping", icon = "pe-7s-cart", description = "Goods, traditional clothing, local art..." }
+    , { name = "Health", icon = "pe-7s-like", description = "Spas, well-being, relaxation..." }
     ]
 
 
@@ -265,22 +266,18 @@ categoriesSection mode place categories =
             [ div [ class "row" ]
                 [ div [ class "col-sm-12 text-center" ]
                     [ categorySelectionTitle mode
-                    ]
-                ]
-            , div [ class "row" ]
-                [ div [ class "col-sm-12 text-center" ]
-                    [ h1 [ class "h1 w-full" ]
+                    , h1 [ class "h1 w-full" ]
                         [ text (placeDescription place)
                         ]
                     ]
                 ]
-            , div [ class "row", style [ ( "margin-top", "50px" ) ] ]
-                [ div [ class "col-sm-6" ]
-                    [ div [ class "country-preview indonesia" ] []
-                    ]
-                , div [ class "col-sm-6" ]
-                    [ ul [ class "categories" ]
-                        (List.map categoryListItemView categories)
+            , div [ class "row" ]
+                (List.map categoryListItemView categories)
+            , div [ class "row" ]
+                [ div [ class "col-sm-12 text-center" ]
+                    [ a [ class "btn btn-custom" ]
+                        [ text " Change destination"
+                        ]
                     ]
                 ]
             ]
@@ -292,42 +289,28 @@ categorySelectionTitle mode =
     case mode of
         FindMode ->
             div []
-                [ h1 [ class "w-full" ]
-                    [ i [ class "pe-7s-search" ] [] ]
-                , h1 [ class "h1 w-full" ]
+                [ h1 [ class "h1 font-light w-full" ]
                     [ text "Find" ]
-                , h4 [ class "w-full" ]
+                , h4 [ class "font-light w-full" ]
                     [ text "What are you looking for?" ]
                 ]
 
         RecommendMode ->
             div []
-                [ h1 [ class "w-full" ]
-                    [ i [ class "pe-7s-pen" ] [] ]
-                , h1 [ class "h1 w-full" ]
+                [ h1 [ class "h1 font-light w-full" ]
                     [ text "Recommend" ]
-                , h4 [ class "w-full" ]
+                , h4 [ class "font-light w-full" ]
                     [ text "What would you like to recommend?" ]
                 ]
 
 
-categorySelectionPlace : Place -> Html Msg
-categorySelectionPlace place =
-    div []
-        [ h1 [ class "h1 w-full" ]
-            [ i [ class "pe-7s-map-marker" ] []
-            , text (placeDescription place)
-            ]
-        , div [ class "country-preview indonesia" ] []
-        ]
-
-
 categoryListItemView : Category -> Html Msg
 categoryListItemView cat =
-    li []
-        [ a []
+    div [ class "col-sm-4" ]
+        [ div [ class "features-box" ]
             [ i [ class cat.icon ] []
-            , text cat.name
+            , h4 [] [ text cat.name ]
+            , p [ class "text-muted" ] [ text cat.description ]
             ]
         ]
 
