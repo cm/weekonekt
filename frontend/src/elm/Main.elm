@@ -35,6 +35,38 @@ type alias Categories =
     List Category
 
 
+type alias User =
+    { first : String
+    , last : String
+    , location : Place
+    , photo : String
+    }
+
+
+type alias Users =
+    List User
+
+
+type alias Recommendation =
+    { interest : Interest
+    , author : User
+    , score : Int
+    , highlights : String
+    }
+
+
+type alias Recommendations =
+    List Recommendation
+
+
+type alias Interest =
+    { name : String
+    , description : String
+    , place : Place
+    , category : Category
+    }
+
+
 type Step
     = Home
     | Categories
@@ -54,6 +86,8 @@ type alias Model =
     , place : Maybe Place
     , categories : Categories
     , category : Maybe Category
+    , users : Users
+    , recommendations : Recommendations
     }
 
 
@@ -72,6 +106,8 @@ initModel flags =
     , place = Nothing
     , categories = allCategories
     , category = Nothing
+    , users = allUsers
+    , recommendations = allRecommendations
     }
 
 
@@ -97,6 +133,30 @@ allCategories =
     ]
 
 
+kuta : Place
+kuta =
+    { country = "Indonesia", area = "Bali", location = "Kuta" }
+
+
+marcos : User
+marcos =
+    { first = "Marcos"
+    , last = "Modino"
+    , location = kuta
+    , photo = "marcos.jpg"
+    }
+
+
+allUsers : Users
+allUsers =
+    [ marcos ]
+
+
+allRecommendations : Recommendations
+allRecommendations =
+    []
+
+
 encodeText : String -> String
 encodeText str =
     Json.Encode.encode 0
@@ -117,6 +177,7 @@ type Msg
     | SelectPlace Place
     | Find
     | Recommend
+    | BackHome
     | WsMsg String
     | WsPing
 
@@ -275,7 +336,7 @@ categoriesSection mode place categories =
                 (List.map categoryListItemView categories)
             , div [ class "row" ]
                 [ div [ class "col-sm-12 text-center" ]
-                    [ a [ class "btn btn-custom" ]
+                    [ a [ class "btn btn-custom", onClick BackHome ]
                         [ text " Change destination"
                         ]
                     ]
@@ -309,7 +370,9 @@ categoryListItemView cat =
     div [ class "col-sm-4" ]
         [ div [ class "features-box" ]
             [ i [ class cat.icon ] []
-            , h4 [] [ text cat.name ]
+            , h4 []
+                [ a [] [ text cat.name ]
+                ]
             , p [ class "text-muted" ] [ text cat.description ]
             ]
         ]
@@ -414,7 +477,7 @@ featuresSection model =
                         [ span []
                             [ text "weeKonekt" ]
                         , text
-                            " enables travellers and local citizens to share their recommendations about their past travel experiences or local favourite spots"
+                            " enables travellers and local citizens to share their recommendations about their past travel experiences and local favourite spots"
                         ]
                     ]
                 ]
@@ -459,7 +522,7 @@ featuresSection model =
                 , div [ class "col-sm-4" ]
                     [ div [ class "features-box" ]
                         [ i [ class "pe-7s-cash" ] []
-                        , h4 [] [ text "Monetarize your experience" ]
+                        , h4 [] [ text "Sell your experience" ]
                         , p [ class "text-muted" ] [ text "Are you liking recommendations? Are your recommendations being liked? Are you giving advice to future travellers? Get paid for it!" ]
                         ]
                     ]
@@ -496,6 +559,9 @@ update msg model =
 
         SelectPlace p ->
             ( { model | place = Just p, keywords = "" }, Cmd.none )
+
+        BackHome ->
+            ( { model | step = Home, mode = Nothing, keywords = "", place = Nothing }, Cmd.none )
 
         Find ->
             ( { model | step = Categories, mode = Just FindMode }, Cmd.none )

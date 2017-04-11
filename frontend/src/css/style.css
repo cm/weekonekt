@@ -467,6 +467,10 @@ iframe {
   font-size: 48px;
 }
 
+a {
+  cursor: pointer;
+}
+
 
 
 /* ==== 8.Pricing === */
@@ -940,30 +944,6 @@ a.disabled {
 
 #categories {
   padding-top: 150px;
-  min-height: 900px;
-  height: 900px;
-}
-
-ul.categories {
-  list-style: none;
-  padding-left: 0;
-  line-height: 28px;
-  font-size: 18px;
-}
-
-ul.categories li {
-  padding: 5px;
-}
-
-ul.categories li a {
-  width: 100%;
-  display: inline-block;
-  cursor: pointer;
-}
-
-ul.categories li i {
-  margin-right: 5px;
-  font-size: 26px;
 }
 
 .country-preview {
