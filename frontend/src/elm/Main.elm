@@ -52,6 +52,7 @@ type alias Recommendation =
     , author : User
     , score : Int
     , highlights : String
+    , photos : Photos
     }
 
 
@@ -65,6 +66,17 @@ type alias Interest =
     , place : Place
     , category : Category
     }
+
+
+type alias Photo =
+    { title : String
+    , data : String
+    , description : String
+    }
+
+
+type alias Photos =
+    List Photo
 
 
 type Step
@@ -167,11 +179,16 @@ interest1 =
     }
 
 
+somePhotos : Photos
+somePhotos =
+    [ { title = "Photo 1", description = "This is a photo", data = "images/indonesia.jpg" } ]
+
+
 allRecommendations : Recommendations
 allRecommendations =
-    [ { interest = interest1, author = marcos, score = 10, highlights = "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable." }
-    , { interest = interest1, author = marcos, score = 10, highlights = "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable." }
-    , { interest = interest1, author = marcos, score = 10, highlights = "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable." }
+    [ { interest = interest1, author = marcos, score = 10, highlights = "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.", photos = somePhotos }
+    , { interest = interest1, author = marcos, score = 10, highlights = "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.", photos = somePhotos }
+    , { interest = interest1, author = marcos, score = 10, highlights = "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.", photos = somePhotos }
     ]
 
 
@@ -449,6 +466,8 @@ recommendationItemView r =
             , p [] [ text r.interest.name ]
             , p [] [ text r.interest.description ]
             , p [ class "text-muted" ] [ text r.highlights ]
+            , p []
+                (List.map photoPreview r.photos)
             , p [ class "text-center" ]
                 [ a []
                     [ text "More ..."
@@ -468,6 +487,12 @@ recommendationItemView r =
                 ]
             ]
         ]
+
+
+photoPreview : Photo -> Html Msg
+photoPreview photo =
+    div [ class "col-md-4" ]
+        [ img [ src photo.data ] [] ]
 
 
 placeActionButtons : Model -> List (Html Msg)

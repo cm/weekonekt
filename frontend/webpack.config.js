@@ -26,9 +26,9 @@ const config = {
   plugins: [
     new webpack.NamedModulesPlugin(),
     new webpack.ProvidePlugin(aliases),
-    //new copy([
-    //  { from: "img/home/slider", to: "img/slider"}
-    //])
+    new copy([
+      { from: "./images", to: "images"}
+    ])
   ],
   module: {
     rules: [
