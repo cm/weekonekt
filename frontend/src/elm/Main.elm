@@ -70,6 +70,7 @@ type alias Interest =
 type Step
     = Home
     | Categories
+    | Recommendations
 
 
 type Mode
@@ -122,9 +123,14 @@ allPlaces =
     ]
 
 
+accomodation : Category
+accomodation =
+    { name = "Accomodation", icon = "pe-7s-home", description = "Hotels, appartments, B&Bs..." }
+
+
 allCategories : Categories
 allCategories =
-    [ { name = "Accomodation", icon = "pe-7s-home", description = "Hotels, appartments, B&Bs..." }
+    [ accomodation
     , { name = "Transportation", icon = "pe-7s-car", description = "Local drivers, Buses, trains..." }
     , { name = "Food & Beverage", icon = "pe-7s-wine", description = "Restaurants, Bars, pubs, lounges..." }
     , { name = "Activities", icon = "pe-7s-photo", description = "Sightseeing, sports, guided tours..." }
@@ -143,7 +149,7 @@ marcos =
     { first = "Marcos"
     , last = "Modino"
     , location = kuta
-    , photo = "marcos.jpg"
+    , photo = "data:image/jpeg;base64,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"
     }
 
 
@@ -152,9 +158,21 @@ allUsers =
     [ marcos ]
 
 
+interest1 : Interest
+interest1 =
+    { name = "Interest1"
+    , description = "Something really interesting"
+    , place = kuta
+    , category = accomodation
+    }
+
+
 allRecommendations : Recommendations
 allRecommendations =
-    []
+    [ { interest = interest1, author = marcos, score = 10, highlights = "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable." }
+    , { interest = interest1, author = marcos, score = 10, highlights = "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable." }
+    , { interest = interest1, author = marcos, score = 10, highlights = "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable." }
+    ]
 
 
 encodeText : String -> String
@@ -175,6 +193,7 @@ type Msg
     = NoOp
     | Keywords String
     | SelectPlace Place
+    | SelectCategory Category
     | Find
     | Recommend
     | BackHome
@@ -196,6 +215,14 @@ view model =
                 _ ->
                     errorView "Missing mode or place"
 
+        Recommendations ->
+            case ( model.mode, model.place, model.category ) of
+                ( Just m, Just p, Just c ) ->
+                    recommendationsView m p c model
+
+                _ ->
+                    errorView "Missing modei, place or category"
+
 
 homeView : Model -> Html Msg
 homeView model =
@@ -212,6 +239,15 @@ categoriesView m p model =
     div []
         [ headerSection model
         , categoriesSection m p model.categories
+        , footerSection model
+        ]
+
+
+recommendationsView : Mode -> Place -> Category -> Model -> Html Msg
+recommendationsView m p c model =
+    div []
+        [ headerSection model
+        , recommendationsSection m p c model.recommendations
         , footerSection model
         ]
 
@@ -350,7 +386,7 @@ categorySelectionTitle mode =
     case mode of
         FindMode ->
             div []
-                [ h1 [ class "h1 font-light w-full" ]
+                [ h3 [ class "title font-light" ]
                     [ text "Find" ]
                 , h4 [ class "font-light w-full" ]
                     [ text "What are you looking for?" ]
@@ -358,7 +394,7 @@ categorySelectionTitle mode =
 
         RecommendMode ->
             div []
-                [ h1 [ class "h1 font-light w-full" ]
+                [ h3 [ class "title font-light" ]
                     [ text "Recommend" ]
                 , h4 [ class "font-light w-full" ]
                     [ text "What would you like to recommend?" ]
@@ -371,9 +407,65 @@ categoryListItemView cat =
         [ div [ class "features-box" ]
             [ i [ class cat.icon ] []
             , h4 []
-                [ a [] [ text cat.name ]
+                [ a [ onClick (SelectCategory cat) ] [ text cat.name ]
                 ]
             , p [ class "text-muted" ] [ text cat.description ]
+            ]
+        ]
+
+
+recommendationsSection : Mode -> Place -> Category -> Recommendations -> Html Msg
+recommendationsSection mode place c recommendations =
+    section [ class "section bg-light", id "recommendations" ]
+        [ div [ class "container" ]
+            [ div [ class "row" ]
+                [ div [ class "col-sm-12 text-center" ]
+                    [ h3 [ class "title font-light" ]
+                        [ text c.name
+                        , text " in "
+                        , text (placeDescription place)
+                        ]
+                    , h1 [ class "title" ] [ text "Top recommendations" ]
+                    , p [ class "text-muted sub-title" ]
+                        [ text "You can refine your search by tweaking some "
+                        , a [] [ text "options" ]
+                        ]
+                    ]
+                ]
+            , div [ class "row" ]
+                (List.map recommendationItemView recommendations)
+            ]
+        ]
+
+
+recommendationItemView : Recommendation -> Html Msg
+recommendationItemView r =
+    div [ class "col-md-4" ]
+        [ div [ class "testimonial-description text-left" ]
+            [ p [ class "pull-right" ]
+                [ i [ class "pe-7s-star" ] []
+                , text (" " ++ (toString r.score))
+                ]
+            , p [] [ text r.interest.name ]
+            , p [] [ text r.interest.description ]
+            , p [ class "text-muted" ] [ text r.highlights ]
+            , p [ class "text-center" ]
+                [ a []
+                    [ text "More ..."
+                    ]
+                ]
+            ]
+        , div [ class "testimonial-user-info user-info text-left" ]
+            [ div [ class "testimonial-user-thumb user-thumb" ]
+                [ img [ src r.author.photo, alt "user-thumb" ]
+                    []
+                ]
+            , div [ class "testimonial-user-txt user-text" ]
+                [ label [ class "testimonial-user-name user-name" ]
+                    [ text r.author.first ]
+                , p [ class "testimonial-user-position user-position text-muted" ]
+                    [ text r.author.location.location ]
+                ]
             ]
         ]
 
@@ -559,6 +651,9 @@ update msg model =
 
         SelectPlace p ->
             ( { model | place = Just p, keywords = "" }, Cmd.none )
+
+        SelectCategory c ->
+            ( { model | step = Recommendations, category = Just c }, Cmd.none )
 
         BackHome ->
             ( { model | step = Home, mode = Nothing, keywords = "", place = Nothing }, Cmd.none )

@@ -573,7 +573,7 @@ a {
 .testimonial-description p {
   line-height: 24px;
   font-size: 14px;
-  font-style: italic;
+  /* font-style: italic; */
 }
 
 .testimonial-user-thumb img{
@@ -942,7 +942,7 @@ a.disabled {
   opacity: 0.2 !important;
 }
 
-#categories {
+#categories, #recommendations {
   padding-top: 150px;
 }
 
