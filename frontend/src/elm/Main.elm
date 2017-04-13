@@ -6,6 +6,10 @@ import Html.Attributes exposing (..)
 import Html.Attributes.Aria exposing (..)
 import WebSocket exposing (..)
 import Json.Encode exposing (..)
+import Task
+import Process
+import Time
+import Array
 
 
 type alias Flags =
@@ -53,6 +57,7 @@ type alias Recommendation =
     , score : Int
     , highlights : String
     , photos : Photos
+    , currentPhoto : Int
     }
 
 
@@ -181,14 +186,18 @@ interest1 =
 
 somePhotos : Photos
 somePhotos =
-    [ { title = "Photo 1", description = "This is a photo", data = "images/indonesia.jpg" } ]
+    [ { title = "Photo 1", description = "This is a photo", data = "images/indonesia1.jpg" }
+    , { title = "Photo 2", description = "This is a photo", data = "images/indonesia2.jpg" }
+    , { title = "Photo 3", description = "This is a photo", data = "images/indonesia3.jpg" }
+    ]
 
 
 allRecommendations : Recommendations
 allRecommendations =
-    [ { interest = interest1, author = marcos, score = 10, highlights = "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.", photos = somePhotos }
-    , { interest = interest1, author = marcos, score = 10, highlights = "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.", photos = somePhotos }
-    , { interest = interest1, author = marcos, score = 10, highlights = "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.", photos = somePhotos }
+    [ { interest = interest1, author = marcos, score = 10, highlights = "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.", photos = somePhotos, currentPhoto = 0 }
+    , { interest = interest1, author = marcos, score = 10, highlights = "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.", photos = somePhotos, currentPhoto = 0 }
+    , { interest = interest1, author = marcos, score = 10, highlights = "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.", photos = somePhotos, currentPhoto = 0 }
+    , { interest = interest1, author = marcos, score = 10, highlights = "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.", photos = somePhotos, currentPhoto = 0 }
     ]
 
 
@@ -216,6 +225,13 @@ type Msg
     | BackHome
     | WsMsg String
     | WsPing
+    | NextSlide
+
+
+nextSlide : Cmd Msg
+nextSlide =
+    Process.sleep (5 * Time.second)
+        |> Task.perform (\_ -> NextSlide)
 
 
 view : Model -> Html Msg
@@ -466,8 +482,10 @@ recommendationItemView r =
             , p [] [ text r.interest.name ]
             , p [] [ text r.interest.description ]
             , p [ class "text-muted" ] [ text r.highlights ]
-            , p []
-                (List.map photoPreview r.photos)
+            , p [ class "photo-show" ]
+                (recommendationPhotos
+                    r
+                )
             , p [ class "text-center" ]
                 [ a []
                     [ text "More ..."
@@ -489,10 +507,40 @@ recommendationItemView r =
         ]
 
 
-photoPreview : Photo -> Html Msg
-photoPreview photo =
-    div [ class "col-md-4" ]
-        [ img [ src photo.data ] [] ]
+recommendationPhotos : Recommendation -> List (Html Msg)
+recommendationPhotos r =
+    r.photos
+        |> Array.fromList
+        |> Array.toIndexedList
+        |> List.reverse
+        |> List.map
+            (\( i, photo ) ->
+                let
+                    ( visibility, positioning ) =
+                        ( photoVisibility i r.currentPhoto, photoPositioning i )
+                in
+                    img [ class ("photo-preview photo-preview-" ++ visibility ++ " photo-preview-" ++ positioning), src photo.data ] []
+            )
+
+
+photoVisibility : Int -> Int -> String
+photoVisibility i1 i2 =
+    case i1 == i2 of
+        True ->
+            "shown"
+
+        False ->
+            "hidden"
+
+
+photoPositioning : Int -> String
+photoPositioning i =
+    case i of
+        0 ->
+            "relative"
+
+        _ ->
+            "absolute"
 
 
 placeActionButtons : Model -> List (Html Msg)
@@ -678,7 +726,7 @@ update msg model =
             ( { model | place = Just p, keywords = "" }, Cmd.none )
 
         SelectCategory c ->
-            ( { model | step = Recommendations, category = Just c }, Cmd.none )
+            ( { model | step = Recommendations, category = Just c }, nextSlide )
 
         BackHome ->
             ( { model | step = Home, mode = Nothing, keywords = "", place = Nothing }, Cmd.none )
@@ -689,11 +737,33 @@ update msg model =
         Recommend ->
             ( { model | step = Categories, mode = Just RecommendMode }, Cmd.none )
 
+        NextSlide ->
+            case model.step of
+                Recommendations ->
+                    ( { model | recommendations = (List.map showNextPhoto model.recommendations) }, nextSlide )
+
+                _ ->
+                    ( model, Cmd.none )
+
         WsMsg str ->
             ( model, Cmd.none )
 
         WsPing ->
             ( model, WebSocket.send (wsUrl model.flags) (encodeText "Hello there") )
+
+
+showNextPhoto : Recommendation -> Recommendation
+showNextPhoto r =
+    let
+        ( i, max ) =
+            ( r.currentPhoto, (List.length r.photos) - 1 )
+    in
+        case i == max of
+            True ->
+                { r | currentPhoto = 0 }
+
+            False ->
+                { r | currentPhoto = i + 1 }
 
 
 subscriptions : Model -> Sub Msg
