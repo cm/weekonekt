@@ -39,6 +39,26 @@ type alias Categories =
     List Category
 
 
+type alias CategoryOption =
+    { name : String
+    , choices : CategoryOptionChoices
+    }
+
+
+type alias CategoryOptions =
+    List CategoryOption
+
+
+type alias CategoryOptionChoice =
+    { name : String
+    , selected : Bool
+    }
+
+
+type alias CategoryOptionChoices =
+    List CategoryOptionChoice
+
+
 type alias User =
     { first : String
     , last : String
@@ -109,6 +129,8 @@ type alias Model =
     , recommendations : Recommendations
     , otherRecommendations : Recommendations
     , recommendation : Maybe Recommendation
+    , showOptions : Bool
+    , categoryOptions : CategoryOptions
     }
 
 
@@ -131,7 +153,42 @@ initModel flags =
     , recommendations = allRecommendations
     , otherRecommendations = allRecommendations
     , recommendation = Nothing
+    , showOptions = False
+    , categoryOptions = allCategoryOptions
     }
+
+
+allCategoryOptions : CategoryOptions
+allCategoryOptions =
+    [ { name = "Option 1"
+      , choices =
+            [ { name = "Value A", selected = False }
+            , { name = "Value B", selected = True }
+            , { name = "Value C", selected = False }
+            ]
+      }
+    , { name = "Option 2"
+      , choices =
+            [ { name = "Value D", selected = False }
+            , { name = "Value E", selected = True }
+            , { name = "Value F", selected = False }
+            ]
+      }
+    , { name = "Option 3"
+      , choices =
+            [ { name = "Value G", selected = False }
+            , { name = "Value H", selected = True }
+            , { name = "Value I", selected = False }
+            ]
+      }
+    , { name = "Option 4"
+      , choices =
+            [ { name = "Value J", selected = False }
+            , { name = "Value K", selected = True }
+            , { name = "Value L", selected = False }
+            ]
+      }
+    ]
 
 
 allPlaces : Places
@@ -223,6 +280,8 @@ wsUrl flags =
 type Msg
     = NoOp
     | Keywords String
+    | ToggleOptions
+    | ToggleChoice CategoryOption CategoryOptionChoice
     | SelectPlace Place
     | SelectCategory Category
     | SelectInterest Recommendation
@@ -295,7 +354,7 @@ recommendationsView : Mode -> Place -> Category -> Model -> Html Msg
 recommendationsView m p c model =
     div []
         [ headerSection model
-        , recommendationsSection m p c model.recommendations
+        , recommendationsSection m p c model
         , footerSection model
         ]
 
@@ -471,8 +530,8 @@ categoryListItemView cat =
         ]
 
 
-recommendationsSection : Mode -> Place -> Category -> Recommendations -> Html Msg
-recommendationsSection mode place c recommendations =
+recommendationsSection : Mode -> Place -> Category -> Model -> Html Msg
+recommendationsSection mode place c model =
     section [ class "section bg-light", id "recommendations" ]
         [ div [ class "container" ]
             [ div [ class "row" ]
@@ -484,15 +543,113 @@ recommendationsSection mode place c recommendations =
                         ]
                     , h1 [ class "title" ] [ text "Top recommendations" ]
                     , p [ class "text-muted sub-title" ]
-                        [ text "You can refine your search by tweaking some "
-                        , a [] [ text "options" ]
+                        [ a [ class "btn btn-custom", onClick ToggleOptions ] [ text (toggleOptionsLabel model) ]
                         ]
                     ]
                 ]
+            , optionsView model
             , div [ class "row" ]
-                (List.map recommendationView recommendations)
+                (List.map recommendationView model.recommendations)
             ]
         ]
+
+
+toggleOptionsLabel : Model -> String
+toggleOptionsLabel model =
+    case model.showOptions of
+        True ->
+            "Hide options"
+
+        False ->
+            "Show options"
+
+
+optionsView : Model -> Html Msg
+optionsView model =
+    case model.showOptions of
+        False ->
+            div [ class "row" ] []
+
+        True ->
+            div [ class "row dark" ]
+                [ div [ class "col-md-12" ]
+                    [ div [ class "row" ]
+                        []
+                    , div [ class "row" ]
+                        (List.map categoryOptionView model.categoryOptions)
+                    ]
+                ]
+
+
+categoryOptionView : CategoryOption -> Html Msg
+categoryOptionView option =
+    article [ class "pricing-column col-lg-3 col-md-3" ]
+        [ div [ class "inner-box" ]
+            [ div [ class "plan-header text-center" ]
+                [ h3 [ class "font-light" ] [ text option.name ] ]
+            , ul [ class "plan-stats list-unstyled text-center" ]
+                (List.map
+                    (\c ->
+                        li []
+                            [ a [ onClick (ToggleChoice option c), class ("btn btn-inverse-fill " ++ (optionChoiceButtonStyle c)) ]
+                                [ text c.name
+                                ]
+                            ]
+                    )
+                    option.choices
+                )
+            ]
+        ]
+
+
+optionChoiceButtonStyle : CategoryOptionChoice -> String
+optionChoiceButtonStyle c =
+    case c.selected of
+        True ->
+            "selected"
+
+        False ->
+            ""
+
+
+newOptions : CategoryOptions -> CategoryOption -> CategoryOptionChoice -> CategoryOptions
+newOptions options opt c =
+    let
+        newOpt =
+            replaceChoice opt c
+    in
+        replaceOption options newOpt
+
+
+replaceChoice : CategoryOption -> CategoryOptionChoice -> CategoryOption
+replaceChoice opt c =
+    { opt
+        | choices =
+            List.map
+                (\c1 ->
+                    case c1.name == c.name of
+                        True ->
+                            c
+
+                        False ->
+                            c1
+                )
+                opt.choices
+    }
+
+
+replaceOption : CategoryOptions -> CategoryOption -> CategoryOptions
+replaceOption options opt =
+    List.map
+        (\o1 ->
+            case o1.name == opt.name of
+                True ->
+                    opt
+
+                False ->
+                    o1
+        )
+        options
 
 
 recommendationViewWithAuthor : String -> Recommendation -> Html Msg
@@ -804,6 +961,12 @@ update msg model =
 
         SelectCategory c ->
             ( { model | step = Recommendations, category = Just c }, slideShow )
+
+        ToggleOptions ->
+            ( { model | showOptions = not (model.showOptions) }, slideShow )
+
+        ToggleChoice opt c ->
+            ( { model | categoryOptions = (newOptions model.categoryOptions opt { c | selected = not (c.selected) }) }, slideShow )
 
         SelectInterest r ->
             ( { model | step = Interests, recommendation = Just r }, slideShow )

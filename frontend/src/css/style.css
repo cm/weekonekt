@@ -178,6 +178,41 @@ a:hover,a:focus,.a:active {
   color: #ffffff !important;
 }
 
+.btn-inverse-fill {
+  padding: 8px 24px !important;
+  background-color: transparent;
+  border: 2px solid #95A8B7 !important;
+  border-radius: 50px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #95A8B7 !important;
+}
+
+.btn-inverse-fill:hover, .btn-inverse-fill.selected {
+  border: 2px solid rgba(255, 255, 255, 0.75) !important;
+  background-color: #ffffff;
+  color: #2f3e47 !important;
+}
+
+.btn-inverse-fill.selected:hover {
+  border: 2px solid #95A8B7 !important;
+  background-color: transparent; 
+  color: #95A8B7 !important;
+}
+
+
+
+.btn-inverse-fill:hover {
+  border: 2px solid rgba(255, 255, 255, 0.75) !important;
+  background-color: #ffffff;
+  color: #2f3e47 !important;
+}
+
+
+
+
+
 .btn-white-bordered {
   padding: 8px 24px !important;
   background-color: transparent !important;
@@ -1000,3 +1035,17 @@ a.disabled {
 .user-score {
   font-size: 24px;
 }
+
+.row.dark {
+  background-color: #2f3e47;
+  border-radius: 5px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.pricing-column {
+  color:  #95A8B7;
+} 
+
