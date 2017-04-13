@@ -88,6 +88,7 @@ type Step
     = Home
     | Categories
     | Recommendations
+    | Interests
 
 
 type Mode
@@ -106,6 +107,8 @@ type alias Model =
     , category : Maybe Category
     , users : Users
     , recommendations : Recommendations
+    , otherRecommendations : Recommendations
+    , recommendation : Maybe Recommendation
     }
 
 
@@ -126,6 +129,8 @@ initModel flags =
     , category = Nothing
     , users = allUsers
     , recommendations = allRecommendations
+    , otherRecommendations = allRecommendations
+    , recommendation = Nothing
     }
 
 
@@ -220,16 +225,18 @@ type Msg
     | Keywords String
     | SelectPlace Place
     | SelectCategory Category
+    | SelectInterest Recommendation
     | Find
     | Recommend
     | BackHome
+    | BackOne
     | WsMsg String
     | WsPing
     | NextSlide
 
 
-nextSlide : Cmd Msg
-nextSlide =
+slideShow : Cmd Msg
+slideShow =
     Process.sleep (5 * Time.second)
         |> Task.perform (\_ -> NextSlide)
 
@@ -256,6 +263,14 @@ view model =
                 _ ->
                     errorView "Missing modei, place or category"
 
+        Interests ->
+            case ( model.mode, model.place, model.category, model.recommendation ) of
+                ( Just m, Just p, Just c, Just r ) ->
+                    interestView m p c r model
+
+                _ ->
+                    errorView "Missing modei, place, category or recommendation"
+
 
 homeView : Model -> Html Msg
 homeView model =
@@ -281,6 +296,15 @@ recommendationsView m p c model =
     div []
         [ headerSection model
         , recommendationsSection m p c model.recommendations
+        , footerSection model
+        ]
+
+
+interestView : Mode -> Place -> Category -> Recommendation -> Model -> Html Msg
+interestView m p c r model =
+    div []
+        [ headerSection model
+        , interestSection m p c r model.otherRecommendations
         , footerSection model
         ]
 
@@ -466,20 +490,50 @@ recommendationsSection mode place c recommendations =
                     ]
                 ]
             , div [ class "row" ]
-                (List.map recommendationItemView recommendations)
+                (List.map recommendationView recommendations)
             ]
         ]
 
 
-recommendationItemView : Recommendation -> Html Msg
-recommendationItemView r =
+recommendationViewWithAuthor : String -> Recommendation -> Html Msg
+recommendationViewWithAuthor style r =
+    div [ class style ]
+        [ div [ class "testimonial-description text-left" ]
+            [ div [ class "testimonial-user-info user-info text-left" ]
+                [ div [ class "user-score pull-right" ]
+                    [ i [ class "pe-7s-star" ] []
+                    , text (" " ++ (toString r.score))
+                    ]
+                , div [ class "testimonial-user-thumb user-thumb" ]
+                    [ img [ src r.author.photo, alt "user-thumb" ]
+                        []
+                    ]
+                , div [ class "testimonial-user-txt user-text" ]
+                    [ label [ class "testimonial-user-name user-name" ]
+                        [ text r.author.first ]
+                    , p [ class "testimonial-user-position user-position text-muted" ]
+                        [ text r.author.location.location ]
+                    ]
+                ]
+            , p [ class "text-muted" ] [ text r.highlights ]
+            , p [ class "photo-show" ]
+                (recommendationPhotos
+                    r
+                )
+            , p [ class "text-center" ]
+                [ a [ class "btn btn-custom", onClick (SelectInterest r) ]
+                    [ text "More"
+                    ]
+                ]
+            ]
+        ]
+
+
+recommendationView : Recommendation -> Html Msg
+recommendationView r =
     div [ class "col-md-4" ]
         [ div [ class "testimonial-description text-left" ]
-            [ p [ class "pull-right" ]
-                [ i [ class "pe-7s-star" ] []
-                , text (" " ++ (toString r.score))
-                ]
-            , p [] [ text r.interest.name ]
+            [ p [] [ text r.interest.name ]
             , p [] [ text r.interest.description ]
             , p [ class "text-muted" ] [ text r.highlights ]
             , p [ class "photo-show" ]
@@ -487,21 +541,9 @@ recommendationItemView r =
                     r
                 )
             , p [ class "text-center" ]
-                [ a []
-                    [ text "More ..."
+                [ a [ class "btn btn-custom", onClick (SelectInterest r) ]
+                    [ text "Select this"
                     ]
-                ]
-            ]
-        , div [ class "testimonial-user-info user-info text-left" ]
-            [ div [ class "testimonial-user-thumb user-thumb" ]
-                [ img [ src r.author.photo, alt "user-thumb" ]
-                    []
-                ]
-            , div [ class "testimonial-user-txt user-text" ]
-                [ label [ class "testimonial-user-name user-name" ]
-                    [ text r.author.first ]
-                , p [ class "testimonial-user-position user-position text-muted" ]
-                    [ text r.author.location.location ]
                 ]
             ]
         ]
@@ -541,6 +583,41 @@ photoPositioning i =
 
         _ ->
             "absolute"
+
+
+interestSection : Mode -> Place -> Category -> Recommendation -> Recommendations -> Html Msg
+interestSection m place cat r other =
+    section [ class "section bg-light", id "interest" ]
+        [ div [ class "container" ]
+            [ div [ class "row" ]
+                [ div [ class "col-sm-12 text-center" ]
+                    [ h3 [ class "title font-light" ]
+                        [ text cat.name
+                        , text " in "
+                        , text (placeDescription place)
+                        ]
+                    , h1 [ class "title" ] [ text r.interest.name ]
+                    , p [ class "text-muted sub-title" ]
+                        [ text r.interest.description
+                        ]
+                    ]
+                ]
+            , div [ class "row" ]
+                [ recommendationViewWithAuthor "col-md-12 text-center" r ]
+            , div [ class "row" ]
+                (List.map (recommendationViewWithAuthor "col-md-4") other)
+            , div [ class "row" ]
+                [ div [ class "col-md-12 text-center nav-buttons" ]
+                    [ a [ class "btn btn-custom", onClick BackOne ]
+                        [ text "Go Back"
+                        ]
+                    , a [ class "btn btn-custom", onClick BackHome ]
+                        [ text "Change destination"
+                        ]
+                    ]
+                ]
+            ]
+        ]
 
 
 placeActionButtons : Model -> List (Html Msg)
@@ -726,10 +803,16 @@ update msg model =
             ( { model | place = Just p, keywords = "" }, Cmd.none )
 
         SelectCategory c ->
-            ( { model | step = Recommendations, category = Just c }, nextSlide )
+            ( { model | step = Recommendations, category = Just c }, slideShow )
+
+        SelectInterest r ->
+            ( { model | step = Interests, recommendation = Just r }, slideShow )
 
         BackHome ->
             ( { model | step = Home, mode = Nothing, keywords = "", place = Nothing }, Cmd.none )
+
+        BackOne ->
+            ( { model | step = Recommendations, recommendation = Nothing }, slideShow )
 
         Find ->
             ( { model | step = Categories, mode = Just FindMode }, Cmd.none )
@@ -740,7 +823,15 @@ update msg model =
         NextSlide ->
             case model.step of
                 Recommendations ->
-                    ( { model | recommendations = (List.map showNextPhoto model.recommendations) }, nextSlide )
+                    ( { model | recommendations = (List.map showNextPhoto model.recommendations) }, slideShow )
+
+                Interests ->
+                    ( { model
+                        | otherRecommendations = (List.map showNextPhoto model.otherRecommendations)
+                        , recommendation = (maybeShowNextPhoto model.recommendation)
+                      }
+                    , slideShow
+                    )
 
                 _ ->
                     ( model, Cmd.none )
@@ -750,6 +841,18 @@ update msg model =
 
         WsPing ->
             ( model, WebSocket.send (wsUrl model.flags) (encodeText "Hello there") )
+
+
+maybeShowNextPhoto : Maybe Recommendation -> Maybe Recommendation
+maybeShowNextPhoto rec =
+    case rec of
+        Nothing ->
+            Nothing
+
+        Just r ->
+            r
+                |> showNextPhoto
+                |> Just
 
 
 showNextPhoto : Recommendation -> Recommendation
