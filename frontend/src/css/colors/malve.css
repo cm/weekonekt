@@ -12,7 +12,7 @@
   border: 2px solid #52587f !important;
 }
 
-.intro-form input:focus {
+.intro-form input:focus, .intro-form textarea:focus {
   border: 1px solid #52587f;
 }
 

@@ -899,7 +899,13 @@ textarea.form-control {
   box-shadow: 0px 22px 45px -15px rgba(0,0,0,0.5) !important;
 }
 
-.intro-form h3{
+.dark, .intro-form-2 {
+  box-shadow: 0px 22px 45px -30px rgba(0, 0, 0, 0.3) !important; 
+  -webkit-box-shadow: 0px 22px 45px -30px rgba(0, 0, 0, 0.3) !important; 
+  -moz-box-shadow: 0px 22px 45px -30px rgba(0, 0, 0, 0.3) !important; 
+}
+
+.intro-form h3 {
   color: #949799;
   font-size: 20px;
   font-weight: 600;
@@ -908,7 +914,17 @@ textarea.form-control {
   margin-top: 0px;
 }
 
-.intro-form input {
+.dark h3 {
+  color: #95A8B7;
+  font-size: 20px;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  margin-top: 10px;
+
+}
+
+.intro-form input, .intro-form textarea {
   border: 1px solid #eee;
   height: 38px;
   box-shadow: none !important;
@@ -1067,6 +1083,10 @@ a.disabled {
   margin-top: 10px;
 }
 
+.margin-top-30 {
+  margin-top: 30px;
+}
+
 .user-actions a {
   display: block;
   margin-top: 5px;
@@ -1103,4 +1123,8 @@ a.disabled {
 #sticky-nav-sticky-wrapper {
   padding-top: 25px;
   min-height: 92px;
+}
+
+a.btn {
+  margin-right: 5px;
 }

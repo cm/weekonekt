@@ -80,6 +80,7 @@ type alias Recommendation =
     , photos : Photos
     , currentPhoto : Int
     , aspects : RecommendationAspects
+    , isNew : Bool
     }
 
 
@@ -124,6 +125,9 @@ type Step
     | Recommendations
     | Interests
     | SingleRecommendation
+    | NewRecommendation
+    | RecommendationSummary
+    | Error
 
 
 type Mode
@@ -147,7 +151,6 @@ type MessageStatus
     = New
     | Seen
     | Sending
-    | Error
 
 
 type alias Model =
@@ -319,11 +322,21 @@ allAspects =
 
 allRecommendations : Recommendations
 allRecommendations =
-    [ { interest = interest1, author = marcos, score = 10, highlights = "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.", photos = somePhotos, currentPhoto = 0, aspects = allAspects }
-    , { interest = interest1, author = marcos, score = 10, highlights = "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.", photos = somePhotos, currentPhoto = 0, aspects = allAspects }
-    , { interest = interest1, author = marcos, score = 10, highlights = "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.", photos = somePhotos, currentPhoto = 0, aspects = allAspects }
-    , { interest = interest1, author = marcos, score = 10, highlights = "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.", photos = somePhotos, currentPhoto = 0, aspects = allAspects }
+    [ { isNew = False, interest = interest1, author = marcos, score = 10, highlights = "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.", photos = somePhotos, currentPhoto = 0, aspects = allAspects }
+    , { isNew = False, interest = interest1, author = marcos, score = 10, highlights = "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.", photos = somePhotos, currentPhoto = 0, aspects = allAspects }
+    , { isNew = False, interest = interest1, author = marcos, score = 10, highlights = "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.", photos = somePhotos, currentPhoto = 0, aspects = allAspects }
+    , { isNew = False, interest = interest1, author = marcos, score = 10, highlights = "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.", photos = somePhotos, currentPhoto = 0, aspects = allAspects }
     ]
+
+
+newRecommendation : Place -> Category -> Recommendation
+newRecommendation place cat =
+    { isNew = True, interest = (newInterest place cat), author = marcos, score = 0, highlights = "", photos = [], currentPhoto = 0, aspects = allAspects }
+
+
+newInterest : Place -> Category -> Interest
+newInterest place cat =
+    { name = "", description = "", category = cat, place = place }
 
 
 encodeText : String -> String
@@ -350,6 +363,8 @@ type Msg
     | SelectCategory Category
     | SelectInterest Recommendation
     | SelectRecommendation Recommendation
+    | RecommendNew
+    | SaveRecommendation Recommendation
     | Find
     | Recommend
     | BackHome
@@ -368,6 +383,9 @@ slideShow =
 view : Model -> Html Msg
 view model =
     case model.step of
+        Error ->
+            errorView "Error in update"
+
         Home ->
             homeView model
 
@@ -399,6 +417,22 @@ view model =
             case ( model.mode, model.place, model.category, model.recommendation ) of
                 ( Just m, Just p, Just c, Just r ) ->
                     singleRecommendationView m p c r model
+
+                _ ->
+                    errorView "Missing mode, place, category or recommendation"
+
+        NewRecommendation ->
+            case ( model.mode, model.place, model.category, model.recommendation ) of
+                ( Just m, Just p, Just c, Just r ) ->
+                    newRecommendationView m p c r model
+
+                _ ->
+                    errorView "Missing mode, place, category or recommendation"
+
+        RecommendationSummary ->
+            case ( model.mode, model.place, model.category, model.recommendation ) of
+                ( Just m, Just p, Just c, Just r ) ->
+                    recommendationSummaryView m p c r model
 
                 _ ->
                     errorView "Missing mode, place, category or recommendation"
@@ -471,6 +505,28 @@ singleRecommendationView m p c r model =
         [ layoutView model
             [ headerSection model
             , singleRecommendationSection m p c r model
+            , footerSection model
+            ]
+        ]
+
+
+newRecommendationView : Mode -> Place -> Category -> Recommendation -> Model -> Html Msg
+newRecommendationView m p c r model =
+    div []
+        [ layoutView model
+            [ headerSection model
+            , newRecommendationSection m p c r model
+            , footerSection model
+            ]
+        ]
+
+
+recommendationSummaryView : Mode -> Place -> Category -> Recommendation -> Model -> Html Msg
+recommendationSummaryView m p c r model =
+    div []
+        [ layoutView model
+            [ headerSection model
+            , recommendationSummarySection m p c r model
             , footerSection model
             ]
         ]
@@ -686,14 +742,15 @@ recommendationsSection mode place c model =
         [ div [ class "my-container" ]
             [ div [ class "row" ]
                 [ div [ class "col-sm-12 text-center" ]
-                    [ h3 [ class "title font-light" ]
+                    [ h1 [ class "" ] [ text "Top recommendations" ]
+                    , h4 [ class "font-light" ]
                         [ text c.name
                         , text " in "
                         , text (placeDescription place)
                         ]
-                    , h1 [ class "title" ] [ text "Top recommendations" ]
                     , p [ class "text-muted sub-title" ]
                         [ a [ class "btn btn-custom", onClick ToggleOptions ] [ text (toggleOptionsLabel model) ]
+                        , addRecommendationView model
                         ]
                     ]
                 ]
@@ -714,6 +771,17 @@ recommendationsSection mode place c model =
         ]
 
 
+addRecommendationView : Model -> Html Msg
+addRecommendationView model =
+    case model.mode of
+        Just RecommendMode ->
+            a [ class "btn btn-custom", onClick RecommendNew ]
+                [ text "Recommend something new" ]
+
+        _ ->
+            text ""
+
+
 toggleOptionsLabel : Model -> String
 toggleOptionsLabel model =
     case model.showOptions of
@@ -731,22 +799,29 @@ optionsView model =
             div [ class "row" ] []
 
         True ->
-            div [ class "row dark" ]
+            optionsPanel "col-lg-3 col-md-3" model
+
+
+optionsPanel : String -> Model -> Html Msg
+optionsPanel style model =
+    div [ class "row dark" ]
+        [ div [ class "col-md-12" ]
+            [ div [ class "row" ]
                 [ div [ class "col-md-12" ]
-                    [ div [ class "row" ]
-                        []
-                    , div [ class "row" ]
-                        (List.map categoryOptionView model.categoryOptions)
-                    ]
+                    [ h3 [] [ text "Options" ] ]
                 ]
+            , div [ class "row" ]
+                (List.map (categoryOptionView style) model.categoryOptions)
+            ]
+        ]
 
 
-categoryOptionView : CategoryOption -> Html Msg
-categoryOptionView option =
-    article [ class "pricing-column col-lg-3 col-md-3" ]
+categoryOptionView : String -> CategoryOption -> Html Msg
+categoryOptionView style option =
+    article [ class ("pricing-column " ++ style) ]
         [ div [ class "inner-box" ]
             [ div [ class "plan-header text-center" ]
-                [ h3 [ class "font-light" ] [ text option.name ] ]
+                [ h4 [ class "font-light" ] [ text option.name ] ]
             , ul [ class "plan-stats list-unstyled text-center" ]
                 (List.map
                     (\c ->
@@ -992,6 +1067,125 @@ singleRecommendationSection m place c r model =
         ]
 
 
+newRecommendationSection : Mode -> Place -> Category -> Recommendation -> Model -> Html Msg
+newRecommendationSection m place c r model =
+    section [ class "section bg-light", id "new-recommendation" ]
+        [ div [ class "my-container" ]
+            (([ div [ class "row" ]
+                    [ div [ class "col-sm-12 text-center" ]
+                        [ h1 [ class "" ]
+                            [ text "New Recommendation" ]
+                        , h4 [ class "font-light" ]
+                            [ text c.name
+                            , text " in "
+                            , text (placeDescription place)
+                            ]
+                        ]
+                    ]
+              , (newRecommendationNameSection r)
+              , div [ class "row margin-top-30" ]
+                    [ div [ class "col-md-12 intro-form intro-form-2" ]
+                        [ h3 [ class "font-light" ]
+                            [ text "Highlights " ]
+                        , div [ class "form-group" ]
+                            [ textarea [ rows 5, class "form-control", placeholder "Please tell us what you liked the most" ] [] ]
+                        ]
+                    ]
+              , div [ class "row margin-top-30" ]
+                    [ div [ class "col-md-12" ]
+                        [ optionsPanel "col-lg-3 col-md-3" model ]
+                    ]
+              ]
+             )
+                ++ (List.map aspectFormView r.aspects)
+                ++ [ div [ class "row margin-top-30" ]
+                        [ div [ class "col-md-12 text-center" ]
+                            [ a [ onClick BackOne, class "btn btn-custom" ]
+                                [ text "Cancel" ]
+                            , a [ onClick (SaveRecommendation r), class "btn btn-custom" ]
+                                [ text "Save" ]
+                            ]
+                        ]
+                   ]
+            )
+        ]
+
+
+recommendationSummarySection : Mode -> Place -> Category -> Recommendation -> Model -> Html Msg
+recommendationSummarySection m place c r model =
+    section [ class "section bg-light", id "recommendation-summary" ]
+        [ div [ class "my-container" ]
+            [ div [ class "row" ]
+                [ div [ class "col-sm-12 text-center" ]
+                    [ h1 [ style [ ( "font-size", "48px" ) ] ]
+                        [ i [ class "pe-7s-smile" ] []
+                        ]
+                    , h4 [ class "font-light" ]
+                        [ text "Thank you for your recommendation about "
+                        , span []
+                            [ text r.interest.name
+                            ]
+                        ]
+                    , h4 [ class "font-light" ]
+                        [ text "Our team will revise your recommendation and we will publish it"
+                        , br [] []
+                        , text "once we have confirmed it complies with "
+                        , span [] [ text "weeKonekt" ]
+                        , text "'s guidelines"
+                        ]
+                    ]
+                ]
+            , div [ class "row margin-top-30" ]
+                [ div [ class "col-sm-12 text-center" ]
+                    [ h4 []
+                        [ text "Would you accept to be koneKted by fellow travellers regarding this recommendation?"
+                        ]
+                    , p []
+                        [ a [ class "btn btn-custom", onClick BackHome ] [ text "No" ]
+                        , a [ class "btn btn-custom", onClick BackHome ] [ text "Yes" ]
+                        ]
+                    ]
+                ]
+            ]
+        ]
+
+
+newRecommendationNameSection : Recommendation -> Html Msg
+newRecommendationNameSection r =
+    case r.isNew of
+        False ->
+            div [ class "row margin-top-30" ]
+                [ div [ class "col-md-12" ]
+                    [ h1 [ class "font-light" ]
+                        [ text r.interest.name ]
+                    , h4 [ class "font-light" ]
+                        [ text r.interest.description ]
+                    ]
+                ]
+
+        True ->
+            div [ class "row margin-top-30" ]
+                [ div [ class "col-md-12 intro-form intro-form-2" ]
+                    [ h3 [ class "font-light" ]
+                        [ text "What would you like to recommend?" ]
+                    , div [ class "form-group" ]
+                        [ input [ type_ "text", class "form-control", placeholder "Enter the name of what you would like to recommend" ] [] ]
+                    ]
+                ]
+
+
+aspectFormView : RecommendationAspect -> Html Msg
+aspectFormView aspect =
+    div [ class "row margin-top-30" ]
+        [ div [ class "col-md-12 intro-form intro-form-2" ]
+            [ h3 [ class "font-light" ]
+                [ text aspect.name ]
+            , div [ class "form-group" ]
+                [ textarea [ rows 5, class "form-control", placeholder "Please tell us what you liked the most" ] [] ]
+            ]
+        ]
+
+
 recommendationAspectView : RecommendationAspect -> Html Msg
 recommendationAspectView aspect =
     div [ class "row" ]
@@ -1201,10 +1395,29 @@ update msg model =
             ( { model | categoryOptions = (newOptions model.categoryOptions opt { c | selected = not (c.selected) }) }, slideShow )
 
         SelectInterest r ->
-            ( { model | step = Interests, recommendation = Just r }, slideShow )
+            case model.mode of
+                Just FindMode ->
+                    ( { model | step = Interests, recommendation = Just r }, slideShow )
+
+                Just RecommendMode ->
+                    ( { model | step = NewRecommendation, recommendation = Just r }, Cmd.none )
+
+                _ ->
+                    ( { model | step = Error }, Cmd.none )
 
         SelectRecommendation r ->
             ( { model | step = SingleRecommendation, recommendation = Just r }, slideShow )
+
+        RecommendNew ->
+            case ( model.place, model.category ) of
+                ( Just p, Just c ) ->
+                    ( { model | step = NewRecommendation, recommendation = Just (newRecommendation p c) }, Cmd.none )
+
+                _ ->
+                    ( { model | step = Error }, Cmd.none )
+
+        SaveRecommendation r ->
+            ( { model | step = RecommendationSummary }, Cmd.none )
 
         BackHome ->
             ( { model | step = Home, mode = Nothing, keywords = "", place = Nothing, category = Nothing, recommendation = Nothing }, Cmd.none )
