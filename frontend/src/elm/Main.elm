@@ -10,6 +10,7 @@ import Task
 import Process
 import Time
 import Array
+import Date
 
 
 type alias Flags =
@@ -78,11 +79,24 @@ type alias Recommendation =
     , highlights : String
     , photos : Photos
     , currentPhoto : Int
+    , aspects : RecommendationAspects
     }
 
 
 type alias Recommendations =
     List Recommendation
+
+
+type alias RecommendationAspect =
+    { name : String
+    , text : String
+    , photos : Photos
+    , currentPhoto : Int
+    }
+
+
+type alias RecommendationAspects =
+    List RecommendationAspect
 
 
 type alias Interest =
@@ -109,11 +123,31 @@ type Step
     | Categories
     | Recommendations
     | Interests
+    | SingleRecommendation
 
 
 type Mode
     = FindMode
     | RecommendMode
+
+
+type alias Conversation =
+    List Message
+
+
+type alias Message =
+    { from : User
+    , to : User
+    , content : String
+    , status : MessageStatus
+    }
+
+
+type MessageStatus
+    = New
+    | Seen
+    | Sending
+    | Error
 
 
 type alias Model =
@@ -131,6 +165,8 @@ type alias Model =
     , recommendation : Maybe Recommendation
     , showOptions : Bool
     , categoryOptions : CategoryOptions
+    , chat : Bool
+    , conversation : Maybe Conversation
     }
 
 
@@ -155,7 +191,16 @@ initModel flags =
     , recommendation = Nothing
     , showOptions = False
     , categoryOptions = allCategoryOptions
+    , chat = False
+    , conversation = Just sampleConversation
     }
+
+
+sampleConversation : Conversation
+sampleConversation =
+    [ { from = marcos, to = pedro, content = "Hi there!", status = Seen }
+    , { from = pedro, to = marcos, content = "Hello ;)", status = Seen }
+    ]
 
 
 allCategoryOptions : CategoryOptions
@@ -223,6 +268,15 @@ kuta =
     { country = "Indonesia", area = "Bali", location = "Kuta" }
 
 
+pedro : User
+pedro =
+    { first = "Pedro"
+    , last = "Guti"
+    , location = kuta
+    , photo = marcos.photo
+    }
+
+
 marcos : User
 marcos =
     { first = "Marcos"
@@ -254,12 +308,21 @@ somePhotos =
     ]
 
 
+allAspects : RecommendationAspects
+allAspects =
+    [ { name = "Room", text = "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.", photos = somePhotos, currentPhoto = 0 }
+    , { name = "Service", text = "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.", photos = somePhotos, currentPhoto = 0 }
+    , { name = "Food", text = "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.", photos = somePhotos, currentPhoto = 0 }
+    , { name = "Amenities", text = "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.", photos = somePhotos, currentPhoto = 0 }
+    ]
+
+
 allRecommendations : Recommendations
 allRecommendations =
-    [ { interest = interest1, author = marcos, score = 10, highlights = "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.", photos = somePhotos, currentPhoto = 0 }
-    , { interest = interest1, author = marcos, score = 10, highlights = "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.", photos = somePhotos, currentPhoto = 0 }
-    , { interest = interest1, author = marcos, score = 10, highlights = "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.", photos = somePhotos, currentPhoto = 0 }
-    , { interest = interest1, author = marcos, score = 10, highlights = "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.", photos = somePhotos, currentPhoto = 0 }
+    [ { interest = interest1, author = marcos, score = 10, highlights = "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.", photos = somePhotos, currentPhoto = 0, aspects = allAspects }
+    , { interest = interest1, author = marcos, score = 10, highlights = "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.", photos = somePhotos, currentPhoto = 0, aspects = allAspects }
+    , { interest = interest1, author = marcos, score = 10, highlights = "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.", photos = somePhotos, currentPhoto = 0, aspects = allAspects }
+    , { interest = interest1, author = marcos, score = 10, highlights = "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.", photos = somePhotos, currentPhoto = 0, aspects = allAspects }
     ]
 
 
@@ -281,10 +344,12 @@ type Msg
     = NoOp
     | Keywords String
     | ToggleOptions
+    | ToggleChat
     | ToggleChoice CategoryOption CategoryOptionChoice
     | SelectPlace Place
     | SelectCategory Category
     | SelectInterest Recommendation
+    | SelectRecommendation Recommendation
     | Find
     | Recommend
     | BackHome
@@ -320,7 +385,7 @@ view model =
                     recommendationsView m p c model
 
                 _ ->
-                    errorView "Missing modei, place or category"
+                    errorView "Missing mode, place or category"
 
         Interests ->
             case ( model.mode, model.place, model.category, model.recommendation ) of
@@ -330,41 +395,84 @@ view model =
                 _ ->
                     errorView "Missing modei, place, category or recommendation"
 
+        SingleRecommendation ->
+            case ( model.mode, model.place, model.category, model.recommendation ) of
+                ( Just m, Just p, Just c, Just r ) ->
+                    singleRecommendationView m p c r model
+
+                _ ->
+                    errorView "Missing mode, place, category or recommendation"
+
+
+layoutView : Model -> List (Html Msg) -> Html Msg
+layoutView model contents =
+    case model.chat of
+        False ->
+            div [ class "row" ]
+                [ div [ class "col-md-12" ] contents ]
+
+        True ->
+            div [ class "row" ]
+                [ div [ class "col-md-9" ]
+                    contents
+                , div [ class "col-md-3 sidebar" ]
+                    [ chatSection model ]
+                ]
+
 
 homeView : Model -> Html Msg
 homeView model =
     div []
-        [ headerSection model
-        , startSection model
-        , featuresSection model
-        , footerSection model
+        [ layoutView model
+            [ headerSection model
+            , startSection model
+            , featuresSection model
+            , footerSection model
+            ]
         ]
 
 
 categoriesView : Mode -> Place -> Model -> Html Msg
 categoriesView m p model =
     div []
-        [ headerSection model
-        , categoriesSection m p model.categories
-        , footerSection model
+        [ layoutView model
+            [ headerSection model
+            , categoriesSection m p model.categories
+            , footerSection model
+            ]
         ]
 
 
 recommendationsView : Mode -> Place -> Category -> Model -> Html Msg
 recommendationsView m p c model =
     div []
-        [ headerSection model
-        , recommendationsSection m p c model
-        , footerSection model
+        [ layoutView model
+            [ headerSection model
+            , recommendationsSection m p c model
+            , footerSection model
+            ]
         ]
 
 
 interestView : Mode -> Place -> Category -> Recommendation -> Model -> Html Msg
 interestView m p c r model =
     div []
-        [ headerSection model
-        , interestSection m p c r model.otherRecommendations
-        , footerSection model
+        [ layoutView model
+            [ headerSection model
+            , interestSection m p c r model.otherRecommendations
+            , footerSection model
+            ]
+        ]
+
+
+singleRecommendationView : Mode -> Place -> Category -> Recommendation -> Model -> Html Msg
+singleRecommendationView m p c r model =
+    div []
+        [ layoutView model
+            [ headerSection model
+            , singleRecommendationSection m p c r model
+            , footerSection model
+            ]
         ]
 
 
@@ -377,9 +485,9 @@ errorView msg =
 
 headerSection : Model -> Html Msg
 headerSection model =
-    div [ id "sticky-nav-sticky-wrapper", class "sticky-wrapper", style [ ( "height", "92px" ) ] ]
-        [ div [ class "navbar navbar-custom sticky", role "navigation", id "sticky-nav" ]
-            [ div [ class "container" ]
+    div [ id "sticky-nav-sticky-wrapper", class "" ]
+        [ div [ role "navigation", id "sticky-nav" ]
+            [ div [ class "my-container" ]
                 [ div [ class "navbar-header" ]
                     [ button
                         [ type_ "button"
@@ -400,7 +508,7 @@ headerSection model =
                 , div [ class "navbar-collapse collapse", id "navbar-menu" ]
                     [ ul [ class "nav navbar-nav nav-custom-left" ] []
                     , ul [ class "nav navbar-nav navbar-right" ]
-                        [ li [] [ a [] [ text "Login" ] ]
+                        [ li [] [ a [ class "navbar-lnk" ] [ text "Login" ] ]
                         , li [] [ a [ class "btn btn-white-fill navbar-btn" ] [ text "Join now" ] ]
                         ]
                     ]
@@ -409,11 +517,53 @@ headerSection model =
         ]
 
 
+chatSection : Model -> Html Msg
+chatSection model =
+    case model.chat of
+        False ->
+            div [] []
+
+        True ->
+            case model.conversation of
+                Nothing ->
+                    div [ id "chat" ] []
+
+                Just messages ->
+                    div [ id "chat" ]
+                        [ div [ class "row" ]
+                            [ div [ class "col-md-12 text-center" ]
+                                [ a [ onClick ToggleChat, class "btn btn-inverse-fill" ]
+                                    [ text "Close chat" ]
+                                ]
+                            ]
+                        , div [ class "row" ]
+                            [ div [ class "col-md-12 messages" ]
+                                (List.map chatMessageView messages)
+                            ]
+                        ]
+
+
+chatMessageView : Message -> Html Msg
+chatMessageView message =
+    div [ class "message" ]
+        [ div [ class "testimonial-user-thumb user-thumb" ]
+            [ img [ src message.from.photo, alt "user-thumb" ]
+                []
+            ]
+        , div [ class "testimonial-user-txt user-text" ]
+            [ label [ class "testimonial-user-name user-name" ]
+                [ text message.from.first ]
+            , p [ class "testimonial-user-position user-position text-muted" ]
+                [ text message.content ]
+            ]
+        ]
+
+
 startSection : Model -> Html Msg
 startSection model =
     section [ class "bg-custom home", id "home" ]
         [ div [ class "home-sm" ]
-            [ div [ class "container" ]
+            [ div [ class "my-container" ]
                 [ div [ class "row" ]
                     [ div [ class "col-md-6 col-sm-7" ]
                         [ div [ class "home-wrapper home-wrapper-alt p-0" ]
@@ -475,7 +625,7 @@ startSection model =
 categoriesSection : Mode -> Place -> Categories -> Html Msg
 categoriesSection mode place categories =
     section [ class "section bg-light", id "categories" ]
-        [ div [ class "container" ]
+        [ div [ class "my-container" ]
             [ div [ class "row" ]
                 [ div [ class "col-sm-12 text-center" ]
                     [ categorySelectionTitle mode
@@ -533,7 +683,7 @@ categoryListItemView cat =
 recommendationsSection : Mode -> Place -> Category -> Model -> Html Msg
 recommendationsSection mode place c model =
     section [ class "section bg-light", id "recommendations" ]
-        [ div [ class "container" ]
+        [ div [ class "my-container" ]
             [ div [ class "row" ]
                 [ div [ class "col-sm-12 text-center" ]
                     [ h3 [ class "title font-light" ]
@@ -550,6 +700,16 @@ recommendationsSection mode place c model =
             , optionsView model
             , div [ class "row" ]
                 (List.map recommendationView model.recommendations)
+            , div [ class "row" ]
+                [ div [ class "col-md-12 text-center nav-buttons" ]
+                    [ a [ class "btn btn-custom", onClick BackOne ]
+                        [ text "Go back"
+                        ]
+                    , a [ class "btn btn-custom", onClick BackHome ]
+                        [ text "Change destination"
+                        ]
+                    ]
+                ]
             ]
         ]
 
@@ -674,11 +834,9 @@ recommendationViewWithAuthor style r =
                 ]
             , p [ class "text-muted" ] [ text r.highlights ]
             , p [ class "photo-show" ]
-                (recommendationPhotos
-                    r
-                )
+                (photoShow r.currentPhoto r.photos)
             , p [ class "text-center" ]
-                [ a [ class "btn btn-custom", onClick (SelectInterest r) ]
+                [ a [ class "btn btn-custom", onClick (SelectRecommendation r) ]
                     [ text "More"
                     ]
                 ]
@@ -694,9 +852,7 @@ recommendationView r =
             , p [] [ text r.interest.description ]
             , p [ class "text-muted" ] [ text r.highlights ]
             , p [ class "photo-show" ]
-                (recommendationPhotos
-                    r
-                )
+                (photoShow r.currentPhoto r.photos)
             , p [ class "text-center" ]
                 [ a [ class "btn btn-custom", onClick (SelectInterest r) ]
                     [ text "Select this"
@@ -706,9 +862,9 @@ recommendationView r =
         ]
 
 
-recommendationPhotos : Recommendation -> List (Html Msg)
-recommendationPhotos r =
-    r.photos
+photoShow : Int -> Photos -> List (Html Msg)
+photoShow currentPhoto photos =
+    photos
         |> Array.fromList
         |> Array.toIndexedList
         |> List.reverse
@@ -716,7 +872,7 @@ recommendationPhotos r =
             (\( i, photo ) ->
                 let
                     ( visibility, positioning ) =
-                        ( photoVisibility i r.currentPhoto, photoPositioning i )
+                        ( photoVisibility i currentPhoto, photoPositioning i )
                 in
                     img [ class ("photo-preview photo-preview-" ++ visibility ++ " photo-preview-" ++ positioning), src photo.data ] []
             )
@@ -745,7 +901,7 @@ photoPositioning i =
 interestSection : Mode -> Place -> Category -> Recommendation -> Recommendations -> Html Msg
 interestSection m place cat r other =
     section [ class "section bg-light", id "interest" ]
-        [ div [ class "container" ]
+        [ div [ class "my-container" ]
             [ div [ class "row" ]
                 [ div [ class "col-sm-12 text-center" ]
                     [ h3 [ class "title font-light" ]
@@ -772,6 +928,79 @@ interestSection m place cat r other =
                         [ text "Change destination"
                         ]
                     ]
+                ]
+            ]
+        ]
+
+
+singleRecommendationSection : Mode -> Place -> Category -> Recommendation -> Model -> Html Msg
+singleRecommendationSection m place c r model =
+    section [ class "section bg-light", id "single-recommendation" ]
+        [ div [ class "my-container" ]
+            [ div [ class "row" ]
+                [ div [ class "col-sm-8" ]
+                    (([ div [ class "row" ]
+                            [ div [ class "col-sm-12" ]
+                                [ h1 [ class "h1" ]
+                                    [ text r.interest.name ]
+                                , h3 [ class "title" ]
+                                    [ text r.interest.description ]
+                                , h4 [ class "font-light" ]
+                                    [ text c.name
+                                    , text " in "
+                                    , text (placeDescription place)
+                                    ]
+                                ]
+                            ]
+                      , div [ class "row" ]
+                            [ div [ class "col-sm-12" ]
+                                [ text r.highlights ]
+                            ]
+                      ]
+                     )
+                        ++ (List.map recommendationAspectView r.aspects)
+                    )
+                , div [ class "col-sm-4 text-center" ]
+                    [ div [ class "testimonial-user-thumb user-thumb full" ]
+                        [ img [ src r.author.photo, alt "user-thumb" ]
+                            []
+                        ]
+                    , div [ class "testimonial-user-txt margin-top-10" ]
+                        [ label [ class "testimonial-user-name user-name" ]
+                            [ text r.author.first ]
+                        , p [ class "testimonial-user-position user-position text-muted" ]
+                            [ text r.author.location.location ]
+                        ]
+                    , div [ class "user-actions" ]
+                        [ a [ class "btn btn-sm btn-custom" ]
+                            [ text "Follow"
+                            ]
+                        , a [ class "btn btn-sm btn-custom", onClick ToggleChat ]
+                            [ text "Chat"
+                            ]
+                        ]
+                    ]
+                , div [ class "row" ]
+                    [ div [ class "col-md-12 text-center nav-buttons" ]
+                        [ a [ class "btn btn-custom", onClick BackOne ]
+                            [ text "Go Back"
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ]
+
+
+recommendationAspectView : RecommendationAspect -> Html Msg
+recommendationAspectView aspect =
+    div [ class "row" ]
+        [ div [ class "col-md-12" ]
+            [ div [ class "testimonial-description text-left" ]
+                [ h3 [] [ text aspect.name ]
+                , p [] [ text aspect.text ]
+                , p [ class "photo-show" ]
+                    (photoShow aspect.currentPhoto aspect.photos)
                 ]
             ]
         ]
@@ -868,7 +1097,7 @@ placeDescription p =
 featuresSection : Model -> Html Msg
 featuresSection model =
     div [ class "section bg-light", id "features" ]
-        [ div [ class "container" ]
+        [ div [ class "my-container" ]
             [ div [ class "row" ]
                 [ div [ class "col-sm-12 text-center" ]
                     [ h3 [ class "title" ] [ text "We connect you to the world" ]
@@ -933,7 +1162,7 @@ featuresSection model =
 footerSection : Model -> Html Msg
 footerSection model =
     footer [ class "bg-gray footer" ]
-        [ div [ class "container" ]
+        [ div [ class "my-container" ]
             [ div [ class "row" ]
                 [ div [ class "col-sm-12" ]
                     [ div [ class "footer-alt text-center" ]
@@ -965,17 +1194,34 @@ update msg model =
         ToggleOptions ->
             ( { model | showOptions = not (model.showOptions) }, slideShow )
 
+        ToggleChat ->
+            ( { model | chat = not (model.chat) }, Cmd.none )
+
         ToggleChoice opt c ->
             ( { model | categoryOptions = (newOptions model.categoryOptions opt { c | selected = not (c.selected) }) }, slideShow )
 
         SelectInterest r ->
             ( { model | step = Interests, recommendation = Just r }, slideShow )
 
+        SelectRecommendation r ->
+            ( { model | step = SingleRecommendation, recommendation = Just r }, slideShow )
+
         BackHome ->
-            ( { model | step = Home, mode = Nothing, keywords = "", place = Nothing }, Cmd.none )
+            ( { model | step = Home, mode = Nothing, keywords = "", place = Nothing, category = Nothing, recommendation = Nothing }, Cmd.none )
 
         BackOne ->
-            ( { model | step = Recommendations, recommendation = Nothing }, slideShow )
+            case model.step of
+                Interests ->
+                    ( { model | step = Recommendations, recommendation = Nothing }, slideShow )
+
+                Recommendations ->
+                    ( { model | step = Categories, category = Nothing }, Cmd.none )
+
+                SingleRecommendation ->
+                    ( { model | step = Interests }, slideShow )
+
+                _ ->
+                    ( model, Cmd.none )
 
         Find ->
             ( { model | step = Categories, mode = Just FindMode }, Cmd.none )
@@ -992,6 +1238,13 @@ update msg model =
                     ( { model
                         | otherRecommendations = (List.map showNextPhoto model.otherRecommendations)
                         , recommendation = (maybeShowNextPhoto model.recommendation)
+                      }
+                    , slideShow
+                    )
+
+                SingleRecommendation ->
+                    ( { model
+                        | recommendation = (maybeShowNextAspectPhoto model.recommendation)
                       }
                     , slideShow
                     )
@@ -1020,16 +1273,42 @@ maybeShowNextPhoto rec =
 
 showNextPhoto : Recommendation -> Recommendation
 showNextPhoto r =
-    let
-        ( i, max ) =
-            ( r.currentPhoto, (List.length r.photos) - 1 )
-    in
-        case i == max of
-            True ->
-                { r | currentPhoto = 0 }
+    { r | currentPhoto = (nextPhoto r.currentPhoto r.photos) }
 
-            False ->
-                { r | currentPhoto = i + 1 }
+
+maybeShowNextAspectPhoto : Maybe Recommendation -> Maybe Recommendation
+maybeShowNextAspectPhoto rec =
+    case rec of
+        Nothing ->
+            Nothing
+
+        Just r ->
+            r
+                |> showNextAspectPhoto
+                |> Just
+
+
+showNextAspectPhoto : Recommendation -> Recommendation
+showNextAspectPhoto r =
+    { r
+        | aspects =
+            (List.map
+                (\a ->
+                    { a | currentPhoto = (nextPhoto a.currentPhoto a.photos) }
+                )
+                r.aspects
+            )
+    }
+
+
+nextPhoto : Int -> Photos -> Int
+nextPhoto current photos =
+    case current == ((List.length photos) - 1) of
+        True ->
+            0
+
+        False ->
+            current + 1
 
 
 subscriptions : Model -> Sub Msg

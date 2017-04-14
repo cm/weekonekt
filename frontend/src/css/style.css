@@ -82,6 +82,15 @@ a:hover,a:focus,.a:active {
 
 
 /*======= 2.Helper classes ======== */
+.my-container {
+ /*  padding-right: 15px;
+  padding-left: 15px;*/
+  margin-right: auto;
+  margin-left: auto;
+  width: 80%;
+}
+
+
 .section {
   padding-top: 100px;
   padding-bottom: 80px;
@@ -355,15 +364,15 @@ a:hover,a:focus,.a:active {
   transition: all 0.5s ease-in-out;
 }
 
-.navbar-custom .navbar-nav li a {
+.navbar-custom .navbar-nav li a, a.navbar-lnk {
   color: rgba(255, 255, 255, 0.75);
   font-size: 15px;
   margin: 5px 0px;
 }
 
-.navbar-custom .nav>li>a:focus,.navbar-custom .nav>li>a:hover,.navbar-custom .navbar-nav li.active a {
-  background-color: transparent;
-  color: #ffffff;
+.navbar-custom .nav>li>a:focus, .navbar-custom .nav>li>a:hover,.navbar-custom .navbar-nav li.active a, a.navbar-lnk:focus, a.navbar-lnk:hover, a.navbar-btn:focus, a.navbar-btn:hover {
+  background-color: transparent !important;
+  color: #ffffff !important;
 }
 
 .navbar-toggle .icon-bar {
@@ -378,8 +387,8 @@ a:hover,a:focus,.a:active {
 }
 
 .logo {
-  font-weight: 500;
-  font-size: 22px;
+  font-weight: 300;
+  font-size: 32px;
   color: #ffffff !important;
   letter-spacing: 1px;
 }
@@ -393,7 +402,7 @@ a:hover,a:focus,.a:active {
   margin-left: 20px;
 }
 
-.nav .open>a, .nav .open>a:focus, .nav .open>a:hover {
+.nav .open>a, .nav .open>a:focus, .nav .open>a:hover, .navbar-btn:hover {
   background-color: transparent;
   border-color: #337ab7;
 }
@@ -978,8 +987,8 @@ a.disabled {
   opacity: 0.2 !important;
 }
 
-#categories, #recommendations, #interest {
-  padding-top: 150px;
+#categories, #recommendations, #interest, #single-recommendation {
+  /* padding-top: 150px;*/
 }
 
 .country-preview {
@@ -1049,3 +1058,49 @@ a.disabled {
   color:  #95A8B7;
 } 
 
+.testimonial-user-thumb.full img {
+  width: 128px !important;
+  height: 128px !important;
+}
+
+.margin-top-10 {
+  margin-top: 10px;
+}
+
+.user-actions a {
+  display: block;
+  margin-top: 5px;
+}
+
+#chat {
+  padding-top: 30px;
+  padding-bottom: 30px;
+
+}
+
+.sidebar {
+}
+  
+.messages {
+}
+
+.message {
+  margin-top: 15px;
+  font-weight: 500;
+}
+
+.message img {
+  border: 2px solid #496174;
+}
+.sidebar {
+  border-right: 2px solid;
+}
+
+.navbar-brand {
+  padding-left: 0 !important;
+}
+
+#sticky-nav-sticky-wrapper {
+  padding-top: 25px;
+  min-height: 92px;
+}

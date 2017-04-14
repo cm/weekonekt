@@ -27,3 +27,11 @@
 .autocomplete {
   background: #52587f; 
 }
+
+.sidebar {
+  border-color: #52587f;
+}
+
+#sticky-nav-sticky-wrapper {
+background: #52587f;
+}
