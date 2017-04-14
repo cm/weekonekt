@@ -1433,6 +1433,9 @@ update msg model =
                 SingleRecommendation ->
                     ( { model | step = Interests }, slideShow )
 
+                NewRecommendation ->
+                    ( { model | step = Recommendations, recommendation = Nothing }, slideShow )
+
                 _ ->
                     ( model, Cmd.none )
 
